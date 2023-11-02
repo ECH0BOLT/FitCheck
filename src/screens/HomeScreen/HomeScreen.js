@@ -2,16 +2,19 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
-
-const onCreateAccountPressed = () => {
-    console.warn("Create Account");
-}
-
-const onLogInPressed = () => {
-    console.warn("Log In");
-}
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
+
+  const onCreateAccountPressed = () => {
+      navigation.navigate('CreateAccount');
+  }
+
+  const onLogInPressed = () => {
+      navigation.navigate('Login');
+  }
+
   return (
         <View style={styles.page}>
           <Image source={require('../../icons/logo.png')} style={styles.logo} />

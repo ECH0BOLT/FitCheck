@@ -1,14 +1,15 @@
 
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import HomeScreen from './src/screens/HomeScreen';
+
+import Navigation from './src/navigation';
 
 
 const App = () => {
 
 
   return (
-    <HomeScreen/>
+    <Navigation/>
   );
 };
 

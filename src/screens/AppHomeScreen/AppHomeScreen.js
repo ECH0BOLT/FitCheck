@@ -5,7 +5,7 @@ import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTert
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
 
-const CreateAccountScreen = () => {
+const AppHomeScreen = () => {
 
     const navigation = useNavigation();
 
@@ -13,7 +13,7 @@ const CreateAccountScreen = () => {
     const [username, setUsername] = useState('');
 
     const onContinuePressed = () => {
-        navigation.navigate('CreateAccount2');
+        console.warn('log in');
     };
 
     return (
@@ -21,9 +21,7 @@ const CreateAccountScreen = () => {
               <Image source={require('../../icons/logo.png')} style={styles.logo} />
               <Text style={styles.appName}>fit check</Text>
 
-              <CustomInput placeholder="email address" value={email} setValue={setEmail} />
-              <CustomInput placeholder="username" value={username} setValue={setUsername} />
-              <CustomButtonPrimary text="continue" onPress={onContinuePressed}/>
+
             </View>
 
       );
@@ -35,7 +33,7 @@ const CreateAccountScreen = () => {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 16,
-        backgroundColor: '#DCF0C8', // Change the background color of the page here
+        backgroundColor: '#142814', // Change the background color of the page here
       },
       logo: {
         width: 200,
@@ -50,4 +48,4 @@ const CreateAccountScreen = () => {
       },
     });
 
-export default CreateAccountScreen
+export default AppHomeScreen
