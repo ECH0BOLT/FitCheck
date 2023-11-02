@@ -17,7 +17,7 @@ const HomeScreen = () => {
 
   return (
         <View style={styles.page}>
-          <Image source={require('../../icons/logo.png')} style={styles.logo} />
+          <Image source={require('../../assets/logo.png')} style={styles.logo} />
           <Text style={styles.appName}>fit check</Text>
 
           <CustomButtonPrimary text="create an account" onPress={onCreateAccountPressed} />

@@ -18,7 +18,7 @@ const CreateAccountScreen = () => {
 
     return (
             <View style={styles.page}>
-              <Image source={require('../../icons/logo.png')} style={styles.logo} />
+              <Image source={require('../../assets/logo.png')} style={styles.logo} />
               <Text style={styles.appName}>fit check</Text>
 
               <CustomInput placeholder="email address" value={email} setValue={setEmail} />
