@@ -18,7 +18,7 @@ const AppHomeScreen = () => {
 
     return (
             <View style={styles.page}>
-              <Image source={require('../../icons/logo.png')} style={styles.logo} />
+              <Image source={require('../../assets/adam.jpg')} style={styles.image} />
               <Text style={styles.appName}>fit check</Text>
 
 
@@ -35,7 +35,7 @@ const AppHomeScreen = () => {
         padding: 16,
         backgroundColor: '#142814', // Change the background color of the page here
       },
-      logo: {
+      image: {
         width: 200,
         height: 200,
         marginTop: -150,
