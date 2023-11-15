@@ -6,7 +6,7 @@ import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const AppHomeScreen = () => {
+const CreatePostScreen = () => {
 
     const navigation = useNavigation();
 
@@ -25,7 +25,7 @@ const AppHomeScreen = () => {
                 <View style={styles.postTop}>
                   <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
                   <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
+                    <Text style={styles.handle}>penismella</Text>
                     <Text style={styles.time}>3 hours ago</Text>
                   </View>
                 </View>
@@ -152,4 +152,4 @@ const AppHomeScreen = () => {
       },
     });
 
-    export default AppHomeScreen;
+    export default CreatePostScreen;
