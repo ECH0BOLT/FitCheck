@@ -21,31 +21,14 @@ const FriendsScreen = () => {
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
               <View style={styles.pageTop} >
-                  <Text style={styles.title}>Friends</Text>
-                  <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
-                  <TouchableOpacity
-                    style={styles.navItem}
-                    onPress={() => navigation.navigate('Settings')}>
-                    <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
-                  </TouchableOpacity>
-              </View>
-
-              <View style={styles.contentHeader} >
-                <Text style={styles.headerText}>
-                  <Text style={styles.boldText}>341</Text> Friends
-                </Text>
+                <Text style={styles.title}>My Profile</Text>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('AddFriends')}>
-                  <Text style={styles.headerText2}>
-                    Add Friends
-                    <Text style={styles.boldText}>+</Text>
-                  </Text>
+                  style={styles.navItem}
+                  onPress={() => navigation.navigate('Settings')}>
+                  <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
                 </TouchableOpacity>
               </View>
 
-              <View style={styles.pageContent} >
-
-              </View>
 
             </ScrollView>
           </LinearGradient>
@@ -62,8 +45,8 @@ const FriendsScreen = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('Profile')}>
-              <Image source={require('../../assets/profile.png')} style={styles.navLogo} />
+              onPress={() => navigation.navigate('Friends')}>
+              <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>
         </View>
@@ -81,7 +64,6 @@ const FriendsScreen = () => {
       pageTop: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        paddingBottom: 30,
       },
       title: {
         color: '#DCDCC8',
@@ -93,35 +75,7 @@ const FriendsScreen = () => {
         position: 'fixed',
         height: 45,
         width: 45,
-        left: 70,
-      },
-      contentHeader: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-      },
-      headerText: {
-        color: '#DCDCC8',
-        fontSize: 20,
-        paddingHorizontal: 10,
-        paddingTop: 5,
-      },
-      headerText2: {
-        color: '#DCDCC8',
-        fontSize: 20,
-        paddingHorizontal: 10,
-        paddingTop: 5,
-        left: 100,
-      },
-      boldText: {
-        fontWeight: 'bold',
-          // Add any other styles for boldText if needed
-      },
-      pageContent: {
-        width: '100%', // Set your desired width
-        height: 500, // Set your desired height
-        backgroundColor: '#3B593B',
-        borderRadius: 10,
-        elevation: 5,
+        left: 80,
       },
       bottomNav: {
         flexDirection: 'row',

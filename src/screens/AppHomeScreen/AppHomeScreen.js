@@ -101,9 +101,9 @@ const AppHomeScreen = () => {
         flexWrap: 'wrap',
       },
       postBottom: {
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-            },
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+      },
       userInfo: {},
       image: {
         width: 50,
