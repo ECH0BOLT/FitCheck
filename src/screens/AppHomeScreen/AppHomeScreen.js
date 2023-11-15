@@ -40,26 +40,6 @@ const AppHomeScreen = () => {
                 </View>
                 <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
               </View>
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-              </View>
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-              </View>
             </ScrollView>
           </LinearGradient>
           <View style={styles.bottomNav}>
@@ -96,10 +76,12 @@ const AppHomeScreen = () => {
         padding: 0,
         flex: 1,
       },
-      postContent: {},
+      postContent: {
+        marginBottom: 50,
+      },
       post: {
         width: '100%',
-        height: 550,
+        height: 500,
         borderRadius: 10,
         marginBottom: 20,
       },
