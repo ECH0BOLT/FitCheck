@@ -65,6 +65,11 @@ const AppHomeScreen = () => {
               <Image source={require('../../assets/profile.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+              style={styles.postButton}
+              onPress={() => navigation.navigate('CreatePost')}>
+              <Image source={require('../../assets/profile.png')} style={styles.postLogo} />
+            </TouchableOpacity>
         </View>
       );
     };
@@ -134,6 +139,16 @@ const AppHomeScreen = () => {
       navLogo: {
         height: 45,
         width: 45,
+      },
+      postLogo: {
+        height: 70,
+        width: 70,
+      },
+      postButton: {
+        height: 0,
+        width: 0,
+        bottom: 160,
+        left: 300,
       },
     });
 
