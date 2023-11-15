@@ -31,7 +31,7 @@ const AppHomeScreen = () => {
                 </View>
                 <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
                 <View style={styles.postBottom}>
-                    <Text style={styles.handle}>@SandleMan</Text>
+                    <Text style={styles.handle}>Words here</Text>
                 </View>
               </View>
 
