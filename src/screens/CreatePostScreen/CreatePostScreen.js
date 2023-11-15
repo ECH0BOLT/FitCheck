@@ -19,57 +19,27 @@ const CreatePostScreen = () => {
     return (
         <View style={styles.container}>
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
 
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>penismella</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-                <View style={styles.postBottom}>
-                    <Text style={styles.handle}>Words here</Text>
-                </View>
-              </View>
+            <Text>Garret code the camera here or outside of this linear gradient maybe?</Text>
 
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-              </View>
-
-            </ScrollView>
           </LinearGradient>
           <View style={styles.bottomNav}>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('Friends')}>
-              <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
+              onPress={() => navigation.navigate('AppHome')}>
+              <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
               onPress={() => navigation.navigate('AppHome')}>
-              <Image source={require('../../assets/logo2.png')} style={styles.navLogo} />
+              <Image source={require('../../assets/logo2unfilled.png')} style={styles.navLogo} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
               onPress={() => navigation.navigate('Profile')}>
-              <Image source={require('../../assets/profile.png')} style={styles.navLogo} />
+              <Image source={require('../../assets/timer.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-              style={styles.postButton}
-              onPress={() => navigation.navigate('CreatePost')}>
-              <Image source={require('../../assets/postButton.png')} style={styles.postLogo} />
-            </TouchableOpacity>
         </View>
       );
     };
