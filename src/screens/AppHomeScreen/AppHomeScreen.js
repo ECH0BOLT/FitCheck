@@ -20,6 +20,21 @@ const AppHomeScreen = () => {
         <View style={styles.container}>
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
+
+              <View style={styles.postContent}>
+                <View style={styles.postTop}>
+                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
+                  <View style={styles.userInfo}>
+                    <Text style={styles.handle}>@SandleMan</Text>
+                    <Text style={styles.time}>3 hours ago</Text>
+                  </View>
+                </View>
+                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
+                <View style={styles.postBottom}>
+                    <Text style={styles.handle}>@SandleMan</Text>
+                </View>
+              </View>
+
               <View style={styles.postContent}>
                 <View style={styles.postTop}>
                   <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
@@ -30,16 +45,7 @@ const AppHomeScreen = () => {
                 </View>
                 <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
               </View>
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-              </View>
+
             </ScrollView>
           </LinearGradient>
           <View style={styles.bottomNav}>
@@ -89,6 +95,10 @@ const AppHomeScreen = () => {
         flexDirection: 'row',
         flexWrap: 'wrap',
       },
+      postBottom: {
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+            },
       userInfo: {},
       image: {
         width: 50,
