@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import FriendList from '../../components/FriendList/FriendList';
-import CustomInput from '../../components/CustomInput';
+import SearchBar from '../../components/CustomInput2';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -42,6 +42,7 @@ const FriendsScreen = () => {
               </View>
 
               <View style={styles.pageContent} >
+                <SearchBar placeholder="Search" />
                 <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
                     <FriendList></FriendList>
                 </ScrollView>
