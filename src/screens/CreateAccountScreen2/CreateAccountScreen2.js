@@ -20,7 +20,11 @@ const CreateAccountScreen2 = () => {
             <View style={styles.page}>
               <Image source={require('../../assets/logo.png')} style={styles.logo} />
               <Text style={styles.appName}>fit check</Text>
-
+              <TouchableOpacity
+                style={styles.backArrow}
+                onPress={() => navigation.navigate('CreateAccount')}>
+                <Image source={require('../../assets/arrow2.png')} style={styles.back} />
+              </TouchableOpacity>
               <CustomInput placeholder="password" value={email} setValue={setEmail} />
               <CustomInput placeholder="confirm password" value={username} setValue={setUsername} />
               <CustomButtonPrimary text="sign up" onPress={onSignUpPressed}/>
@@ -46,7 +50,14 @@ const CreateAccountScreen2 = () => {
         color: '#3B593B',
         fontSize: 48,
         fontFamily: 'Montserrat-Regular',
-        marginBottom: 65,
+        marginBottom: 30,
+      },
+      back: {
+        height: 45,
+        width: 45,
+      },
+      backArrow: {
+        right: 160,
       },
     });
 

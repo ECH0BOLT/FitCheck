@@ -20,7 +20,11 @@ const LoginScreen = () => {
             <View style={styles.page}>
               <Image source={require('../../assets/logo.png')} style={styles.logo} />
               <Text style={styles.appName}>fit check</Text>
-
+              <TouchableOpacity
+                style={styles.backArrow}
+                onPress={() => navigation.navigate('Home')}>
+                <Image source={require('../../assets/arrow2.png')} style={styles.back} />
+              </TouchableOpacity>
               <CustomInput placeholder="username" value={email} setValue={setEmail} />
               <CustomInput placeholder="password" value={username} setValue={setUsername} />
               <CustomButtonPrimary text="log in" onPress={onLoginPressed}/>
@@ -46,7 +50,14 @@ const LoginScreen = () => {
         color: '#3B593B',
         fontSize: 48,
         fontFamily: 'Montserrat-Regular',
-        marginBottom: 65,
+        marginBottom: 30,
+      },
+      back: {
+        height: 45,
+        width: 45,
+      },
+      backArrow: {
+        right: 160,
       },
     });
 

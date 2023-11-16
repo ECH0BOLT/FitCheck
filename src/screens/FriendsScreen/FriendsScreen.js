@@ -1,13 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
-import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
-import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
+import FriendList from '../../components/FriendList/FriendList';
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const FriendsScreen = () => {
-
     const navigation = useNavigation();
 
     const scrollToTop = () => {
@@ -32,19 +30,21 @@ const FriendsScreen = () => {
 
               <View style={styles.contentHeader} >
                 <Text style={styles.headerText}>
-                  <Text style={styles.boldText}>341</Text> Friends
+                  <Text style={styles.boldText}>34</Text> Friends
                 </Text>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('AddFriends')}>
                   <Text style={styles.headerText2}>
-                    Add Friends
+                    {'Add Friends '}
                     <Text style={styles.boldText}>+</Text>
                   </Text>
                 </TouchableOpacity>
               </View>
 
               <View style={styles.pageContent} >
-
+                <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
+                    <FriendList></FriendList>
+                </ScrollView>
               </View>
 
             </ScrollView>
@@ -101,16 +101,16 @@ const FriendsScreen = () => {
       },
       headerText: {
         color: '#DCDCC8',
-        fontSize: 20,
+        fontSize: 25,
         paddingHorizontal: 10,
         paddingTop: 5,
       },
       headerText2: {
         color: '#DCDCC8',
-        fontSize: 20,
+        fontSize: 25,
         paddingHorizontal: 10,
         paddingTop: 5,
-        left: 100,
+        left: 50,
       },
       boldText: {
         fontWeight: 'bold',
@@ -118,7 +118,7 @@ const FriendsScreen = () => {
       },
       pageContent: {
         width: '100%', // Set your desired width
-        height: 500, // Set your desired height
+        height: 535, // Set your desired height
         backgroundColor: '#3B593B',
         borderRadius: 10,
         elevation: 5,
