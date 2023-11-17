@@ -27,7 +27,6 @@ const FriendsScreen = () => {
                     <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
                   </TouchableOpacity>
               </View>
-
               <View style={styles.contentHeader} >
                 <Text style={styles.headerText}>
                   <Text style={styles.boldText}>34</Text> Friends
@@ -115,7 +114,6 @@ const FriendsScreen = () => {
       },
       boldText: {
         fontWeight: 'bold',
-          // Add any other styles for boldText if needed
       },
       pageContent: {
         width: '100%', // Set your desired width

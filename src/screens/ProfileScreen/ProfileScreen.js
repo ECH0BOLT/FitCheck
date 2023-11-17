@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import ProfileFriends from '../../components/ProfileFriends/ProfileFriends';
+import ProfileMemories from '../../components/ProfileMemories/ProfileMemories';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -17,47 +18,53 @@ const ProfileScreen = () => {
     return (
         <View style={styles.container}>
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
+
             <View style={styles.pageTop} >
               <Text style={styles.title}>My Profile</Text>
               <TouchableOpacity
-                style={styles.navItem}
+                style={styles.shareButton}
+                onPress={() => navigation.navigate('Home')}>
+                <Image source={require('../../assets/share.png')} style={styles.settings} />
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={() => navigation.navigate('Settings')}>
                 <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
               </TouchableOpacity>
+              <TouchableOpacity style={styles.editProfileContainer}
+                onPress={() => navigation.navigate('Settings')}>
+                <Text style={styles.editProfile}>edit profile</Text>
+              </TouchableOpacity>
             </View>
+
             <View style={styles.userInfo}>
               <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
               <Text style={styles.name}>Adam Sandler</Text>
               <Text style={styles.username}>@SandleMan</Text>
             </View>
-            <Text style={styles.boxTitle}>Friends</Text>
+
+            <Text style={styles.boxTitle}>
+                <Text style={styles.boldText}>{'34 '}</Text>
+                Friends
+             </Text>
             <View style={styles.friendsRectangle}>
                 <ProfileFriends/>
-                <TouchableOpacity
-                  style={styles.navItem}
-                  onPress={() => navigation.navigate('Friends')}>
-                  <Text style={styles.addFriendButton}>+</Text>
-                </TouchableOpacity>
             </View>
+
             <Text style={styles.boxTitle2}>Memories</Text>
             <View style={styles.memoriesRectangle}>
+                <ProfileMemories/>
             </View>
+
           </LinearGradient>
 
           <View style={styles.bottomNav}>
-            <TouchableOpacity
-              style={styles.navItem}
-              onPress={() => navigation.navigate('AppHome')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
               <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.navItem}
-              onPress={() => navigation.navigate('AppHome')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
               <Image source={require('../../assets/logo2.png')} style={styles.navLogo} />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.navItem}
-              onPress={() => navigation.navigate('Friends')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Friends')}>
               <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>
@@ -83,25 +90,35 @@ const ProfileScreen = () => {
         paddingHorizontal: 10,
         paddingTop: 5,
       },
+      editProfileContainer: {
+        position: 'absolute',
+        left: 10,
+        top: 50,
+      },
+      editProfile: {
+        color: '#DCDCC8',
+        fontSize: 20,
+        textDecorationLine: 'underline',
+      },
       userInfo: {
         justifyContent: 'center',
         alignItems: 'center',
       },
       profilePic: {
-        width: 200,
-        height: 200,
+        width: 170,
+        height: 170,
         borderRadius: 100,
         top: 40,
       },
       name: {
         color: '#DCDCC8',
         fontSize: 30,
-        top: 50,
+        top: 45,
       },
       username: {
         color: '#DCDCC8',
         fontSize: 20,
-        top: 55,
+        top: 45,
       },
       settings: {
         position: 'absolute',
@@ -114,6 +131,9 @@ const ProfileScreen = () => {
         fontSize: 20,
         top: 60,
         left: 25,
+      },
+      boldText: {
+        fontWeight: 'bold',
       },
       boxTitle2: {
         color: '#DCDCC8',
@@ -128,16 +148,12 @@ const ProfileScreen = () => {
         marginBottom: 5,
         borderRadius: 13,
       },
-      addFriendButton: {
-        color: '#DCDCC8',
-        fontSize: 20,
-      },
       memoriesRectangle: {
         backgroundColor: '#3B593B',
-        width: 360,
-        height: 175,
+        width: 380,
+        height: 205,
         alignSelf: 'center',
-        borderRadius: 25,
+        borderRadius: 10,
       },
       bottomNav: {
         flexDirection: 'row',
@@ -146,6 +162,9 @@ const ProfileScreen = () => {
         backgroundColor: '#142614',
         paddingVertical: 15,
         elevation: 5,
+      },
+      shareButton: {
+        right: 60,
       },
       navItem: {
         flex: 1,
