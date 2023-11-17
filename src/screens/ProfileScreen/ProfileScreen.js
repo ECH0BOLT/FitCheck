@@ -157,7 +157,7 @@ const ProfileScreen = () => {
       },
       navLogo: {
         height: 45,
-        width: 55,
+        width: 45,
       },
     });
 
