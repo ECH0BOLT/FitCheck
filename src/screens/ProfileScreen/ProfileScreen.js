@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
-import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
-import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
-import CustomInput from '../../components/CustomInput';
+import ProfileFriends from '../../components/ProfileFriends/ProfileFriends';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const FriendsScreen = () => {
+const ProfileScreen = () => {
 
     const navigation = useNavigation();
 
@@ -19,19 +17,33 @@ const FriendsScreen = () => {
     return (
         <View style={styles.container}>
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
-              <View style={styles.pageTop} >
-                <Text style={styles.title}>My Profile</Text>
+            <View style={styles.pageTop} >
+              <Text style={styles.title}>My Profile</Text>
+              <TouchableOpacity
+                style={styles.navItem}
+                onPress={() => navigation.navigate('Settings')}>
+                <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.userInfo}>
+              <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
+              <Text style={styles.name}>Adam Sandler</Text>
+              <Text style={styles.username}>@SandleMan</Text>
+            </View>
+            <Text style={styles.boxTitle}>Friends</Text>
+            <View style={styles.friendsRectangle}>
+                <ProfileFriends/>
                 <TouchableOpacity
                   style={styles.navItem}
-                  onPress={() => navigation.navigate('Settings')}>
-                  <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
+                  onPress={() => navigation.navigate('Friends')}>
+                  <Text style={styles.addFriendButton}>+</Text>
                 </TouchableOpacity>
-              </View>
-
-
-            </ScrollView>
+            </View>
+            <Text style={styles.boxTitle2}>Memories</Text>
+            <View style={styles.memoriesRectangle}>
+            </View>
           </LinearGradient>
+
           <View style={styles.bottomNav}>
             <TouchableOpacity
               style={styles.navItem}
@@ -71,11 +83,61 @@ const FriendsScreen = () => {
         paddingHorizontal: 10,
         paddingTop: 5,
       },
+      userInfo: {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      profilePic: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        top: 40,
+      },
+      name: {
+        color: '#DCDCC8',
+        fontSize: 30,
+        top: 50,
+      },
+      username: {
+        color: '#DCDCC8',
+        fontSize: 20,
+        top: 55,
+      },
       settings: {
-        position: 'fixed',
+        position: 'absolute',
         height: 45,
         width: 45,
-        left: 80,
+        left: 165,
+      },
+      boxTitle: {
+        color: '#DCDCC8',
+        fontSize: 20,
+        top: 60,
+        left: 25,
+      },
+      boxTitle2: {
+        color: '#DCDCC8',
+        fontSize: 20,
+      },
+      friendsRectangle: {
+        backgroundColor: '#3B593B',
+        width: 315,
+        height: 60,
+        alignSelf: 'center',
+        marginTop: 60,
+        marginBottom: 5,
+        borderRadius: 13,
+      },
+      addFriendButton: {
+        color: '#DCDCC8',
+        fontSize: 20,
+      },
+      memoriesRectangle: {
+        backgroundColor: '#3B593B',
+        width: 360,
+        height: 175,
+        alignSelf: 'center',
+        borderRadius: 25,
       },
       bottomNav: {
         flexDirection: 'row',
@@ -99,4 +161,4 @@ const FriendsScreen = () => {
       },
     });
 
-    export default FriendsScreen;
+    export default ProfileScreen;
