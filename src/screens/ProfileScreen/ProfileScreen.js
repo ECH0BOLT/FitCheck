@@ -19,7 +19,6 @@ const FriendsScreen = () => {
     return (
         <View style={styles.container}>
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
               <View style={styles.pageTop} >
                 <Text style={styles.title}>My Profile</Text>
                 <TouchableOpacity
@@ -28,10 +27,13 @@ const FriendsScreen = () => {
                   <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
                 </TouchableOpacity>
               </View>
-
-
-            </ScrollView>
+              <View style={styles.userInfo}>
+                <Text style={styles.username}>test</Text>
+              </View>
+            <View style={styles.friendsRectangle}></View>
+            <View style={styles.memoriesRectangle}></View>
           </LinearGradient>
+
           <View style={styles.bottomNav}>
             <TouchableOpacity
               style={styles.navItem}
@@ -71,11 +73,36 @@ const FriendsScreen = () => {
         paddingHorizontal: 10,
         paddingTop: 5,
       },
+       username: {
+        color: '#DCDCC8',
+        fontSize: 25,
+        top: 225,
+      },
+      userInfo: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      },
       settings: {
         position: 'fixed',
         height: 45,
         width: 45,
         left: 80,
+      },
+       friendsRectangle: {
+          backgroundColor: '#3B593B',
+          width: 315,
+          height: 60,
+          alignSelf: 'center',
+          marginTop: 315,
+          marginBottom: 40,
+          borderRadius: 15
+      },
+      memoriesRectangle: {
+          backgroundColor: '#3B593B',
+          width: 360,
+          height: 175,
+          alignSelf: 'center',
+          borderRadius: 30,
       },
       bottomNav: {
         flexDirection: 'row',
