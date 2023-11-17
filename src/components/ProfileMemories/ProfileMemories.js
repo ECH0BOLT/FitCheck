@@ -35,13 +35,15 @@ const ProfileMemories = () => {
         </TouchableOpacity>
       ))}
 
-      <Modal visible={modalVisible} animationType="slide" transparent={true}>
-        <View style={styles.modalContainer}>
+      <Modal visible={modalVisible} animationType="fade" transparent={true}>
+        <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={closeModal}>
           <View style={styles.modalContent}>
-            <Text>{selectedDate ? `You did not post on ${selectedDate.format('MMMM Do')}` : ''}</Text>
-            <Button title="Close" onPress={closeModal} />
+            <Text style={styles.modalText}>{selectedDate ? `You did not post on ${selectedDate.format('MMMM Do')}` : ''}</Text>
+            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+              <Text style={styles.buttonText}>Close</Text>
+            </TouchableOpacity>
           </View>
-        </View>
+        </TouchableOpacity>
       </Modal>
 
       <TouchableOpacity style={styles.seeAllButton} onPress={handleSeeAllPress}>
@@ -78,13 +80,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
+    backgroundColor: '#3B593B',
+    padding: 15,
+    width: 350,
     borderRadius: 10,
     alignItems: 'center',
+  },
+  modalText: {
+    color: 'white',
+    fontSize: 18,
+    marginBottom: 15,
+  },
+  closeButton: {
+    backgroundColor: '#182E18',
+    width: 100,
+    borderRadius: 25,
+    padding: 5,
+  },
+  buttonText: {
+    color: '#DCDCC8',
+    fontSize: 16,
+    textAlign: 'center',
   },
   seeAllButton: {
     backgroundColor: '#182E18',
