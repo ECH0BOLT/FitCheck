@@ -56,7 +56,7 @@ const Post = () => {
 
     const styles = StyleSheet.create({
       postContent: {
-        marginBottom: 50,
+        marginBottom: 40,
       },
       post: {
         width: '100%',
