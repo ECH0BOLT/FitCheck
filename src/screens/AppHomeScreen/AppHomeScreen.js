@@ -21,17 +21,7 @@ const AppHomeScreen = () => {
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
 
               <Post/>
-
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-              </View>
+              <Post/>
 
             </ScrollView>
           </LinearGradient>
@@ -67,7 +57,8 @@ const AppHomeScreen = () => {
       },
       page: {
         flex: 1,
-        padding: 16,
+        paddingHorizontal: 16,
+        paddingTop: 10,
       },
       feedContent: {
         backgroundColor: 'transparent',

@@ -33,7 +33,21 @@ const Post = () => {
                 <Image source={require('../../assets/comment.png')} style={styles.commentButton} />
               </TouchableOpacity>
             </View>
-            <Text style={styles.handle}>Words here</Text>
+            <View style={styles.checkCount}>
+              <Text style={styles.checkCount}>
+                <Text style={styles.boldText}>{'24 '}</Text>
+                checks
+              </Text>
+            </View>
+            <View style={styles.userCaption}>
+              <Text style={styles.userCaption}>
+                <Text style={styles.boldText}>{'SandleMan '}</Text>
+                This fit goes hard, feel free to ss.
+              </Text>
+            </View>
+            <TouchableOpacity style={styles.viewComments} onPress={() => navigation.navigate('Comments')}>
+              <Text style={styles.viewComments}>View 6 comments</Text>
+            </TouchableOpacity>
           </View>
 
         </View>
@@ -48,7 +62,7 @@ const Post = () => {
         width: '100%',
         height: 500,
         borderRadius: 10,
-        marginBottom: 20,
+        marginBottom: -6,
       },
       postTop: {
         flexDirection: 'row',
@@ -75,19 +89,37 @@ const Post = () => {
       },
       postButtons:{
         flexDirection: 'row',
-        flexWrap: 'wrap',
+        top: 10,
       },
       unlikedButton: {
-        height: 30,
-        width: 30,
+        height: 35,
+        width: 35,
       },
       likedButton: {
-        height: 30,
-        width: 30,
+        height: 35,
+        width: 35,
       },
       commentButton: {
         height: 35,
         width: 35,
+      },
+      checkCount: {
+        color: '#DCDCC8',
+        fontSize: 20,
+        top: 5,
+      },
+      userCaption: {
+        color: '#DCDCC8',
+        fontSize: 20,
+        top: 5,
+      },
+      viewComments: {
+        color: '#DCDCC8',
+        fontSize: 15,
+        top: 5,
+      },
+      boldText: {
+        fontWeight: 'bold',
       },
       bottomNav: {
         flexDirection: 'row',
