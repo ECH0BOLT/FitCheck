@@ -15,7 +15,7 @@ const FriendList = ({ onPress, text }) => {
     }, []);
 
     useEffect(() => {
-      setOriginalUsers(users); // Update the original user list whenever users change
+      setOriginalUsers(users);
     }, [users]);
 
     async function fetchUsers() {
@@ -35,7 +35,7 @@ const FriendList = ({ onPress, text }) => {
 
     function handleFilter(searchTerm) {
       if (searchTerm === "") {
-        setUsers(originalUsers); // Reset the user list when the search term is empty
+        setUsers(originalUsers);
       } else {
         setUsers(
           originalUsers.filter((user) =>

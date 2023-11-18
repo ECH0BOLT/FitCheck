@@ -15,9 +15,13 @@ const Post = () => {
         <View style={styles.postContent}>
 
           <View style={styles.postTop}>
-            <Image source={require('../../assets/adam2.jpg')} style={styles.userIcon} />
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                <Image source={require('../../assets/adam2.jpg')} style={styles.userIcon} />
+            </TouchableOpacity>
             <View style={styles.userInfo}>
-              <Text style={styles.handle}>@SandleMan</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                <Text style={styles.handle}>@SandleMan</Text>
+              </TouchableOpacity>
               <Text style={styles.time}>3 hours ago</Text>
             </View>
           </View>
