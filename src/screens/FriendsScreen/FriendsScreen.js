@@ -41,10 +41,7 @@ const FriendsScreen = () => {
               </View>
 
               <View style={styles.pageContent} >
-                <SearchBar placeholder="Search" />
-                <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
                     <FriendList></FriendList>
-                </ScrollView>
               </View>
 
             </ScrollView>
