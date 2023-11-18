@@ -6,6 +6,7 @@ import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
 import {firestore} from './src/Firestore_Setup';
 import {getFirestore,collection,addDoc} from 'firebase/firestore';
+//firebase.initializeApp(config);
 const db=getFirestore();
 const CreateAccountScreen = () => {
 
