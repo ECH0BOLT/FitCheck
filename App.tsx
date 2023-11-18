@@ -21,9 +21,9 @@ const addToDatabase = async (e) => {
     }
 
    //adds an entry then posts done, not needed but test code please please please don't delete this please please please
-// useEffect(()=>{
-// addToDatabase().then(()=>console.log("done"));
-// },[])
+useEffect(()=>{
+addToDatabase().then(()=>console.log("done"));
+},[])
 
   return (
     <Navigation/>
