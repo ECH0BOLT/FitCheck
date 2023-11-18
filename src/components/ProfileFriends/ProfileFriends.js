@@ -28,13 +28,18 @@ const ProfileFriends = ({ onPress, text }) => {
     }
 
     return (
-        <View style={styles.friend}>
-          {users.map((user, index) => (
-            <View key={index} style={styles.friendItem}>
-              <Image source={{ uri: user.picture.thumbnail }} style={styles.friendIcon}/>
-            </View>
-          ))}
-        </View>
+          <View style={styles.friend}>
+                {users.map((user, index) => (
+                  <View key={index} style={styles.friendItem}>
+                    <Image source={{ uri: user.picture.thumbnail }} style={styles.friendIcon}/>
+                    {index === users.length - 1 && (
+                      <TouchableOpacity onPress={() => navigation.navigate('Friends')}>
+                        <Text style={styles.plusSign}>+</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                ))}
+          </View>
       );
 }
 
@@ -53,6 +58,12 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
+  },
+  plusSign: {
+    fontSize: 40,
+    marginLeft: 22.5,
+    bottom: 5,
+    color: '#DCDCC8',
   },
 });
 

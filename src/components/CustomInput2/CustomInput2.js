@@ -7,8 +7,6 @@ const CustomInput2 = ({value, setValue, placeholder}) => {
 
     const handleContainerPress = () => {
       if (textInputRef.current) {
-        // When the container is pressed, dismiss the keyboard if it is open,
-        // otherwise, focus on the TextInput to open the keyboard.
         Keyboard.dismiss();
         textInputRef.current.focus();
       }
@@ -25,6 +23,7 @@ const CustomInput2 = ({value, setValue, placeholder}) => {
               placeholder={placeholder}
               placeholderTextColor='#DCDCC8'
               style={styles.input}
+              editable={true}
             />
           </View>
         </TouchableWithoutFeedback>

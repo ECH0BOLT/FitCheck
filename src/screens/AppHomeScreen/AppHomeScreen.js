@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
-import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
-import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
+import Post from '../../components/Post/Post';
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,30 +20,8 @@ const AppHomeScreen = () => {
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
 
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-                <View style={styles.postBottom}>
-                    <Text style={styles.handle}>Words here</Text>
-                </View>
-              </View>
-
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-              </View>
+              <Post/>
+              <Post/>
 
             </ScrollView>
           </LinearGradient>
@@ -71,8 +48,8 @@ const AppHomeScreen = () => {
               <Image source={require('../../assets/postButton.png')} style={styles.postLogo} />
             </TouchableOpacity>
         </View>
-      );
-    };
+    );
+};
 
     const styles = StyleSheet.create({
       container: {
@@ -80,7 +57,8 @@ const AppHomeScreen = () => {
       },
       page: {
         flex: 1,
-        padding: 16,
+        paddingHorizontal: 16,
+        paddingTop: 10,
       },
       feedContent: {
         backgroundColor: 'transparent',
