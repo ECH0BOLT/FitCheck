@@ -19,10 +19,8 @@ const AppHomeScreen = () => {
         <View style={styles.container}>
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
-
               <Post/>
               <Post/>
-
             </ScrollView>
           </LinearGradient>
           <View style={styles.bottomNav}>
