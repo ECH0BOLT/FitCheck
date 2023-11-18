@@ -15,7 +15,6 @@ const CreateAccountScreen = () => {
     const [username, setUsername] = useState('');
 
 
-
     const onContinuePressed = () => {
     const userData = collection(db, 'userData');
     const myDocumentData = {
@@ -24,6 +23,10 @@ const CreateAccountScreen = () => {
           password: 'test'
     };
     const newDocRef = addDoc(userData, myDocumentData);
+    if(email==='' || username===''){
+        navigation.navigate('AppHome')
+    }
+    else
         navigation.navigate('CreateAccount2');
     };
 
