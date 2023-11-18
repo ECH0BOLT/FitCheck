@@ -5,23 +5,23 @@ import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTert
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
 
-const [todos, setTodos] = useState([]);
-
-    const fetchPost = async () => {
-
-        await getDocs(collection(db, "todos"))
-            .then((querySnapshot)=>{
-                const newData = querySnapshot.docs
-                    .map((doc) => ({...doc.data(), id:doc.id }));
-                setTodos(newData);
-                console.log(todos, newData);
-            })
-
-    }
-
-    useEffect(()=>{
-        fetchPost();
-    }, [])
+//const [todos, setTodos] = useState([]);
+//
+//    const fetchPost = async () => {
+//
+//        await getDocs(collection(firebase, "todos"))
+//            .then((querySnapshot)=>{
+//                const newData = querySnapshot.docs
+//                    .map((doc) => ({...doc.data(), id:doc.id }));
+//                setTodos(newData);
+//                console.log(todos, newData);
+//            })
+//
+//    }
+//
+//    useEffect(()=>{
+//        fetchPost();
+//    }, [])
 const LoginScreen = () => {
 
     const navigation = useNavigation();
