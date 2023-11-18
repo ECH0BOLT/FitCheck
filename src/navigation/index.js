@@ -25,8 +25,8 @@ const Navigation = () => {
                 <Stack.Screen name="Friends" component={FriendsScreen} />
                 <Stack.Screen name="Profile" component={ProfileScreen} />
                 <Stack.Screen name="CreatePost" component={CreatePostScreen} />
-                <Stack.Screen name="Settings" component={SettingsScreen} />
-                <Stack.Screen name="Comments" component={CommentsScreen} />
+//                <Stack.Screen name="Settings" component={SettingsScreen} />
+//                <Stack.Screen name="Comments" component={CommentsScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
