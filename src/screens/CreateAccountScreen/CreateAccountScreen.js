@@ -4,7 +4,9 @@ import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrima
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
-
+import {firestore} from './src/Firestore_Setup';
+import {getFirestore,collection,addDoc} from 'firebase/firestore';
+const db=getFirestore();
 const CreateAccountScreen = () => {
 
     const navigation = useNavigation();
@@ -12,7 +14,34 @@ const CreateAccountScreen = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
 
+//    const addToDatabase = async (e) => {
+//
+//                    try {
+//                        const docRef = await addDoc(collection(firestore, "userData"), {
+//                          userData: "password",
+//                        });
+//                        console.log("Document written with ID: ", docRef.id);
+//                      } catch (e) {
+//                        console.error("Error adding document: ", e);
+//                      }
+//                }
+
+
+
+// Add the document to the collection
+
+
     const onContinuePressed = () => {
+    const userData = collection(db, 'userData');
+    const myDocumentData = {
+          email: email,
+          username: username,
+          password: 'test'
+    };
+    const newDocRef = addDoc(userData, myDocumentData);
+//        useEffect(()=>{
+//        addToDatabase().then(()=>console.log("done"));
+//        },[])
         navigation.navigate('CreateAccount2');
     };
 

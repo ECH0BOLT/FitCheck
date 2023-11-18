@@ -27,7 +27,7 @@ const LoginScreen = () => {
     const navigation = useNavigation();
 
     const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const onLoginPressed = () => {
 
@@ -45,7 +45,7 @@ const LoginScreen = () => {
                 <Image source={require('../../assets/arrow2.png')} style={styles.back} />
               </TouchableOpacity>
               <CustomInput placeholder="username" value={email} setValue={setEmail} />
-              <CustomInput placeholder="password" value={username} setValue={setUsername} />
+              <CustomInput placeholder="password" value={password} setValue={setPassword} />
               <CustomButtonPrimary text="log in" onPress={onLoginPressed}/>
             </View>
 

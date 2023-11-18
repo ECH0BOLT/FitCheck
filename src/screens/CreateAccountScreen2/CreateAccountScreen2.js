@@ -9,11 +9,14 @@ const CreateAccountScreen2 = () => {
 
     const navigation = useNavigation();
 
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
 
     const onSignUpPressed = () => {
+    if(password1==password2){
         navigation.navigate('AppHome');
+        }
+        else navigation.navigate('Friends');
     };
 
     return (
@@ -25,8 +28,8 @@ const CreateAccountScreen2 = () => {
                 onPress={() => navigation.navigate('CreateAccount')}>
                 <Image source={require('../../assets/arrow2.png')} style={styles.back} />
               </TouchableOpacity>
-              <CustomInput placeholder="password" value={email} setValue={setEmail} />
-              <CustomInput placeholder="confirm password" value={username} setValue={setUsername} />
+              <CustomInput placeholder="password" value={password1} setValue={setPassword1} />
+              <CustomInput placeholder="confirm password" value={password2} setValue={setPassword2} />
               <CustomButtonPrimary text="sign up" onPress={onSignUpPressed}/>
             </View>
 
