@@ -4,16 +4,26 @@ import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrima
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
-
+import {firestore} from '../../Firestore_Setup';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, getDoc} from 'firebase/firestore';
 const LoginScreen = () => {
 
     const navigation = useNavigation();
 
     const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    const onLoginPressed = () => {
-        navigation.navigate('AppHome');
+    const onLoginPressed = async () => {
+    const usersRef = doc(firestore,`userData/${email}`);
+    var p = await getDoc(usersRef)
+    var testPass = p.data();
+
+    if (testPass.password==password) {
+    navigation.navigate('AppHome');
+    } else {
+    console.log('No user found with that email and password combination.');
+    }
+
     };
 
     return (
@@ -25,8 +35,8 @@ const LoginScreen = () => {
                 onPress={() => navigation.navigate('Home')}>
                 <Image source={require('../../assets/arrow2.png')} style={styles.back} />
               </TouchableOpacity>
-              <CustomInput placeholder="username" value={email} setValue={setEmail} />
-              <CustomInput placeholder="password" value={username} setValue={setUsername} />
+              <CustomInput placeholder="email" value={email} setValue={setEmail} />
+              <CustomInput placeholder="password" value={password} setValue={setPassword} />
               <CustomButtonPrimary text="log in" onPress={onLoginPressed}/>
             </View>
 

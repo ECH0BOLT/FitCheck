@@ -13,10 +13,9 @@ const CreateAccountScreen = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
 
-
     const onContinuePressed = () => {
 
-    if(email==='' || username===''){
+    if(email.trim()==="" || username.trim()===""){
         navigation.navigate('AppHome')
     }
     else
