@@ -17,14 +17,15 @@ const CreateAccountScreen2 = () => {
     const [password2, setPassword2] = useState('');
     const onSignUpPressed = () => {
 
-    if(password1==password2){
+    if(password1===password2&&password1.trim() !== ""){
     setDoc(doc(firestore, 'userData', email), {
             username: username,
             password: password1
           });
         navigation.navigate('AppHome');
     }
-        else navigation.navigate('Friends');
+    else console.warn("Your password does not meet normal standards");
+        //else navigation.navigate('Friends');
     };
 
     return (
