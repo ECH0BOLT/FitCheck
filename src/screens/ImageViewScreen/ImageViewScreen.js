@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Animated } from 'react-native';
 
@@ -6,22 +6,26 @@ const ImageViewScreen = ({ route }) => {
   const { imagePath } = route.params;
   const navigation = useNavigation();
   const [menuVisible, setMenuVisible] = useState(false);
-  const translateY = new Animated.Value(0);
+  const slideAnimation = new Animated.Value(0);
 
   const toggleMenu = () => {
-    Animated.timing(translateY, {
-      toValue: menuVisible ? Dimensions.get('window').height : 0,
-      duration: 300,
+    const newValue = menuVisible ? 0 : 1;
+    setMenuVisible(!menuVisible);
+
+    Animated.timing(slideAnimation, {
+      toValue: newValue,
+      duration: 1000, // Adjust the duration as needed (in milliseconds)
       useNativeDriver: false,
-    }).start(() => {
-      setMenuVisible(!menuVisible);
-    });
+    }).start();
   };
 
   const menuStyle = {
     transform: [
       {
-        translateY: translateY,
+        translateY: slideAnimation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [120, 0], // Adjust the height of the sliding menu as needed
+        }),
       },
     ],
   };
@@ -37,20 +41,26 @@ const ImageViewScreen = ({ route }) => {
         </TouchableOpacity>
       </View>
 
-      <Animated.View style={[styles.menuContainer, menuStyle]}>
-        <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 1 pressed')}>
-          {/* Add content for button 1 */}
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 2 pressed')}>
-          {/* Add content for button 2 */}
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 3 pressed')}>
-          {/* Add content for button 1 */}
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 4 pressed')}>
-          {/* Add content for button 2 */}
-        </TouchableOpacity>
-      </Animated.View>
+      {/* Sliding Menu */}
+      {menuVisible && (
+        <Animated.View style={[styles.menuContainer, menuStyle]}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 1 pressed')}>
+            <Image source={require('../../assets/hat.png')} style={styles.hat} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 2 pressed')}>
+            <Image source={require('../../assets/shirt.png')} style={styles.shirt} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 3 pressed')}>
+            <Image source={require('../../assets/pants.png')} style={styles.pants} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 4 pressed')}>
+            <Image source={require('../../assets/shoes.png')} style={styles.shoes} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 5 pressed')}>
+            <Image source={require('../../assets/moreOptions.png')} style={styles.more} />
+          </TouchableOpacity>
+        </Animated.View>
+      )}
 
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
@@ -82,38 +92,63 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   hangerContainer: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    zIndex: 1,
+      position: 'absolute',
+      bottom: 10,
+      right: 10,
+      zIndex: 1,
+    },
+    circleContainer: {
+      width: 75,
+      height: 75,
+      borderRadius: 40,
+      backgroundColor: '#DCF0C8',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    hangerIcon: {
+      width: 55,
+      height: 40,
+    },
+    menuContainer: {
+      position: 'absolute',
+      bottom: 210,
+      right: 10,
+      zIndex: 0,
+      backgroundColor: '#142614',
+      width: 75,
+      height: 325,
+      borderRadius: 40,
+      elevation: 5,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingBottom: 50,
+    },
+    menuItem: {
+      paddingVertical: 5,
+    },
+    navLogo: {
+    height: 45,
+    width: 45,
   },
-  circleContainer: {
-    width: 75,
-    height: 75,
-    borderRadius: 40,
-    backgroundColor: '#DCF0C8',
-    justifyContent: 'center',
-    alignItems: 'center',
+  hat: {
+    height: 30,
+    width: 45,
   },
-  hangerIcon: {
-    width: 55,
-    height: 40,
+  shirt: {
+    height: 45,
+    width: 45,
   },
-  menuContainer: {
-    position: 'absolute',
-    bottom: 90,
-    right: 10,
-    zIndex: 0,
-    backgroundColor: '#142614',
-    width: 75,
-    height: 300,
-    borderRadius: 40,
-    elevation: 5,
+  pants: {
+    height: 45,
+    width: 30,
   },
-  menuItem: {
-    paddingVertical: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+  shoes: {
+    height: 35,
+    width: 45,
+  },
+  more: {
+    height: 30,
+    width: 45,
   },
   bottomNav: {
     flexDirection: 'row',
