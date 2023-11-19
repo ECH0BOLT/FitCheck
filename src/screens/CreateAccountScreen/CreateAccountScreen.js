@@ -4,10 +4,8 @@ import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrima
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
-import {firestore} from './src/Firestore_Setup';
+import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc} from 'firebase/firestore';
-//firebase.initializeApp(config);
-//const db=getFirestore();
 const CreateAccountScreen = () => {
 
     const navigation = useNavigation();
@@ -17,7 +15,7 @@ const CreateAccountScreen = () => {
 
 
     const onContinuePressed = () => {
-    const userData = collection(db, 'userData');
+    const userData = collection(firestore, 'userData');
     const myDocumentData = {
           email: email,
           username: username,

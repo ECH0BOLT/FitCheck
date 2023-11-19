@@ -1,16 +1,22 @@
-import React, {useState} from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, {useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import SearchBar from '../../components/CustomInput2';
 
 const URL = "https://randomuser.me/api/?results=34";
 
 const FriendList = ({ onPress, text }) => {
     const navigation = useNavigation();
     const [users, setUsers] = useState([]);
+    const [originalUsers, setOriginalUsers] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         fetchUsers();
     }, []);
+
+    useEffect(() => {
+      setOriginalUsers(users);
+    }, [users]);
 
     async function fetchUsers() {
       try {
@@ -27,21 +33,38 @@ const FriendList = ({ onPress, text }) => {
       }
     }
 
+    function handleFilter(searchTerm) {
+      if (searchTerm === "") {
+        setUsers(originalUsers);
+      } else {
+        setUsers(
+          originalUsers.filter((user) =>
+            user.login.username.toUpperCase().includes(searchTerm.toUpperCase())
+          )
+        );
+      }
+    }
+    
     return (
-        <View style={styles.friend}>
-          {users.map((user, index) => (
-            <View key={index} style={styles.friendItem}>
-              <Image source={{ uri: user.picture.thumbnail }} style={styles.friendIcon}/>
-              <Text style={styles.friendText}>{`@${user.login.username}`}</Text>
-              <View style={styles.friendOptionsContainer}>
-                  <TouchableOpacity
-                    style={styles.friendOptions}
-                    onPress={() => navigation.navigate('Profile')}>
-                    <Text style={styles.optionsText}>Remove</Text>
-                  </TouchableOpacity>
-              </View>
-            </View>
-          ))}
+        <View>
+            <SearchBar placeholder="Search" onChangeText={(text) => handleFilter(text)}/>
+            <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
+                <View style={styles.friend}>
+                  {users.map((user, index) => (
+                    <View key={index} style={styles.friendItem}>
+                      <Image source={{ uri: user.picture.thumbnail }} style={styles.friendIcon}/>
+                      <Text style={styles.friendText}>{`@${user.login.username}`}</Text>
+                      <View style={styles.friendOptionsContainer}>
+                          <TouchableOpacity
+                            style={styles.friendOptions}
+                            onPress={() => navigation.navigate('Profile')}>
+                            <Text style={styles.optionsText}>Remove</Text>
+                          </TouchableOpacity>
+                      </View>
+                    </View>
+                  ))}
+                </View>
+            </ScrollView>
         </View>
       );
 }

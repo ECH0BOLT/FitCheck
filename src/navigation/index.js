@@ -10,7 +10,8 @@ import AppHomeScreen from '../screens/AppHomeScreen';
 import FriendsScreen from '../screens/FriendsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
-
+import SettingsScreen from '../screens/SettingsScreen';
+import CommentsScreen from '../screens/CommentsScreen';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -25,7 +26,8 @@ const Navigation = () => {
                 <Stack.Screen name="Friends" component={FriendsScreen} />
                 <Stack.Screen name="Profile" component={ProfileScreen} />
                 <Stack.Screen name="CreatePost" component={CreatePostScreen} />
-
+                <Stack.Screen name="Settings" component={SettingsScreen} />
+                <Stack.Screen name="Comments" component={CommentsScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
