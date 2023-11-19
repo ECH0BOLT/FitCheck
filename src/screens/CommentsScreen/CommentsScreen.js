@@ -51,6 +51,7 @@ const CommentsScreen = () => {
         color: '#DCDCC8',
         flex: 1,
         marginRight: 45,
+        textDecorationLine: 'underline',
       },
       navItem: {
       },
