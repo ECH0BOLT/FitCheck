@@ -30,7 +30,7 @@ const LoginScreen = () => {
     const [username, setUsername] = useState('');
 
     const onLoginPressed = () => {
-
+// try catch on username, getDocs(username)
         navigation.navigate('AppHome');
     };
 
