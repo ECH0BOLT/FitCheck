@@ -89,8 +89,8 @@ const AppHomeScreen = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('CreatePost')}>
-              <Image source={require('../../assets/postButton.png')} style={styles.navPost} />
+              onPress={() => navigation.navigate('AppHome')}>
+              <Image source={require('../../assets/logo2.png')} style={styles.navLogo} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
@@ -98,6 +98,11 @@ const AppHomeScreen = () => {
               <Image source={require('../../assets/profile.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+              style={styles.postButton}
+              onPress={() => navigation.navigate('CreatePost')}>
+              <Image source={require('../../assets/postButton.png')} style={styles.postLogo} />
+            </TouchableOpacity>
         </View>
     );
 };
@@ -154,7 +159,7 @@ const AppHomeScreen = () => {
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#142614',
-        paddingVertical: 10,
+        paddingVertical: 15,
         elevation: 5,
       },
       navItem: {
@@ -169,10 +174,6 @@ const AppHomeScreen = () => {
         height: 45,
         width: 45,
       },
-      navPost: {
-              height: 55,
-              width: 55,
-            },
       postLogo: {
         height: 80,
         width: 80,
