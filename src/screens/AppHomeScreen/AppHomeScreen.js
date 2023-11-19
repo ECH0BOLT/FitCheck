@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import Post from '../../components/Post/Post';
 import CustomInput from '../../components/CustomInput';
@@ -10,65 +10,91 @@ import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions }
 
 const AppHomeScreen = () => {
 
-    const navigation = useNavigation();
-
     const scrollToTop = () => {
         if (scrollViewRef.current) {
           scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
         }
     };
 
-//    const [imageUri, setImageUri] = useState('');
-//    useEffect(() => {
-//      requestCameraPermission();
-//    }, []);
-//
-//      const requestCameraPermission = async () => {
-//        try {
-//          if (Platform.OS === 'android') {
-//            const granted = await PermissionsAndroid.request(
-//              PermissionsAndroid.PERMISSIONS.CAMERA,
-//              {
-//                title: 'App Camera Permission',
-//                message: 'App needs access to your camera',
-//                buttonNeutral: 'Ask Me Later',
-//                buttonNegative: 'Cancel',
-//                buttonPositive: 'OK',
-//              }
-//            );
-//            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-//              console.log('Camera permission granted');
-//            } else {
-//              console.log('Camera permission denied');
-//            }
-//          }
-//        } catch (err) {
-//          console.warn(err);
-//        }
-//      };
-//
-//      const launchCamera = () => {
-//        const options = {
-//          storageOptions: {
-//            skipBackup: true,
-//            path: 'images',
-//          },
-//        };
-//        ImagePicker.launchCamera(options, (response) => {
-//          console.log('Response = ', response);
-//
-//          if (response.didCancel) {
-//            console.log('User cancelled image picker by pressing back button');
-//          } else if (response.error) {
-//            console.log('ImagePicker Error: ', response.error);
-//          } else if (response.customButton) {
-//            console.log('User selected custom button: ', response.customButton);
-//            alert(response.customButton);
-//          } else {
-//            setImageUri(response.uri);
-//          }
-//        });
-//      };
+const [imageUri, setImageUri] = useState('');
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    requestCameraPermission();
+  }, []);
+
+  const requestCameraPermission = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: 'App Camera Permission',
+            message: 'App needs access to your camera',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Camera permission granted');
+        } else {
+          console.log('Camera permission denied');
+        }
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  const launchCamera = () => {
+    const options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+
+    ImagePicker.launchCamera(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker by pressing back button');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.assets && response.assets.length > 0) {
+        const selectedImageUri = response.assets[0].uri || null;
+
+        if (selectedImageUri) {
+          setImageUri(selectedImageUri);
+        } else {
+          console.log('Invalid or undefined image URI');
+        }
+      } else {
+        console.log('Invalid response format or no image selected');
+      }
+    });
+  };
+
+
+  const saveImage = async () => {
+    try {
+      if (!imageUri || !imageUri.startsWith('file://')) {
+        console.log('Invalid or undefined image URI');
+        return;
+      }
+
+      const imageName = 'liked_image.jpg';
+      const imagePath = `${RNFS.DocumentDirectoryPath}/${imageName}`;
+
+      // Use moveFile method of RNFS to handle file operations
+      await RNFS.moveFile(imageUri, imagePath);
+      console.log('Image saved at:', imagePath);
+//      navigation.navigate('ImageViewScreen', { imagePath });
+    } catch (error) {
+      console.error('Error saving image:', error);
+    }
+  };
 
     return (
         <View style={styles.container}>
@@ -88,7 +114,8 @@ const AppHomeScreen = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('CreatePost')}>
+//              onPress={() => navigation.navigate('CreatePost')}>
+              onPress={launchCamera}>
               <Image source={require('../../assets/postButton.png')} style={styles.navPost} />
             </TouchableOpacity>
             <TouchableOpacity
