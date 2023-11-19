@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import React, {useState, Fragment, useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import Post from '../../components/Post/Post';
+=======
+import React, {useState} from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
+import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
+>>>>>>> 9405f28dc925471d4316742e296480aba004b488
 import CustomInput from '../../components/CustomInput';
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
