@@ -67,7 +67,7 @@ const ProfileScreen = () => {
                 <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
               </TouchableOpacity>
               <TouchableOpacity style={styles.editProfileContainer}
-                onPress={() => navigation.navigate('Settings')}>
+                onPress={() => navigation.navigate('ProfileEditor')}>
                 <Text style={styles.editProfile}>edit profile</Text>
               </TouchableOpacity>
             </View>
