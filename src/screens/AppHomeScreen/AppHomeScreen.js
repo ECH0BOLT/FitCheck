@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
-import Post from '../../components/Post/Post';
+import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
+import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import * as ImagePicker from 'react-native-image-picker';
+import RNFS from 'react-native-fs'; // Import React Native FS for file handling
+import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 const AppHomeScreen = () => {
 
@@ -14,6 +18,58 @@ const AppHomeScreen = () => {
           scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
         }
     };
+
+//    const [imageUri, setImageUri] = useState('');
+//    useEffect(() => {
+//      requestCameraPermission();
+//    }, []);
+//
+//      const requestCameraPermission = async () => {
+//        try {
+//          if (Platform.OS === 'android') {
+//            const granted = await PermissionsAndroid.request(
+//              PermissionsAndroid.PERMISSIONS.CAMERA,
+//              {
+//                title: 'App Camera Permission',
+//                message: 'App needs access to your camera',
+//                buttonNeutral: 'Ask Me Later',
+//                buttonNegative: 'Cancel',
+//                buttonPositive: 'OK',
+//              }
+//            );
+//            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+//              console.log('Camera permission granted');
+//            } else {
+//              console.log('Camera permission denied');
+//            }
+//          }
+//        } catch (err) {
+//          console.warn(err);
+//        }
+//      };
+//
+//      const launchCamera = () => {
+//        const options = {
+//          storageOptions: {
+//            skipBackup: true,
+//            path: 'images',
+//          },
+//        };
+//        ImagePicker.launchCamera(options, (response) => {
+//          console.log('Response = ', response);
+//
+//          if (response.didCancel) {
+//            console.log('User cancelled image picker by pressing back button');
+//          } else if (response.error) {
+//            console.log('ImagePicker Error: ', response.error);
+//          } else if (response.customButton) {
+//            console.log('User selected custom button: ', response.customButton);
+//            alert(response.customButton);
+//          } else {
+//            setImageUri(response.uri);
+//          }
+//        });
+//      };
 
     return (
         <View style={styles.container}>
