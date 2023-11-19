@@ -49,54 +49,64 @@ const [imageUri, setImageUri] = useState('');
     }
   };
 
-  const launchCamera = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
+const launchCamera = () => {
+  const options = {
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    },
+  };
 
-    ImagePicker.launchCamera(options, (response) => {
-      console.log('Response = ', response);
+  ImagePicker.launchCamera(options, async (response) => {
+    console.log('Response = ', response);
 
-      if (response.didCancel) {
-        console.log('User cancelled image picker by pressing back button');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.assets && response.assets.length > 0) {
-        const selectedImageUri = response.assets[0].uri || null;
+    if (response.didCancel) {
+      console.log('User cancelled image picker by pressing back button');
+    } else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    } else if (response.assets && response.assets.length > 0) {
+      const selectedImageUri = response.assets[0].uri || null;
 
-        if (selectedImageUri) {
-          setImageUri(selectedImageUri);
-        } else {
-          console.log('Invalid or undefined image URI');
+      if (selectedImageUri) {
+        setImageUri(selectedImageUri);
+
+        try {
+          await saveImage(selectedImageUri);
+        } catch (error) {
+          console.error('Error saving image:', error);
         }
       } else {
-        console.log('Invalid response format or no image selected');
-      }
-    });
-  };
-
-
-  const saveImage = async () => {
-    try {
-      if (!imageUri || !imageUri.startsWith('file://')) {
         console.log('Invalid or undefined image URI');
-        return;
       }
-
-      const imageName = 'liked_image.jpg';
-      const imagePath = `${RNFS.DocumentDirectoryPath}/${imageName}`;
-
-      // Use moveFile method of RNFS to handle file operations
-      await RNFS.moveFile(imageUri, imagePath);
-      console.log('Image saved at:', imagePath);
-//      navigation.navigate('ImageViewScreen', { imagePath });
-    } catch (error) {
-      console.error('Error saving image:', error);
+    } else {
+      console.log('Invalid response format or no image selected');
     }
-  };
+  });
+};
+
+
+
+const saveImage = async (imageUri) => {
+  try {
+    if (!imageUri || !imageUri.startsWith('file://')) {
+      console.log('Invalid or undefined image URI');
+      return;
+    }
+
+    const imageName = 'liked_image.jpg';
+    const imagePath = `${RNFS.DocumentDirectoryPath}/${imageName}`;
+
+    // Use moveFile method of RNFS to handle file operations
+    await RNFS.moveFile(imageUri, imagePath);
+    console.log('Image saved at:', imagePath);
+
+    navigation.navigate('ImageViewScreen', { imagePath });
+  } catch (error) {
+    console.error('Error saving image:', error);
+    throw error;
+  }
+};
+
 
     return (
         <View style={styles.container}>
