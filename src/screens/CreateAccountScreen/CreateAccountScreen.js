@@ -4,7 +4,8 @@ import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrima
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
-
+import {firestore} from '../../Firestore_Setup';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc} from 'firebase/firestore';
 const CreateAccountScreen = () => {
 
     const navigation = useNavigation();
@@ -12,11 +13,18 @@ const CreateAccountScreen = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
 
+
     const onContinuePressed = () => {
-        navigation.navigate('CreateAccount2');
+
+    if(email==='' || username===''){
+        navigation.navigate('AppHome')
+    }
+    else
+        console.log(username,email);
+        navigation.navigate('CreateAccount2', {email:email,username:username});
     };
 
-    return (
+   return (
             <View style={styles.page}>
               <Image source={require('../../assets/logo.png')} style={styles.logo} />
               <Text style={styles.appName}>fit check</Text>
@@ -32,7 +40,7 @@ const CreateAccountScreen = () => {
             </View>
 
       );
-    };
+};
 
     const styles = StyleSheet.create({
       page: {
