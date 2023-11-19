@@ -12,6 +12,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import CommentsScreen from '../screens/CommentsScreen';
+import ProfileEditor from '../screens/ProfileEditor';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ const Navigation = () => {
                 <Stack.Screen name="CreatePost" component={CreatePostScreen} />
                 <Stack.Screen name="Settings" component={SettingsScreen} />
                 <Stack.Screen name="Comments" component={CommentsScreen} />
+                <Stack.Screen name="ProfileEditor" component={ProfileEditor} />
             </Stack.Navigator>
         </NavigationContainer>
     );
