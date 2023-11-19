@@ -18,8 +18,8 @@ const CreateAccountScreen2 = () => {
     const onSignUpPressed = () => {
 
     if(password1==password2){
-    setDoc(doc(firestore, 'userData', username), {
-            email: email,
+    setDoc(doc(firestore, 'userData', email), {
+            username: username,
             password: password1
           });
         navigation.navigate('AppHome');
