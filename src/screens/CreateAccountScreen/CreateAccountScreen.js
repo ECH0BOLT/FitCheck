@@ -15,13 +15,16 @@ const CreateAccountScreen = () => {
 
 
     const onContinuePressed = () => {
-
-    if(email==='' || username===''){
-        navigation.navigate('AppHome')
-    }
-    else
-        console.log(username,email);
-        navigation.navigate('CreateAccount2', {email:email,username:username});
+    console.log(email);
+    console.log(username);
+      if (email.trim() === "" || username.trim() === "") {
+        // If either email or username is blank, do not navigate to the next screen
+        console.warn("Both email and username are required.");
+      } else {
+        // If both email and username are provided, navigate to the next screen
+        console.log(username, email);
+        navigation.navigate('CreateAccount2', { email: email, username: username });
+      }
     };
 
    return (
