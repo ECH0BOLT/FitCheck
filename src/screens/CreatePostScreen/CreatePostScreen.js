@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, SafeAreaVi
 import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import * as ImagePicker from 'react-native-image-picker';
 import RNFS from 'react-native-fs'; // Import React Native FS for file handling
@@ -12,6 +12,9 @@ import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions }
 const CreatePostScreen = () => {
   const [imageUri, setImageUri] = useState('');
   const navigation = useNavigation();
+   const route = useRoute();
+      const email = route.params?.email;
+      console.log("CREATE_POST/Email: " +email);
 
   useEffect(() => {
     requestCameraPermission();

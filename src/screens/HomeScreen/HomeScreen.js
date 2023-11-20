@@ -2,12 +2,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation,useRoute} from '@react-navigation/native';
 
 
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+
 
   const onCreateAccountPressed = () => {
       navigation.navigate('CreateAccount');

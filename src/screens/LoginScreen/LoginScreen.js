@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation,useRoute} from '@react-navigation/native';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, getDoc} from 'firebase/firestore';
 const LoginScreen = () => {
@@ -13,13 +13,14 @@ const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+
     const onLoginPressed = async () => {
     const usersRef = doc(firestore,`userData/${email}`);
     var p = await getDoc(usersRef)
     var testPass = p.data();
 
     if (testPass.password==password) {
-    navigation.navigate('AppHome');
+    navigation.navigate('AppHome',{email:email});
     } else {
     console.warn('No user found with that email and password combination.');
     }

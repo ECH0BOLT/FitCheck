@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useRoute } from '@react-navigation/native';
 import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Animated } from 'react-native';
 
 const ImageViewScreen = ({ route }) => {
-  const { imagePath } = route.params;
+
+    const email = route.params?.email;
+    console.log("ImageViewS/Email: " +email);
+
+  const { imagePath } = route.params?.imagePath;
   console.log(imagePath)
   const navigation = useNavigation();
   const [menuVisible, setMenuVisible] = useState(false);
@@ -68,10 +72,10 @@ const ImageViewScreen = ({ route }) => {
       )}
 
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
           <Image source={require('../../assets/logo2unfilled.png')} style={styles.navLogo} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}></TouchableOpacity>

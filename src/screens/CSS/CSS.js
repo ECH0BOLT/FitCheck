@@ -6,6 +6,9 @@ import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'reac
 const CSS = ({ route }) => {
   const { item, imagePath } = route.params;
 
+      const email = route.params?.email;
+      console.log("CSS/Email: " +email);
+
   console.log(imagePath)
   const navigation = useNavigation();
 
@@ -52,10 +55,10 @@ const CSS = ({ route }) => {
         />
       </View>
       <View style={styles.bottomNav}>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', imagePath )}>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', {imagePath:imagePath, email:email} )}>
         <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
         <Image source={require('../../assets/logo2unfilledjalf.png')} style={styles.navLogo} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.navItem}></TouchableOpacity>
