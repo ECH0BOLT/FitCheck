@@ -14,6 +14,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import CommentsScreen from '../screens/CommentsScreen';
 import ProfileEditor from '../screens/ProfileEditor';
 import ImageViewScreen from '../screens/ImageViewScreen';
+import MemoriesScreen from '../screens/MemoriesScreen';
 import CSS from '../screens/CSS';
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +30,7 @@ const Navigation = () => {
                 <Stack.Screen name="AppHome" component={AppHomeScreen} />
                 <Stack.Screen name="Friends" component={FriendsScreen} />
                 <Stack.Screen name="Profile" component={ProfileScreen} />
+                <Stack.Screen name="Memories" component={MemoriesScreen} />
                 <Stack.Screen name="CreatePost" component={CreatePostScreen} />
                 <Stack.Screen name="Settings" component={SettingsScreen} />
                 <Stack.Screen name="Comments" component={CommentsScreen} />
