@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Switch } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation,useRoute } from '@react-navigation/native';
+import {firestore} from '../../Firestore_Setup';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc,getDoc,deleteDoc} from 'firebase/firestore';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -11,11 +13,14 @@ const SettingsScreen = () => {
   const [isPrivateProfile, setIsPrivateProfile] = useState(false);
 
   const handleLogout = () => {
-    // Implement logout functionality
+    navigation.navigate('Home')
   };
 
-  const handleDeleteAccount = () => {
-    // Implement delete account functionality
+  const handleDeleteAccount = async () => {
+  //Add confirmation message please someone from frontend, just make sure users don't accidentally delete their account
+    const usersRef = doc(firestore,`userData/${email}`);
+    var p = await deleteDoc(usersRef)
+    navigation.navigate('Home')
   };
 
   const handleSupport = () => {
