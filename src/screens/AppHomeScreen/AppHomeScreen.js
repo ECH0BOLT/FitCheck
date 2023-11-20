@@ -129,6 +129,14 @@ const saveImage = async (imageUri) => {
 
               <Post/>
               <Post/>
+              <Post/>
+              <Post/>
+              <Post/>
+              <Post/>
+              <Post/>
+              <Post/>
+              <Post/>
+              <Post/>
 
             </ScrollView>
           </LinearGradient>

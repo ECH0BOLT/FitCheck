@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -6,27 +6,61 @@ const Post = () => {
 
     const navigation = useNavigation();
     const [isImageFilled, setImageFilled] = useState(true);
+    const [randomUsername, setRandomUsername] = useState('');
+    const [randomUserIcon, setRandomUserIcon] = useState(null);
+    const [randomPostImage, setRandomPostImage] = useState(null);
 
     const toggleImage = () => {
       setImageFilled(!isImageFilled);
     };
+
+    const generateRandomUsername = () => {
+        const adjectives = ['Cool', 'Happy', 'Awesome', 'Lucky', 'Sunny', 'Breezy'];
+        const nouns = ['Explorer', 'Dreamer', 'Adventurer', 'Creator', 'Achiever', 'Pioneer'];
+        const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+        const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+        return `${randomAdjective}${randomNoun}`;
+      };
+
+     useEffect(() => {
+
+        const generatedUsername = generateRandomUsername();
+        setRandomUsername(generatedUsername);
+
+        fetch('https://source.unsplash.com/random/500x400/?fashion')
+          .then(response => {
+            setRandomPostImage(response.url);
+          })
+          .catch(error => {
+            console.error('Error fetching random image:', error);
+        });
+
+        fetch('https://source.unsplash.com/random/50x50/?portrait')
+          .then(response => {
+            setRandomUserIcon(response.url);
+          })
+          .catch(error => {
+            console.error('Error fetching random image:', error);
+        });
+
+     }, []);
 
     return (
         <View style={styles.postContent}>
 
           <View style={styles.postTop}>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                <Image source={require('../../assets/adam2.jpg')} style={styles.userIcon} />
+                <Image source={{ uri: randomUserIcon }} style={styles.userIcon} />
             </TouchableOpacity>
             <View style={styles.userInfo}>
               <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                <Text style={styles.handle}>@SandleMan</Text>
+                <Text style={styles.handle}>@{randomUsername}</Text>
               </TouchableOpacity>
               <Text style={styles.time}>3 hours ago</Text>
             </View>
           </View>
 
-          <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
+          <Image source={{ uri: randomPostImage }} style={styles.post} />
 
           <View style={styles.postBottom}>
             <View style={styles.postButtons}>
@@ -45,7 +79,7 @@ const Post = () => {
             </View>
             <View style={styles.userCaption}>
               <Text style={styles.userCaption}>
-                <Text style={styles.boldText}>{'SandleMan '}</Text>
+                <Text style={styles.boldText}>{`${randomUsername} `}</Text>
                 This fit goes hard, feel free to ss.
               </Text>
             </View>
