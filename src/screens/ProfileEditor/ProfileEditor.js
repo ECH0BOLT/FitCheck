@@ -20,7 +20,7 @@ const ProfileEditor = () => {
   const [modalVisibleName, setModalVisibleName] = useState(false);
   const [modalVisibleProfilePicture, setModalVisibleProfilePicture] = useState(false);
 
-  const closeModal = async () => {
+  const closeModal = async () => { 
   const usersRef = doc(firestore,`userData/${email}`);
   var p = await getDoc(usersRef);
   var info = p.data();
