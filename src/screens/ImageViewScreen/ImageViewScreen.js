@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Animated } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const ImageViewScreen = ({ route }) => {
   const { imagePath } = route.params;
@@ -37,6 +38,7 @@ const ImageViewScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
+     <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: `file://${imagePath}` }} style={styles.image} />
         <TouchableOpacity style={styles.hangerContainer} onPress={toggleMenu}>
@@ -66,7 +68,7 @@ const ImageViewScreen = ({ route }) => {
           </TouchableOpacity>
         </Animated.View>
       )}
-
+       </LinearGradient>
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
     },
     menuContainer: {
       position: 'absolute',
-      bottom: 210,
+      bottom: 140,
       right: 10,
       zIndex: 0,
       backgroundColor: '#142614',
