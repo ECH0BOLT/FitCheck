@@ -37,6 +37,16 @@ const ProfileEditor = () => {
   setModalVisibleProfilePicture(false);
   }
 
+  const closeUsernameModal = async () => {
+    setModalVisibleUsername(false);
+  }
+  const closeNameModal = async () => {
+    setModalVisibleName(false);
+  }
+  const closeProfilePictureModal = async () => {
+    setModalVisibleProfilePicture(false);
+  }
+
   const handleEditUsername = () => {
     setModalVisibleUsername(true);
   }
@@ -105,7 +115,7 @@ const ProfileEditor = () => {
 
               <CustomInput placeholder="New Username" value={username} setValue={setUsername}/>
 
-              <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+              <TouchableOpacity onPress={closeUsernameModal} style={styles.closeButton}>
                 <Text style={styles.buttonText}>Confirm</Text>
               </TouchableOpacity>
             </View>
@@ -119,7 +129,7 @@ const ProfileEditor = () => {
 
               <CustomInput placeholder="New Name" value={name} setValue={setName}/>
 
-              <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+              <TouchableOpacity onPress={closeNameModal} style={styles.closeButton}>
                 <Text style={styles.buttonText}>Confirm</Text>
               </TouchableOpacity>
             </View>
@@ -131,7 +141,7 @@ const ProfileEditor = () => {
             <View style={styles.modalContent}>
               <Text style={styles.modalText}>Change Profile Picture</Text>
 
-              <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+              <TouchableOpacity onPress={closeProfilePictureModal} style={styles.closeButton}>
                 <Text style={styles.buttonText}>Confirm</Text>
               </TouchableOpacity>
             </View>
