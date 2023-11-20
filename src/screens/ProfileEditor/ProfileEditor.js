@@ -13,15 +13,25 @@ const ProfileEditor = () => {
       const email = route.params?.email;
       console.log("ProfileEditor/Email: " +email);
     const [newUsername, setUsername] = useState('');
+    const [newName, setName] = useState('');
   const { imagePath } = route.params;
 
   const handleEditUsername = () => {
-  //Add a textbox popup that they can type in
+  //Add a textbox popup that they can type in that does setValue={setUsername}
   //Add onPress={handleHandleEditUsername}
   }
+  const handleEditName = () => {
+  //Add a textbox popup that they can type in that does setValue={setName}
+  //Add onPress={handleHandleEditName}
+  }
+
+  const handleEditProfilePicture = () => {
+  //todo
+  }
+
   const handleHandleEditUsername = async () => {
 
-  var newUsername = "hi"
+  var newUsername = "newUsername"
   const usersRef = doc(firestore,`userData/${email}`);
   var p = await getDoc(usersRef);
   var info = p.data();
@@ -36,12 +46,27 @@ const ProfileEditor = () => {
             });
   console.warn("Set to: "+newUsername);
   }
-  const handleEditName = async () => {
-      console.warn("todo");
+
+  const handleHandleEditName = async () => {
+  var newName = "newName"
+    const usersRef = doc(firestore,`userData/${email}`);
+    var p = await getDoc(usersRef);
+    var info = p.data();
+    name=newName;
+    username=info.username;
+    password=info.password;
+    console.warn(info);
+    setDoc(doc(firestore, 'userData', email), {
+                name: name,
+                username: username,
+                password: password
+              });
+    console.warn("Set to: "+newUsername);
     }
-    const changeProfilePicture = async () => {
-          console.warn("todo");
-        }
+
+  const changeProfilePicture = async () => {
+        console.warn("todo");
+  }
   return (
     <View style={styles.container}>
     <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
