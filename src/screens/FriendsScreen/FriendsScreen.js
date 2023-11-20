@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const FriendsScreen = () => {
     const navigation = useNavigation();
-    const route = useRoute();
+     const route = useRoute();
         const email = route.params?.email;
         console.log("FriendsScreen/Email: "+email);
 
