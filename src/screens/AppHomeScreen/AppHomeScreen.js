@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import React, {useState, Fragment, useEffect} from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, PermissionsAndroid } from 'react-native';
+import Post from '../../components/Post/Post';
 import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import * as ImagePicker from 'react-native-image-picker';
+import RNFS from 'react-native-fs'; // Import React Native FS for file handling
+import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 const AppHomeScreen = () => {
-
-    const navigation = useNavigation();
 
     const scrollToTop = () => {
         if (scrollViewRef.current) {
@@ -16,35 +18,103 @@ const AppHomeScreen = () => {
         }
     };
 
+const [imageUri, setImageUri] = useState('');
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    requestCameraPermission();
+  }, []);
+
+  const requestCameraPermission = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: 'App Camera Permission',
+            message: 'App needs access to your camera',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Camera permission granted');
+        } else {
+          console.log('Camera permission denied');
+        }
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+const launchCamera = () => {
+  const options = {
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    },
+  };
+
+  ImagePicker.launchCamera(options, async (response) => {
+    console.log('Response = ', response);
+
+    if (response.didCancel) {
+      console.log('User cancelled image picker by pressing back button');
+    } else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    } else if (response.assets && response.assets.length > 0) {
+      const selectedImageUri = response.assets[0].uri || null;
+
+      if (selectedImageUri) {
+        setImageUri(selectedImageUri);
+
+        try {
+          await saveImage(selectedImageUri);
+        } catch (error) {
+          console.error('Error saving image:', error);
+        }
+      } else {
+        console.log('Invalid or undefined image URI');
+      }
+    } else {
+      console.log('Invalid response format or no image selected');
+    }
+  });
+};
+
+
+
+const saveImage = async (imageUri) => {
+  try {
+    if (!imageUri || !imageUri.startsWith('file://')) {
+      console.log('Invalid or undefined image URI');
+      return;
+    }
+
+    const imageName = 'liked_image.jpg';
+    const imagePath = `${RNFS.DocumentDirectoryPath}/${imageName}`;
+
+    // Use moveFile method of RNFS to handle file operations
+    await RNFS.moveFile(imageUri, imagePath);
+    console.log('Image saved at:', imagePath);
+
+    navigation.navigate('ImageViewScreen', { imagePath });
+  } catch (error) {
+    console.error('Error saving image:', error);
+    throw error;
+  }
+};
+
+
     return (
         <View style={styles.container}>
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
 
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-                <View style={styles.postBottom}>
-                    <Text style={styles.handle}>Words here</Text>
-                </View>
-              </View>
-
-              <View style={styles.postContent}>
-                <View style={styles.postTop}>
-                  <Image source={require('../../assets/adam2.jpg')} style={styles.image} />
-                  <View style={styles.userInfo}>
-                    <Text style={styles.handle}>@SandleMan</Text>
-                    <Text style={styles.time}>3 hours ago</Text>
-                  </View>
-                </View>
-                <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-              </View>
+              <Post/>
+              <Post/>
 
             </ScrollView>
           </LinearGradient>
@@ -56,8 +126,9 @@ const AppHomeScreen = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('AppHome')}>
-              <Image source={require('../../assets/logo2.png')} style={styles.navLogo} />
+//              onPress={() => navigation.navigate('CreatePost')}>
+              onPress={launchCamera}>
+              <Image source={require('../../assets/postButton.png')} style={styles.navPost} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
@@ -65,14 +136,9 @@ const AppHomeScreen = () => {
               <Image source={require('../../assets/profile.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-              style={styles.postButton}
-              onPress={() => navigation.navigate('CreatePost')}>
-              <Image source={require('../../assets/postButton.png')} style={styles.postLogo} />
-            </TouchableOpacity>
         </View>
-      );
-    };
+    );
+};
 
     const styles = StyleSheet.create({
       container: {
@@ -80,7 +146,8 @@ const AppHomeScreen = () => {
       },
       page: {
         flex: 1,
-        padding: 16,
+        paddingHorizontal: 16,
+        paddingTop: 10,
       },
       feedContent: {
         backgroundColor: 'transparent',
@@ -125,7 +192,7 @@ const AppHomeScreen = () => {
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#142614',
-        paddingVertical: 15,
+        paddingVertical: 10,
         elevation: 5,
       },
       navItem: {
@@ -140,6 +207,10 @@ const AppHomeScreen = () => {
         height: 45,
         width: 45,
       },
+      navPost: {
+              height: 55,
+              width: 55,
+            },
       postLogo: {
         height: 80,
         width: 80,

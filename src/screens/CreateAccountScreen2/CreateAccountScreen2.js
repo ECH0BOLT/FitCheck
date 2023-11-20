@@ -17,14 +17,15 @@ const CreateAccountScreen2 = () => {
     const [password2, setPassword2] = useState('');
     const onSignUpPressed = () => {
 
-    if(password1==password2){
-    setDoc(doc(firestore, 'userData', username), {
-            email: email,
+    if(password1===password2&&password1.trim() !== ""){
+    setDoc(doc(firestore, 'userData', email), {
+            username: username,
             password: password1
           });
         navigation.navigate('AppHome');
     }
-        else navigation.navigate('Friends');
+    else console.warn("Your password does not meet normal standards");
+        //else navigation.navigate('Friends');
     };
 
     return (
@@ -37,6 +38,7 @@ const CreateAccountScreen2 = () => {
                 <Image source={require('../../assets/arrow2.png')} style={styles.back} />
               </TouchableOpacity>
               <CustomInput placeholder="password" value={password1} setValue={setPassword1} />
+
               <CustomInput placeholder="confirm password" value={password2} setValue={setPassword2} />
               <CustomButtonPrimary text="sign up" onPress={onSignUpPressed}/>
             </View>

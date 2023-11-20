@@ -4,36 +4,27 @@ import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrima
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
-
-//const [todos, setTodos] = useState([]);
-//
-//    const fetchPost = async () => {
-//
-//        await getDocs(collection(firebase, "todos"))
-//            .then((querySnapshot)=>{
-//                const newData = querySnapshot.docs
-//                    .map((doc) => ({...doc.data(), id:doc.id }));
-//                setTodos(newData);
-//                console.log(todos, newData);
-//            })
-//
-//    }
-//
-//    useEffect(()=>{
-//        fetchPost();
-//    }, [])
+import {firestore} from '../../Firestore_Setup';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, getDoc} from 'firebase/firestore';
 const LoginScreen = () => {
 
     const navigation = useNavigation();
 
     const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    const onLoginPressed = () => {
-// try catch on username, getDocs(username)
-        navigation.navigate('AppHome');
+    const onLoginPressed = async () => {
+    const usersRef = doc(firestore,`userData/${email}`);
+    var p = await getDoc(usersRef)
+    var testPass = p.data();
+
+    if (testPass.password==password) {
+    navigation.navigate('AppHome');
+    } else {
+    console.warn('No user found with that email and password combination.');
+    }
+
     };
-
 
     return (
             <View style={styles.page}>
@@ -44,8 +35,8 @@ const LoginScreen = () => {
                 onPress={() => navigation.navigate('Home')}>
                 <Image source={require('../../assets/arrow2.png')} style={styles.back} />
               </TouchableOpacity>
-              <CustomInput placeholder="username" value={email} setValue={setEmail} />
-              <CustomInput placeholder="password" value={username} setValue={setUsername} />
+              <CustomInput placeholder="email" value={email} setValue={setEmail} />
+              <CustomInput placeholder="password" value={password} setValue={setPassword} />
               <CustomButtonPrimary text="log in" onPress={onLoginPressed}/>
             </View>
 

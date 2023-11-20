@@ -5,7 +5,8 @@ import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTert
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
 import {firestore} from '../../Firestore_Setup';
-import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc} from 'firebase/firestore';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc,getDoc} from 'firebase/firestore';
+
 const CreateAccountScreen = () => {
 
     const navigation = useNavigation();
@@ -13,16 +14,32 @@ const CreateAccountScreen = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
 
+    const onContinuePressed = async() => {
 
-    const onContinuePressed = () => {
+    const usersRef = doc(firestore,`userData/${email}`);
+     var p = await getDoc(usersRef)
 
-    if(email==='' || username===''){
-        navigation.navigate('AppHome')
-    }
-    else
-        console.log(username,email);
-        navigation.navigate('CreateAccount2', {email:email,username:username});
-    };
+    console.log("UserData: "+ p.exists());
+
+      if(p.exists()){
+
+        console.warn("This email is already in use.");
+      }
+      else{
+      if (email.trim() === "" || username.trim() === "") {
+              // If either email or username is blank, do not navigate to the next screen
+              console.warn("Both email and username are required.");
+            } else {
+              // If both email and username are provided, navigate to the next screen
+              // check if the email or username, already exists in the database.
+              console.log(username, email);
+              navigation.navigate('CreateAccount2', { email: email, username: username });
+            }
+          };
+
+      }
+
+
 
    return (
             <View style={styles.page}>
