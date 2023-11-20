@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import {firestore} from '../../Firestore_Setup';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
 
 const ImageViewScreen = ({ route }) => {
-
     const email = route.params?.email;
     console.log("ImageViewS/Email: " +email);
-
+      const [imageData, setImageData] = useState('');
   const { imagePath } = route.params?.imagePath;
   console.log(imagePath)
   const navigation = useNavigation();
   const [menuVisible, setMenuVisible] = useState(false);
   const slideAnimation = new Animated.Value(0);
+
 
   const navigateToCSS = (item, imagePath) => {
     navigation.navigate('CSS', { item: item, imagePath: imagePath,email:email });
@@ -29,6 +30,15 @@ const ImageViewScreen = ({ route }) => {
       useNativeDriver: false,
     }).start();
   };
+  useEffect( () =>{
+  const postRef = doc(firestore,`posts/placeholder`);
+  getDoc(postRef).then(p => setImageData("data:image/png;base64,"+p.data().image));
+  },[])
+
+//for testing purposes
+//  useEffect( () =>{
+//    console.log(imageData);
+//    },[imageData])
 
   const menuStyle = {
     transform: [
@@ -45,7 +55,10 @@ const ImageViewScreen = ({ route }) => {
     <View style={styles.container}>
      <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: `file://${imagePath}` }} style={styles.image} />
+        {
+        imageData &&
+        <Image source={{ uri: imageData }} style={styles.image} />
+        }
         <TouchableOpacity style={styles.hangerContainer} onPress={toggleMenu}>
           <View style={styles.circleContainer}>
             <Image source={require('../../assets/hanger.png')} style={styles.hangerIcon} />
