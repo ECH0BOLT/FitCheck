@@ -22,7 +22,7 @@ const CreateAccountScreen2 = () => {
             username: username,
             password: password1
           });
-        navigation.navigate('AppHome');
+        navigation.navigate('AppHome', {email:email});
     }
     else console.warn("Your password does not meet normal standards");
         //else navigation.navigate('Friends');

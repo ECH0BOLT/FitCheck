@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Switch } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useRoute } from '@react-navigation/native';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
+   const route = useRoute();
+      const email = route.params?.email;
+      console.log("ProfileScreen/Email: " +email);
   const [isPrivateProfile, setIsPrivateProfile] = useState(false);
 
   const handleLogout = () => {
@@ -27,7 +30,7 @@ const SettingsScreen = () => {
   return (
     <View style={styles.container}>
       <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile',{email:email})}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
         </TouchableOpacity>
         <View style={styles.titleContainer}>

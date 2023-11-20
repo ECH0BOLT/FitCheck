@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
 const CSS = ({ route }) => {
   const { item, imagePath } = route.params;
+
+      const email = route.params?.email;
+      console.log("CSS/Email: " +email);
 
   console.log(imagePath)
   const navigation = useNavigation();
@@ -56,10 +58,10 @@ const CSS = ({ route }) => {
       </View>
     </LinearGradient>
     <View style={styles.bottomNav}>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', imagePath )}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', {imagePath,email:email})}>
               <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', imagePath )}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', {imagePath,email:email})}>
               <Image source={require('../../assets/logo2unfilledjalf.png')} style={styles.navLogo} />
             </TouchableOpacity>
           <TouchableOpacity style={styles.navItem}></TouchableOpacity>

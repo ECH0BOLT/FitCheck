@@ -1,19 +1,23 @@
 
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, TextInput, Clipboard, } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation,useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const ProfileEditor = () => {
   // Add your profile editing logic here
-  const navigation = useNavigation();
+   const route = useRoute();
+   const navigation = useNavigation();
+      const email = route.params?.email;
+      console.log("ProfileEditor/Email: " +email);
 
+  const { imagePath } = route.params;
   return (
     <View style={styles.container}>
     <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
       {/* Add your profile editing components here */}
       <View style={styles.header}>
-          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile',{email:email})}>
               <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
           </TouchableOpacity>
           <Text style={styles.titleEP}>Edit Profile</Text>

@@ -4,13 +4,18 @@ import Post from '../../components/Post/Post';
 import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useRoute } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import * as ImagePicker from 'react-native-image-picker';
 import RNFS from 'react-native-fs'; // Import React Native FS for file handling
+
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 const AppHomeScreen = () => {
+
+    const route = useRoute();
+    const email = route.params?.email;
+    console.log("HOME/Email: " +email);
 
     const scrollToTop = () => {
         if (scrollViewRef.current) {
@@ -101,7 +106,7 @@ const saveImage = async (imageUri) => {
     await RNFS.moveFile(imageUri, imagePath);
     console.log('Image saved at:', imagePath);
 
-    navigation.navigate('ImageViewScreen', { imagePath });
+    navigation.navigate('ImageViewScreen', { imagePath:imagePath,email:email });
   } catch (error) {
     console.error('Error saving image:', error);
     throw error;
@@ -122,7 +127,7 @@ const saveImage = async (imageUri) => {
           <View style={styles.bottomNav}>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('Friends')}>
+              onPress={() => navigation.navigate('Friends',{email:email})}>
               <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
             </TouchableOpacity>
             <TouchableOpacity
@@ -133,7 +138,7 @@ const saveImage = async (imageUri) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('Profile')}>
+              onPress={() => navigation.navigate('Profile',{email:email})}>
               <Image source={require('../../assets/profile.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>
