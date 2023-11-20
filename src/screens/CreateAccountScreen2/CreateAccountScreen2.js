@@ -38,6 +38,7 @@ const CreateAccountScreen2 = () => {
                 <Image source={require('../../assets/arrow2.png')} style={styles.back} />
               </TouchableOpacity>
               <CustomInput placeholder="password" value={password1} setValue={setPassword1} />
+
               <CustomInput placeholder="confirm password" value={password2} setValue={setPassword2} />
               <CustomButtonPrimary text="sign up" onPress={onSignUpPressed}/>
             </View>
