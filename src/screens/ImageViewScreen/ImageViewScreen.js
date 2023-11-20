@@ -10,7 +10,7 @@ const ImageViewScreen = ({ route }) => {
   const slideAnimation = new Animated.Value(0);
 
   const navigateToCSS = (item, imagePath) => {
-      navigation.navigate('CSS', { item, imagePath });
+    navigation.navigate('CSS', { item: item, imagePath: imagePath });
     };
 
   const toggleMenu = () => {

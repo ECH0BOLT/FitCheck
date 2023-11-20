@@ -4,7 +4,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 
 const CSS = ({ route }) => {
-  const { item, imagePath } = route.params; // Get the selected item from navigation params
+  const { item, imagePath } = route.params;
+
   console.log(imagePath)
   const navigation = useNavigation();
 
@@ -51,7 +52,7 @@ const CSS = ({ route }) => {
         />
       </View>
       <View style={styles.bottomNav}>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', { imagePath })}>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', imagePath )}>
         <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
