@@ -11,8 +11,8 @@ const ProfileEditor = () => {
   const navigation = useNavigation();
   const email = route.params?.email;
   console.log("ProfileEditor/Email: " +email);
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
+  var [username, setUsername] = useState('');
+  var [name, setName] = useState('');
   const [profilePicture, setProfilePicture] = useState('');
   const { imagePath } = route.params;
 
