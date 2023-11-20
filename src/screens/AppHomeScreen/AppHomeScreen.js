@@ -8,7 +8,8 @@ import { useNavigation,useRoute } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import * as ImagePicker from 'react-native-image-picker';
 import RNFS from 'react-native-fs'; // Import React Native FS for file handling
-
+import {firestore} from '../../Firestore_Setup';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc} from 'firebase/firestore';
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 const AppHomeScreen = () => {
@@ -71,6 +72,13 @@ const launchCamera = () => {
     } else if (response.error) {
       console.log('ImagePicker Error: ', response.error);
     } else if (response.assets && response.assets.length > 0) {
+        console.log(response.assets);
+        var x = await RNFS.readFile(response.assets[0].originalPath,"base64");
+        console.log(x);
+       setDoc(doc(firestore, 'posts', 'placeholder'), {
+                   image: x
+                 });
+
       const selectedImageUri = response.assets[0].uri || null;
 
       if (selectedImageUri) {

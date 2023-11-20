@@ -17,6 +17,7 @@ const SettingsScreen = () => {
   };
 
   const handleDeleteAccount = async () => {
+  //SPENCERRRRRRRRRRRR
   //Add confirmation message please someone from frontend, just make sure users don't accidentally delete their account
     const usersRef = doc(firestore,`userData/${email}`);
     var p = await deleteDoc(usersRef)
@@ -24,7 +25,8 @@ const SettingsScreen = () => {
   };
 
   const handleSupport = () => {
-    // Implement support functionality
+    // SPENCERRRRRRRRRR
+    //Add a textbox to link to fitcheckproject@gmail.com
   };
 
   const handlePrivacyToggle = () => {
