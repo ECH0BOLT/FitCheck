@@ -75,7 +75,7 @@ const launchCamera = () => {
         console.log(response.assets);
         var x = await RNFS.readFile(response.assets[0].originalPath,"base64");
         console.log(x);
-       setDoc(doc(firestore, 'posts', 'placeholder'), {
+       setDoc(doc(firestore, 'test', 'placeholder'), {
                    image: x
                  });
 

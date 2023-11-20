@@ -31,7 +31,7 @@ const ImageViewScreen = ({ route }) => {
     }).start();
   };
   useEffect( () =>{
-  const postRef = doc(firestore,`posts/placeholder`);
+  const postRef = doc(firestore,`test/placeholder`);
   getDoc(postRef).then(p => setImageData("data:image/png;base64,"+p.data().image));
   },[])
 
