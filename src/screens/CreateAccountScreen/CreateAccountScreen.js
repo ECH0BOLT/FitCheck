@@ -13,6 +13,7 @@ const CreateAccountScreen = () => {
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
 
     const onContinuePressed = async() => {
 
@@ -26,14 +27,14 @@ const CreateAccountScreen = () => {
         console.warn("This email is already in use.");
       }
       else{
-      if (email.trim() === "" || username.trim() === "") {
+      if (email.trim() === "" || username.trim() === "" || name.trim() === "") {
               // If either email or username is blank, do not navigate to the next screen
-              console.warn("Both email and username are required.");
+              console.warn("Email, name, and username are required.");
             } else {
               // If both email and username are provided, navigate to the next screen
               // check if the email or username, already exists in the database.
-              console.log(username, email);
-              navigation.navigate('CreateAccount2', { email: email, username: username });
+              console.log(name, username, email);
+              navigation.navigate('CreateAccount2', { email: email, name: name, username: username });
             }
           };
 
@@ -51,6 +52,7 @@ const CreateAccountScreen = () => {
                 <Image source={require('../../assets/arrow2.png')} style={styles.back} />
               </TouchableOpacity>
               <CustomInput placeholder="email address" value={email} setValue={setEmail} />
+              <CustomInput placeholder="name" value={name} setValue={setName} />
               <CustomInput placeholder="username" value={username} setValue={setUsername} />
               <CustomButtonPrimary text="continue" onPress={onContinuePressed}/>
 

@@ -10,6 +10,7 @@ import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc} from 
 const CreateAccountScreen2 = () => {
     const route = useRoute();
     const email = route.params?.email;
+    const name = route.params?.name;
     const username = route.params?.username;
     const navigation = useNavigation();
 
@@ -19,6 +20,7 @@ const CreateAccountScreen2 = () => {
 
     if(password1===password2&&password1.trim() !== ""){
     setDoc(doc(firestore, 'userData', email), {
+            name: name,
             username: username,
             password: password1
           });
