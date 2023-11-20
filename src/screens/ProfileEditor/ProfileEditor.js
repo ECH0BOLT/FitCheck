@@ -3,14 +3,14 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, TextInput, Clipboard, } from 'react-native';
 import {useNavigation,useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import { useRoute } from "@react-navigation/native";
+
 const ProfileEditor = () => {
   // Add your profile editing logic here
    const route = useRoute();
+   const navigation = useNavigation();
       const email = route.params?.email;
       console.log("ProfileEditor/Email: " +email);
-  const navigation = useNavigation();
-    const email = route.params?.email;
+
   const { imagePath } = route.params;
   return (
     <View style={styles.container}>

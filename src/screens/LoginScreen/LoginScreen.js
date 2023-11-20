@@ -6,11 +6,10 @@ import CustomInput from '../../components/CustomInput';
 import {useNavigation,useRoute} from '@react-navigation/native';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, getDoc} from 'firebase/firestore';
-import { useRoute } from "@react-navigation/native";
+
 
 const LoginScreen = () => {
-    const email = route.params?.email;
-  const { imagePath } = route.params;
+
     const navigation = useNavigation();
 
     const [email, setEmail] = useState('');

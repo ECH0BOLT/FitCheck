@@ -75,10 +75,10 @@ const ImageViewScreen = ({ route }) => {
       )}
        </LinearGradient>
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',email:email)}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',email:email)}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
           <Image source={require('../../assets/logo2unfilled.png')} style={styles.navLogo} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}></TouchableOpacity>
