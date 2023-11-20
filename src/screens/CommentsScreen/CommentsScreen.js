@@ -4,11 +4,12 @@ import Comments from '../../components/Comments/Comments';
 import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { useRoute } from "@react-navigation/native";
 const CommentsScreen = () => {
 
     const navigation = useNavigation();
-
+        const route = useRoute();
+        const email = route.params?.email;
     const scrollToTop = () => {
         if (scrollViewRef.current) {
           scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
@@ -19,7 +20,7 @@ const CommentsScreen = () => {
         <View style={styles.container}>
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
+                <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome', {email:email})}>
                   <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
                 </TouchableOpacity>
                 <Text style={styles.commentHeader}>Comments</Text>

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { useRoute } from "@react-navigation/native";
 const CSS = ({ route }) => {
   const { item, imagePath } = route.params;
-
+    const route = useRoute();
+    const email = route.params?.email;
   console.log(imagePath)
   const navigation = useNavigation();
 

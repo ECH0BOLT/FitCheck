@@ -6,8 +6,11 @@ import CustomInput from '../../components/CustomInput';
 import {useNavigation} from '@react-navigation/native';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, getDoc} from 'firebase/firestore';
-const LoginScreen = () => {
+import { useRoute } from "@react-navigation/native";
 
+const LoginScreen = () => {
+    const email = route.params?.email;
+  const { imagePath } = route.params;
     const navigation = useNavigation();
 
     const [email, setEmail] = useState('');
@@ -19,7 +22,7 @@ const LoginScreen = () => {
     var testPass = p.data();
 
     if (testPass.password==password) {
-    navigation.navigate('AppHome');
+    navigation.navigate('AppHome',{email:email});
     } else {
     console.warn('No user found with that email and password combination.');
     }

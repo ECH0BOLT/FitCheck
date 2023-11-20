@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useRoute } from "@react-navigation/native";
 
 const ImageViewScreen = ({ route }) => {
+    const email = route.params?.email;
   const { imagePath } = route.params;
   console.log(imagePath)
   const navigation = useNavigation();
@@ -11,7 +13,7 @@ const ImageViewScreen = ({ route }) => {
   const slideAnimation = new Animated.Value(0);
 
   const navigateToCSS = (item, imagePath) => {
-    navigation.navigate('CSS', { item: item, imagePath: imagePath });
+    navigation.navigate('CSS', { item: item, imagePath: imagePath,email:email });
     };
 
   const toggleMenu = () => {
@@ -51,29 +53,29 @@ const ImageViewScreen = ({ route }) => {
       {/* Sliding Menu */}
       {menuVisible && (
         <Animated.View style={[styles.menuContainer, menuStyle]}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Hat', { imagePath })}}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Hat', { imagePath,email:email })}}>
             <Image source={require('../../assets/hat.png')} style={styles.hat} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Shirt', { imagePath })}}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Shirt', { imagePath,email:email })}}>
             <Image source={require('../../assets/shirt.png')} style={styles.shirt} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Pants', { imagePath })}}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Pants', { imagePath,email:email })}}>
             <Image source={require('../../assets/pants.png')} style={styles.pants} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Shoes', { imagePath })}}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Shoes', { imagePath,email:email })}}>
             <Image source={require('../../assets/shoes.png')} style={styles.shoes} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Accessories', { imagePath })}}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Accessories', { imagePath,email:email })}}>
             <Image source={require('../../assets/moreOptions.png')} style={styles.more} />
           </TouchableOpacity>
         </Animated.View>
       )}
        </LinearGradient>
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',email:email)}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',email:email)}>
           <Image source={require('../../assets/logo2unfilled.png')} style={styles.navLogo} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}></TouchableOpacity>
