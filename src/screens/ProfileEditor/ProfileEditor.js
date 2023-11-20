@@ -1,73 +1,97 @@
-
 import React, {useState} from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, TextInput, Clipboard, } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, Button, TextInput, Clipboard, } from 'react-native';
 import {useNavigation,useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
+import CustomInput from '../../components/CustomInput';
 
 const ProfileEditor = () => {
-  // Add your profile editing logic here
-   const route = useRoute();
-   const navigation = useNavigation();
-      const email = route.params?.email;
-      console.log("ProfileEditor/Email: " +email);
-    const [newUsername, setUsername] = useState('');
+  const route = useRoute();
+  const navigation = useNavigation();
+  const email = route.params?.email;
+  console.log("ProfileEditor/Email: " +email);
+  const [username, setUsername] = useState('');
   const { imagePath } = route.params;
 
-  const handleEditUsername = () => {
-  //Add a textbox popup that they can type in
-  //Add onPress={handleHandleEditUsername}
-  }
-  const handleHandleEditUsername = async () => {
+  const [modalVisible, setModalVisible] = useState(false);
 
-  var newUsername = "hi"
-  const usersRef = doc(firestore,`userData/${email}`);
-  var p = await getDoc(usersRef);
-  var info = p.data();
-  name=info.name;
-  username=newUsername;
-  password=info.password;
-  console.warn(info);
-  setDoc(doc(firestore, 'userData', email), {
-              name: name,
-              username: username,
-              password: password
-            });
-  console.warn("Set to: "+newUsername);
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleEditUsername = () => {
+    setModalVisible(true);
   }
+
+  const handleHandleEditUsername = async () => {
+    var newUsername = "hi"
+    const usersRef = doc(firestore,`userData/${email}`);
+    var p = await getDoc(usersRef);
+    var info = p.data();
+    name=info.name;
+    username=newUsername;
+    password=info.password;
+    console.warn(info);
+    setDoc(doc(firestore, 'userData', email), {
+      name: name,
+      username: username
+    });
+    console.warn("Set to: "+newUsername);
+  }
+
   const handleEditName = async () => {
       console.warn("todo");
-    }
-    const changeProfilePicture = async () => {
-          console.warn("todo");
-        }
+  }
+
+  const changeProfilePicture = async () => {
+        console.warn("todo");
+  }
+
   return (
     <View style={styles.container}>
-    <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-      {/* Add your profile editing components here */}
-      <View style={styles.header}>
+      <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
+
+        <View style={styles.header}>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile',{email:email})}>
-              <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
+            <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
           </TouchableOpacity>
           <Text style={styles.titleEP}>Edit Profile</Text>
-      </View>
-      {/* Example components for editing username, display name, and profile picture */}
-      <View style={styles.userInfo}>
-        <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
-        <Text style={styles.name}>Adam Sandler</Text>
-        <Text style={styles.username}>@SandleMan</Text>
-      </View>
-      <TouchableOpacity style={styles.editProfileItem} onPress={handleEditUsername}>
-        <Text style={styles.editProfileLabel}>Change Username</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.editProfileItem} onPress={handleEditName}>
-        <Text style={styles.editProfileLabel}>Change Name</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.editProfileItem} onPress={changeProfilePicture}>
-        <Text style={styles.editProfileLabel}>Change Profile Picture</Text>
-      </TouchableOpacity>
-       </LinearGradient>
+        </View>
+
+        <View style={styles.userInfo}>
+          <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
+          <Text style={styles.name}>Adam Sandler</Text>
+          <Text style={styles.username}>@SandleMan</Text>
+        </View>
+
+        <TouchableOpacity style={styles.editProfileItem} onPress={handleEditUsername}>
+          <Text style={styles.editProfileLabel}>Change Username</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.editProfileItem} onPress={handleEditName}>
+          <Text style={styles.editProfileLabel}>Change Name</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.editProfileItem} onPress={changeProfilePicture}>
+          <Text style={styles.editProfileLabel}>Change Profile Picture</Text>
+        </TouchableOpacity>
+
+        <Modal visible={modalVisible} animationType="fade" transparent={true}>
+          <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={closeModal}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>Change Username</Text>
+
+              <CustomInput placeholder="New Username" value={username} setValue={setUsername}/>
+
+              <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+                <Text style={styles.buttonText}>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+
+      </LinearGradient>
     </View>
   );
 };
@@ -113,6 +137,35 @@ const styles = StyleSheet.create({
     fontSize: 20,
     top: 45,
     marginBottom: 100,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  modalContent: {
+    backgroundColor: '#3B593B',
+    padding: 15,
+    width: 350,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    color: 'white',
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  closeButton: {
+    backgroundColor: '#182E18',
+    width: 100,
+    borderRadius: 25,
+    padding: 5,
+  },
+  buttonText: {
+    color: '#DCDCC8',
+    fontSize: 16,
+    textAlign: 'center',
   },
   header: {
     flexDirection: 'row',
