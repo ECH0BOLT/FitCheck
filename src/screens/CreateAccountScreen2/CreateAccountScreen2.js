@@ -22,10 +22,10 @@ const CreateAccountScreen2 = () => {
             username: username,
             password: password1
           });
-        navigation.navigate('AppHome');
+        navigation.navigate('AppHome',{email:email});
     }
     else console.warn("Your password does not meet normal standards");
-        //else navigation.navigate('Friends');
+        //else navigation.navigate('Friends', {email:email});
     };
 
     return (
@@ -34,7 +34,7 @@ const CreateAccountScreen2 = () => {
               <Text style={styles.appName}>fit check</Text>
               <TouchableOpacity
                 style={styles.backArrow}
-                onPress={() => navigation.navigate('CreateAccount')}>
+                onPress={() => navigation.navigate('CreateAccount', {email:email})}>
                 <Image source={require('../../assets/arrow2.png')} style={styles.back} />
               </TouchableOpacity>
               <CustomInput placeholder="password" value={password1} setValue={setPassword1} />

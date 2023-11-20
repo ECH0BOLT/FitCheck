@@ -4,10 +4,11 @@ import FriendList from '../../components/FriendList/FriendList';
 import SearchBar from '../../components/CustomInput2';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { useRoute } from "@react-navigation/native";
 const FriendsScreen = () => {
     const navigation = useNavigation();
-
+    const route = useRoute();
+    const email = route.params?.email;
     const scrollToTop = () => {
         if (scrollViewRef.current) {
           scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
@@ -23,7 +24,7 @@ const FriendsScreen = () => {
                   <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
                   <TouchableOpacity
                     style={styles.navItem}
-                    onPress={() => navigation.navigate('Settings')}>
+                    onPress={() => navigation.navigate('Settings', {email:email})}>
                     <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
                   </TouchableOpacity>
               </View>
@@ -32,7 +33,7 @@ const FriendsScreen = () => {
                   <Text style={styles.boldText}>34</Text> Friends
                 </Text>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('AddFriends')}>
+                  onPress={() => navigation.navigate('AddFriends', {email:email})}>
                   <Text style={styles.headerText2}>
                     {'Add Friends '}
                     <Text style={styles.boldText}>+</Text>
@@ -49,17 +50,17 @@ const FriendsScreen = () => {
           <View style={styles.bottomNav}>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('AppHome')}>
+              onPress={() => navigation.navigate('AppHome',{email:email})}>
               <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('AppHome')}>
+              onPress={() => navigation.navigate('AppHome',{email:email})}>
               <Image source={require('../../assets/logo2.png')} style={styles.navLogo} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.navItem}
-              onPress={() => navigation.navigate('Profile')}>
+              onPress={() => navigation.navigate('Profile',{email:email})}>
               <Image source={require('../../assets/profile.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>

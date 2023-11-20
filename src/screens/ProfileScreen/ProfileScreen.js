@@ -4,9 +4,10 @@ import ProfileFriends from '../../components/ProfileFriends/ProfileFriends';
 import ProfileMemories from '../../components/ProfileMemories/ProfileMemories';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { useRoute } from "@react-navigation/native";
 const ProfileScreen = () => {
-
+    const route = useRoute();
+    const email = route.params?.email;
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
     const [profileUrl, setProfileUrl] = useState(''); // State to store the profile URL
@@ -63,11 +64,11 @@ const ProfileScreen = () => {
                         </View>
                       </Modal>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Settings')}>
+                onPress={() => navigation.navigate('Settings',{email:email})}>
                 <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
               </TouchableOpacity>
               <TouchableOpacity style={styles.editProfileContainer}
-                onPress={() => navigation.navigate('ProfileEditor')}>
+                onPress={() => navigation.navigate('ProfileEditor',{email:email})}>
                 <Text style={styles.editProfile}>edit profile</Text>
               </TouchableOpacity>
             </View>
@@ -94,13 +95,13 @@ const ProfileScreen = () => {
           </LinearGradient>
 
           <View style={styles.bottomNav}>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
               <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
               <Image source={require('../../assets/logo2.png')} style={styles.navLogo} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Friends')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Friends',{email:email})}>
               <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>

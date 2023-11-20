@@ -8,8 +8,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as ImagePicker from 'react-native-image-picker';
 import RNFS from 'react-native-fs'; // Import React Native FS for file handling
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
-
+import { useRoute } from "@react-navigation/native";
 const CreatePostScreen = () => {
+    const route = useRoute();
+    const email = route.params?.email;
   const [imageUri, setImageUri] = useState('');
   const navigation = useNavigation();
 
@@ -84,7 +86,7 @@ const CreatePostScreen = () => {
       // Use moveFile method of RNFS to handle file operations
       await RNFS.moveFile(imageUri, imagePath);
       console.log('Image saved at:', imagePath);
-//      navigation.navigate('ImageViewScreen', { imagePath });
+//      navigation.navigate('ImageViewScreen', { imagePath, email:email });
     } catch (error) {
       console.error('Error saving image:', error);
     }
