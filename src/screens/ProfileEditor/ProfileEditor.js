@@ -12,9 +12,13 @@ const ProfileEditor = () => {
   const email = route.params?.email;
   console.log("ProfileEditor/Email: " +email);
   const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
   const { imagePath } = route.params;
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleUsername, setModalVisibleUsername] = useState(false);
+  const [modalVisibleName, setModalVisibleName] = useState(false);
+  const [modalVisibleProfilePicture, setModalVisibleProfilePicture] = useState(false);
 
   const closeModal = async () => {
   const usersRef = doc(firestore,`userData/${email}`);
@@ -28,16 +32,26 @@ const ProfileEditor = () => {
         password: password
   });
   console.warn("Set to: "+username);
-  setModalVisible(false);
-  };
+  setModalVisibleUsername(false);
+  setModalVisibleName(false);
+  setModalVisibleProfilePicture(false);
+  }
 
   const handleEditUsername = () => {
-    setModalVisible(true);
+    setModalVisibleUsername(true);
+  }
+
+  const handleEditName = () => {
+    setModalVisibleName(true);
+  }
+
+  const changeProfilePicture = () => {
+    setModalVisibleProfilePicture(true);
   }
 
 
 
-  const handleEditName = async () => {
+  const handleHandleEditName = async () => {
       const usersRef = doc(firestore,`userData/${email}`);
         var p = await getDoc(usersRef);
         var info = p.data();
@@ -51,7 +65,7 @@ const ProfileEditor = () => {
         console.warn("Set to: "+name);
   }
 
-  const changeProfilePicture = async () => {
+  const handleChangeProfilePicture = async () => {
         console.warn("todo");
   }
 
@@ -84,12 +98,38 @@ const ProfileEditor = () => {
           <Text style={styles.editProfileLabel}>Change Profile Picture</Text>
         </TouchableOpacity>
 
-        <Modal visible={modalVisible} animationType="fade" transparent={true}>
+        <Modal visible={modalVisibleUsername} animationType="fade" transparent={true}>
           <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={closeModal}>
             <View style={styles.modalContent}>
               <Text style={styles.modalText}>Change Username</Text>
 
               <CustomInput placeholder="New Username" value={username} setValue={setUsername}/>
+
+              <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+                <Text style={styles.buttonText}>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+
+        <Modal visible={modalVisibleName} animationType="fade" transparent={true}>
+          <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={closeModal}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>Change Name</Text>
+
+              <CustomInput placeholder="New Name" value={name} setValue={setName}/>
+
+              <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+                <Text style={styles.buttonText}>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+
+        <Modal visible={modalVisibleProfilePicture} animationType="fade" transparent={true}>
+          <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={closeModal}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>Change Profile Picture</Text>
 
               <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
                 <Text style={styles.buttonText}>Confirm</Text>
