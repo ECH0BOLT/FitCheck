@@ -21,28 +21,42 @@ const ProfileEditor = () => {
   const [modalVisibleProfilePicture, setModalVisibleProfilePicture] = useState(false);
 
   const closeModal = async () => { 
-  const usersRef = doc(firestore,`userData/${email}`);
-  var p = await getDoc(usersRef);
-  var info = p.data();
-  name=info.name;
-  password=info.password;
-  setDoc(doc(firestore, 'userData', email), {
-        name: name,
-        username: username,
-        password: password
-  });
-  console.warn("Set to: "+username);
+
   setModalVisibleUsername(false);
   setModalVisibleName(false);
   setModalVisibleProfilePicture(false);
   }
 
   const closeUsernameModal = async () => {
+  const usersRef = doc(firestore,`userData/${email}`);
+    var p = await getDoc(usersRef);
+    var info = p.data();
+    name=info.name;
+    password=info.password;
+    setDoc(doc(firestore, 'userData', email), {
+          name: name,
+          username: username,
+          password: password
+    });
+    console.warn("Set to: "+username);
     setModalVisibleUsername(false);
   }
+
   const closeNameModal = async () => {
+  const usersRef = doc(firestore,`userData/${email}`);
+    var p = await getDoc(usersRef);
+    var info = p.data();
+    username=info.username;
+    password=info.password;
+    setDoc(doc(firestore, 'userData', email), {
+          name: name,
+          username: username,
+          password: password
+    });
+    console.warn("Set to: "+name);
     setModalVisibleName(false);
   }
+
   const closeProfilePictureModal = async () => {
     setModalVisibleProfilePicture(false);
   }
