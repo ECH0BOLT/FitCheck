@@ -23,6 +23,7 @@ const CommentsScreen = () => {
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
             <View style={styles.header}>
                 <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
+
                   <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
                 </TouchableOpacity>
                 <Text style={styles.commentHeader}>Comments</Text>

@@ -87,7 +87,7 @@ const CreatePostScreen = () => {
       // Use moveFile method of RNFS to handle file operations
       await RNFS.moveFile(imageUri, imagePath);
       console.log('Image saved at:', imagePath);
-//      navigation.navigate('ImageViewScreen', { imagePath });
+//      navigation.navigate('ImageViewScreen', { imagePath,email:email });
     } catch (error) {
       console.error('Error saving image:', error);
     }
