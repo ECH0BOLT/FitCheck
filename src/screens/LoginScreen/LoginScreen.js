@@ -21,7 +21,7 @@ const LoginScreen = () => {
     if (testPass.password==password) {
     navigation.navigate('AppHome');
     } else {
-    console.log('No user found with that email and password combination.');
+    console.warn('No user found with that email and password combination.');
     }
 
     };
