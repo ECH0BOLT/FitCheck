@@ -4,9 +4,14 @@ import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Animated } from 
 
 const ImageViewScreen = ({ route }) => {
   const { imagePath } = route.params;
+  console.log(imagePath)
   const navigation = useNavigation();
   const [menuVisible, setMenuVisible] = useState(false);
   const slideAnimation = new Animated.Value(0);
+
+  const navigateToCSS = (item, imagePath) => {
+      navigation.navigate('CSS', { item, imagePath });
+    };
 
   const toggleMenu = () => {
     const newValue = menuVisible ? 0 : 1;
@@ -44,19 +49,19 @@ const ImageViewScreen = ({ route }) => {
       {/* Sliding Menu */}
       {menuVisible && (
         <Animated.View style={[styles.menuContainer, menuStyle]}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 1 pressed')}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Hat', { imagePath })}}>
             <Image source={require('../../assets/hat.png')} style={styles.hat} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 2 pressed')}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Shirt', { imagePath })}}>
             <Image source={require('../../assets/shirt.png')} style={styles.shirt} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 3 pressed')}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Pants', { imagePath })}}>
             <Image source={require('../../assets/pants.png')} style={styles.pants} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 4 pressed')}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Shoes', { imagePath })}}>
             <Image source={require('../../assets/shoes.png')} style={styles.shoes} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log('Button 5 pressed')}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Accessories', { imagePath })}}>
             <Image source={require('../../assets/moreOptions.png')} style={styles.more} />
           </TouchableOpacity>
         </Animated.View>
