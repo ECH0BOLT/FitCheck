@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-const Post = () => {
+const Post = ( { post } ) => {
 
     const navigation = useNavigation();
     const [isImageFilled, setImageFilled] = useState(true);
@@ -11,7 +11,55 @@ const Post = () => {
       setImageFilled(!isImageFilled);
     };
 
+    if (!post) {
+        return null; // Or return a placeholder, error message, or loading indicator
+    }
+
     return (
+//        <View style={styles.postContent}>
+//
+//          <View style={styles.postTop}>
+//            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+//                <Image source={require('../../assets/adam2.jpg')} style={styles.userIcon} />
+//            </TouchableOpacity>
+//            <View style={styles.userInfo}>
+//              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+//                <Text style={styles.handle}>@SandleMan</Text>
+//              </TouchableOpacity>
+//              <Text style={styles.time}>3 hours ago</Text>
+//            </View>
+//          </View>
+//
+//          <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
+//
+//          <View style={styles.postBottom}>
+//            <View style={styles.postButtons}>
+//              <TouchableOpacity onPress={toggleImage}>
+//                {isImageFilled ? (<Image source={require('../../assets/logo2unfilled.png')} style={styles.unlikedButton} />) : (<Image source={require('../../assets/logo2.png')} style={styles.likedButton} />)}
+//              </TouchableOpacity>
+//              <TouchableOpacity style={styles.commentButton} onPress={() => navigation.navigate('Comments')}>
+//                <Image source={require('../../assets/comment.png')} style={styles.commentButton} />
+//              </TouchableOpacity>
+//            </View>
+//            <View style={styles.checkCount}>
+//              <Text style={styles.checkCount}>
+//                <Text style={styles.boldText}>{'24 '}</Text>
+//                checks
+//              </Text>
+//            </View>
+//            <View style={styles.userCaption}>
+//              <Text style={styles.userCaption}>
+//                <Text style={styles.boldText}>{'SandleMan '}</Text>
+//                This fit goes hard, feel free to ss.
+//              </Text>
+//            </View>
+//            <TouchableOpacity style={styles.viewComments} onPress={() => navigation.navigate('Comments')}>
+//              <Text style={styles.viewComments}>View 6 comments</Text>
+//            </TouchableOpacity>
+//          </View>
+//
+//        </View>
+
         <View style={styles.postContent}>
 
           <View style={styles.postTop}>
@@ -20,13 +68,13 @@ const Post = () => {
             </TouchableOpacity>
             <View style={styles.userInfo}>
               <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                <Text style={styles.handle}>@SandleMan</Text>
+                <Text style={styles.handle}>@{ post.user }</Text>
               </TouchableOpacity>
               <Text style={styles.time}>3 hours ago</Text>
             </View>
           </View>
 
-          <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
+          <Image source={{ uri: post.imageURL}} style={styles.post} />
 
           <View style={styles.postBottom}>
             <View style={styles.postButtons}>
@@ -39,14 +87,14 @@ const Post = () => {
             </View>
             <View style={styles.checkCount}>
               <Text style={styles.checkCount}>
-                <Text style={styles.boldText}>{'24 '}</Text>
-                checks
+                <Text style={styles.boldText}>{ post.likes }</Text>
+                  {' checks'}
               </Text>
             </View>
             <View style={styles.userCaption}>
               <Text style={styles.userCaption}>
-                <Text style={styles.boldText}>{'SandleMan '}</Text>
-                This fit goes hard, feel free to ss.
+                <Text style={styles.boldText}>{ post.user + ':'}</Text>
+                { ' ' + post.caption }
               </Text>
             </View>
             <TouchableOpacity style={styles.viewComments} onPress={() => navigation.navigate('Comments')}>

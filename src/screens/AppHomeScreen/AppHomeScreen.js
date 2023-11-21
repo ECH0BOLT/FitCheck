@@ -9,28 +9,53 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as ImagePicker from 'react-native-image-picker';
 import RNFS from 'react-native-fs'; // Import React Native FS for file handling
 import {firestore} from '../../Firestore_Setup';
-import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc} from 'firebase/firestore';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc, getDocs} from 'firebase/firestore';
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 const AppHomeScreen = () => {
 
-    const route = useRoute();
-    const email = route.params?.email;
-    console.log("HOME/Email: " +email);
+  const [posts, setPosts] = useState([]);
+  const route = useRoute();
+  const email = route.params?.email;
+  console.log("HOME/Email: " +email);
+  const [imageUri, setImageUri] = useState('');
+  const navigation = useNavigation();
 
-    const scrollToTop = () => {
+  const scrollToTop = () => {
         if (scrollViewRef.current) {
           scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
         }
-    };
-
-const [imageUri, setImageUri] = useState('');
-
-  const navigation = useNavigation();
+  };
 
   useEffect(() => {
     requestCameraPermission();
+    fetchPosts();
   }, []);
+
+  const fetchPosts = async () => {
+      try {
+        const postsCollection = collection(firestore, 'posts');
+        const querySnapshot = await getDocs(postsCollection);
+
+        const fetchedPosts = [];
+        querySnapshot.forEach((doc) => {
+          const postData = doc.data();
+          // Map Firestore data to the structure expected by the Post component
+          const post = {
+            user: postData.user,
+            imageURL: postData.imageURL,
+            caption: postData.caption,
+            likes: postData.likes
+            // Add other fields as needed (likes, comments, etc.)
+          };
+          fetchedPosts.push(post);
+        });
+
+        setPosts(fetchedPosts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+  };
 
   const requestCameraPermission = async () => {
     try {
@@ -125,12 +150,12 @@ const saveImage = async (imageUri) => {
     return (
         <View style={styles.container}>
           <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
-
-              <Post/>
-              <Post/>
-
-            </ScrollView>
+            <ScrollView style={styles.page} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'} >
+                    {/* Render fetched posts using the Post component */}
+                    {posts.map((post, index) => (
+                      <Post key={index} post={post} />
+                    ))}
+                  </ScrollView>
           </LinearGradient>
           <View style={styles.bottomNav}>
             <TouchableOpacity

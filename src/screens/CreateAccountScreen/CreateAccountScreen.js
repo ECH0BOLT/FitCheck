@@ -30,7 +30,11 @@ const CreateAccountScreen = () => {
       if (email.trim() === "" || username.trim() === "" || name.trim() === "") {
               // If either email or username is blank, do not navigate to the next screen
               console.warn("Email, name, and username are required.");
-            } else {
+            } else if (email.length>30||username.length>15||name.length>40) {
+                console.warn("Too long.");
+            }
+            else {
+
               // If both email and username are provided, navigate to the next screen
               // check if the email or username, already exists in the database.
               console.log(name, username, email);
