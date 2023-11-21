@@ -4,7 +4,7 @@ import Post from '../../components/Post/Post';
 import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
 import CustomButtonTertiary from '../../components/CustomButton/CustomButtonTertiary';
 import CustomInput from '../../components/CustomInput';
-import { useNavigation,useRoute } from '@react-navigation/native';
+import { useNavigation,useRoute, useIsFocused } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import * as ImagePicker from 'react-native-image-picker';
 import RNFS from 'react-native-fs'; // Import React Native FS for file handling
@@ -20,6 +20,12 @@ const AppHomeScreen = () => {
   console.log("HOME/Email: " +email);
   const [imageUri, setImageUri] = useState('');
   const navigation = useNavigation();
+    // check if screen is focused
+    const isFocused = useIsFocused();
+  useEffect(() => {
+    isFocused && fetchPosts()
+  },[isFocused]);
+
 
   const scrollToTop = () => {
         if (scrollViewRef.current) {
@@ -43,7 +49,7 @@ const AppHomeScreen = () => {
           // Map Firestore data to the structure expected by the Post component
           const post = {
             user: postData.user,
-            imageURL: postData.imageURL,
+            imageURL: "data:image/png;base64,"+postData.imageURL,
             caption: postData.caption,
             likes: postData.likes
             // Add other fields as needed (likes, comments, etc.)

@@ -16,6 +16,30 @@ const PostConfirmationScreen = ({ route }) => {
 
   const [caption, setCaption] = useState('');
 
+  var likes=5;
+  var imageURL = 'https://kobebryant.com';
+
+  const handlePost = async () => {
+  const imageRef = doc(getFirestore(), 'test','placeholder');
+  const imageDoc = await getDoc(imageRef);
+  const imageData = imageDoc.data();
+  imageURL = imageData.image;
+
+  const userRef = doc(getFirestore(), 'userData', email);
+  const userDoc = await getDoc(userRef);
+  const userData = userDoc.data();
+  const username=userData.username;
+
+  setDoc(doc(firestore, 'posts', username+caption), {
+             caption: caption,
+             imageURL: imageURL,
+             likes: likes,
+             user: username
+           });
+  console.warn(caption);
+  navigation.navigate('AppHome',{email:email});
+  }
+
   useEffect( () => {
   const postRef = doc(firestore,`test/placeholder`);
   getDoc(postRef).then(p => setImageData("data:image/png;base64,"+p.data().image));
@@ -40,7 +64,7 @@ const PostConfirmationScreen = ({ route }) => {
         <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen',{email:email})}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{ imagePath: imagePath, email:email})}>
+        <TouchableOpacity style={styles.navItem} onPress={handlePost}>
           <Image source={require('../../assets/logo2unfilledfull.png')} style={styles.navLogo} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}></TouchableOpacity>
