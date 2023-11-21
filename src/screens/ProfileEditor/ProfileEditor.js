@@ -45,7 +45,6 @@ const [userData, setUserData] = useState({
   const closeNameModal = async () => {
   if(name.length>40){
   console.warn("Name cannot be longer than 40 characters.")}
-  }
   else{
     updateDoc(doc(firestore, 'userData', email), {
           name: name
