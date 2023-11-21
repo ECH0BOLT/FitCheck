@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { firestore } from '../../Firestore_Setup';
 import { doc, deleteDoc } from 'firebase/firestore';
+import { TextInput } from 'react-native';
 
 const SettingsScreen = () => {
 
@@ -15,6 +16,7 @@ const SettingsScreen = () => {
   const [isPrivateProfile, setIsPrivateProfile] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showSupportModal, setShowSupportModal] = useState(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
   const handleLogout = () => {
     navigation.navigate('Home');
@@ -39,6 +41,15 @@ const SettingsScreen = () => {
     Clipboard.setString('fitcheckproject@gmail.com');
     setShowSupportModal(false);
   };
+   const handleChangePassword = () => {
+    setShowChangePasswordModal(true);
+  };
+   const handleSavePassword = () => {
+    // Placeholder logic for saving password
+    // You can implement the actual logic to change the password here
+    console.log('Password saved');
+    setShowChangePasswordModal(false); // Close the modal after saving the password
+  };
 
     return (
       <View style={styles.container}>
@@ -60,6 +71,9 @@ const SettingsScreen = () => {
             <TouchableOpacity style={styles.tabItem} onPress={handleSupport}>
               <Text style={styles.tabText}>Support</Text>
             </TouchableOpacity>
+             <TouchableOpacity style={styles.tabItem} onPress={handleChangePassword}>
+              <Text style={styles.tabText}>Change Password</Text>
+             </TouchableOpacity>
             <View style={styles.privacyContainer}>
               <Text style={styles.tabText}>Privacy:</Text>
               <Text style={styles.privacyStatus}>{isPrivateProfile ? 'Private' : 'Public'}</Text>
@@ -102,6 +116,37 @@ const SettingsScreen = () => {
               <TouchableOpacity onPress={handleCopyLink}>
                 <Text style={styles.copyLinkButton}>Copy Link</Text>
               </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showChangePasswordModal}
+          onRequestClose={() => setShowChangePasswordModal(false)}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>Change Password:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="New Password"
+                placeholderTextColor="#DCDCC8"
+                secureTextEntry
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Confirm Password"
+                placeholderTextColor="#DCDCC8"
+                secureTextEntry
+              />
+              <View style={styles.modalButtons}>
+                <TouchableOpacity onPress={() => setShowChangePasswordModal(false)}>
+                  <Text style={styles.modalButton}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleSavePassword}>
+                  <Text style={styles.modalButton}>Save</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </Modal>
@@ -201,6 +246,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+   input: {
+    height: 40,
+    borderColor: '#DCDCC8',
+    borderWidth: 1,
+    marginBottom: 10,
+    color: '#DCDCC8',
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    },
 });
 
 export default SettingsScreen;
