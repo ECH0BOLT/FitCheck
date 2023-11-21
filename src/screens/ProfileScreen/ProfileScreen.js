@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, TextInput, Clipboard, } from 'react-native';
 import ProfileFriends from '../../components/ProfileFriends/ProfileFriends';
 import ProfileMemories from '../../components/ProfileMemories/ProfileMemories';
 import {useNavigation, useRoute } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import {firestore} from '../../Firestore_Setup';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
+import CustomInput from '../../components/CustomInput';
 
 const ProfileScreen = () => {
 
@@ -13,14 +16,24 @@ const ProfileScreen = () => {
     const email = route.params?.email;
     console.log("ProfileScreen/Email: " +email);
 
+
+
+    const [userData, setUserData] = useState({
+        username: '',
+        name: ''
+      });
     const [modalVisible, setModalVisible] = useState(false);
     const [profileUrl, setProfileUrl] = useState(''); // State to store the profile URL
 
+useEffect(() => {
+    // Fetch user data when the component mounts
+    fetchUserData();
+  }, []);
     const handleShareButton = () => {
         setModalVisible(true);
         // You can set the profile URL here or fetch it from an API
         // For now, let's set it to a dummy value
-        setProfileUrl('https://example.com/user123');
+        //setProfileUrl('https://example.com/user123');
     };
     const handleCopyLink = () => {
         Clipboard.setString(profileUrl);
@@ -35,6 +48,27 @@ const ProfileScreen = () => {
           scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
         }
     };
+     const fetchUserData = async () => {
+        try {
+          const userRef = doc(getFirestore(), 'userData', email);
+          const userDoc = await getDoc(userRef);
+
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            setUserData(userData);
+
+            // Assuming there's a 'name' field in the user data
+            setProfileUrl(userData.name);
+
+            // You can set other state variables based on your user data
+          } else {
+            console.log('User document not found');
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
 
     return (
         <View style={styles.container}>
@@ -77,11 +111,11 @@ const ProfileScreen = () => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.userInfo}>
-              <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
-              <Text style={styles.name}>Adam Sandler</Text>
-              <Text style={styles.username}>@SandleMan</Text>
-            </View>
+             <View style={styles.userInfo}>
+                      <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
+                      <Text style={styles.name}>{userData.name}</Text>
+                      <Text style={styles.username}>@{userData.username}</Text>
+                    </View>
 
             <Text style={styles.boxTitle}>
                 <Text style={styles.boldText}>{'34 '}</Text>

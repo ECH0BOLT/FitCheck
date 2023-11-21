@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, Button, TextInput, Clipboard, } from 'react-native';
 import {useNavigation,useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -16,6 +16,10 @@ const ProfileEditor = () => {
   const [profilePicture, setProfilePicture] = useState('');
   const { imagePath } = route.params;
 
+const [userData, setUserData] = useState({
+        username: '',
+        name: ''
+      });
   const [modalVisibleUsername, setModalVisibleUsername] = useState(false);
   const [modalVisibleName, setModalVisibleName] = useState(false);
   const [modalVisibleProfilePicture, setModalVisibleProfilePicture] = useState(false);
@@ -64,6 +68,33 @@ const ProfileEditor = () => {
         console.warn("todo");
   }
 
+useEffect(() => {
+    // Fetch user data when the component mounts
+    fetchUserData();
+  }, []);
+
+     const fetchUserData = async () => {
+        try {
+          const userRef = doc(getFirestore(), 'userData', email);
+          const userDoc = await getDoc(userRef);
+
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            setUserData(userData);
+
+
+
+            // You can set other state variables based on your user data
+          } else {
+            console.log('User document not found');
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+
+
   return (
     <View style={styles.container}>
       <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
@@ -77,8 +108,8 @@ const ProfileEditor = () => {
 
         <View style={styles.userInfo}>
           <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
-          <Text style={styles.name}>Adam Sandler</Text>
-          <Text style={styles.username}>@SandleMan</Text>
+          <Text style={styles.name}>{userData.name}</Text>
+          <Text style={styles.username}>@{userData.username}</Text>
         </View>
 
         <TouchableOpacity style={styles.editProfileItem} onPress={handleEditUsername}>
