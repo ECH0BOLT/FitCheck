@@ -18,7 +18,7 @@ const CreateAccountScreen2 = () => {
     const [password2, setPassword2] = useState('');
     const onSignUpPressed = () => {
 
-    if(password1===password2&&password1.trim() !== ""){
+    if(password1===password2&&password1.trim() !== ""&&password1.length<20){
     setDoc(doc(firestore, 'userData', email), {
             name: name,
             username: username,
