@@ -15,6 +15,7 @@ import CommentsScreen from '../screens/CommentsScreen';
 import ProfileEditor from '../screens/ProfileEditor';
 import ImageViewScreen from '../screens/ImageViewScreen';
 import MemoriesScreen from '../screens/MemoriesScreen';
+import PostConfirmationScreen from '../screens/PostConfirmationScreen';
 import CSS from '../screens/CSS';
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ const Navigation = () => {
                 <Stack.Screen name="Comments" component={CommentsScreen} />
                 <Stack.Screen name="ProfileEditor" component={ProfileEditor} />
                 <Stack.Screen name="ImageViewScreen" component={ImageViewScreen} />
+                <Stack.Screen name="PostConfirmation" component={PostConfirmationScreen} />
                 <Stack.Screen name="CSS" component={CSS} />
             </Stack.Navigator>
         </NavigationContainer>

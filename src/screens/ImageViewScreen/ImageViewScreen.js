@@ -6,9 +6,10 @@ import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
 
 const ImageViewScreen = ({ route }) => {
-    const email = route.params?.email;
-    console.log("ImageViewS/Email: " +email);
-      const [imageData, setImageData] = useState('');
+
+  const email = route.params?.email;
+  console.log("ImageViewS/Email: " +email);
+  const [imageData, setImageData] = useState('');
   const { imagePath } = route.params?.imagePath;
   console.log(imagePath)
   const navigation = useNavigation();
@@ -91,7 +92,7 @@ const ImageViewScreen = ({ route }) => {
         <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('PostConfirmation',{ imagePath: imagePath, email:email})}>
           <Image source={require('../../assets/logo2unfilled.png')} style={styles.navLogo} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}></TouchableOpacity>
