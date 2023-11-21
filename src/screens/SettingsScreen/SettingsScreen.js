@@ -6,6 +6,7 @@ import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc,getDoc,deleteDoc} from 'firebase/firestore';
 
 const SettingsScreen = () => {
+//TODO: Add security header with a change password button.
   const navigation = useNavigation();
    const route = useRoute();
       const email = route.params?.email;
