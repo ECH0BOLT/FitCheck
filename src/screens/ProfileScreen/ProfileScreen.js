@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, TextInput, Clipboard, } from 'react-native';
 import ProfileFriends from '../../components/ProfileFriends/ProfileFriends';
 import ProfileMemories from '../../components/ProfileMemories/ProfileMemories';
-import {useNavigation, useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute,useFocusEffect } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
@@ -24,7 +24,11 @@ const ProfileScreen = () => {
       });
     const [modalVisible, setModalVisible] = useState(false);
     const [profileUrl, setProfileUrl] = useState(''); // State to store the profile URL
-
+useFocusEffect(
+    React.useCallback(() => {
+      fetchUserData();
+    }, [email]) // Re-run the effect when the email changes
+  );
 useEffect(() => {
     // Fetch user data when the component mounts
     fetchUserData();

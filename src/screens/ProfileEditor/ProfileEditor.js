@@ -32,20 +32,26 @@ const [userData, setUserData] = useState({
   }
 
   const closeUsernameModal = async () => {
+  if(username.length>15){
+  console.warn("Username cannot be longer than 15 characters.")}
+  else {
     updateDoc(doc(firestore, 'userData', email), {
           username: username
     });
     console.warn("Set to: "+username);
     setModalVisibleUsername(false);
-  }
+  }}
 
   const closeNameModal = async () => {
+  if(name.length>40){
+  console.warn("Name cannot be longer than 40 characters.")}
+  else{
     updateDoc(doc(firestore, 'userData', email), {
           name: name
     });
     console.warn("Set to: "+name);
     setModalVisibleName(false);
-  }
+  }}
 
   const closeProfilePictureModal = async () => {
     setModalVisibleProfilePicture(false);
