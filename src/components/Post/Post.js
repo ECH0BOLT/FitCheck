@@ -156,7 +156,7 @@ const Post = ( { post } ) => {
           <Modal visible={commentsModalVisible} transparent={true} onRequestClose={closeCommentsModal}>
             <View style={styles.commentsContainer}>
               <Comments/>
-              <TouchableOpacity onPress={closeCommentsModal}>
+              <TouchableOpacity style={styles.closeContainer} onPress={closeCommentsModal}>
                 <Text style={styles.closeButton}>Close</Text>
               </TouchableOpacity>
             </View>
