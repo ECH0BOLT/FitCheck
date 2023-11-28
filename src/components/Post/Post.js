@@ -1,53 +1,22 @@
 import React, {useState} from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
 import Comments from '../../components/Comments/Comments';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
-import Animated, { Easing } from 'react-native-reanimated';
 
 const Post = ( { post } ) => {
     const navigation = useNavigation();
     const [isImageFilled, setImageFilled] = useState(true);
 
     const [commentsModalVisible, setCommentsModalVisible] = useState(false);
-    const translateY = new Animated.Value(0);
-
     const openCommentsModal = () => {
       setCommentsModalVisible(true);
     };
 
     const closeCommentsModal = () => {
-      Animated.timing(translateY, {
-        toValue: 0,
-        duration: 300,
-        easing: Easing.inOut(Easing.ease),
-      }).start(() => {
-        setCommentsModalVisible(false);
-      });
+      setCommentsModalVisible(false);
     };
-
-    const onGestureEvent = Animated.event([{ nativeEvent: { translationY: translateY } }], {
-      useNativeDriver: true,
-    });
-
-    const onHandlerStateChange = event => {
-      if (event.nativeEvent.state === State.END) {
-        if (event.nativeEvent.translationY > 100) {
-          closeCommentsModal();
-        } else {
-          Animated.spring(translateY, {
-            toValue: 0,
-            velocity: 2,
-            tension: 1,
-            friction: 8,
-            useNativeDriver: true,
-          }).start();
-        }
-      }
-    };
-
 
     const updateLikes = async () => {
     try {
@@ -184,19 +153,13 @@ const Post = ( { post } ) => {
             </TouchableOpacity>
           </View>
 
-          <Modal visible={commentsModalVisible} animationType="slide" transparent={true} onRequestClose={closeCommentsModal}>
-            <TouchableWithoutFeedback onPress={closeCommentsModal}>
-              <View style={styles.overlay} />
-            </TouchableWithoutFeedback>
-
-            <PanGestureHandler onGestureEvent={onGestureEvent} onHandlerStateChange={onHandlerStateChange}>
-              <Animated.View style={[styles.commentsContainer, { transform: [{ translateY: translateY }] }]}>
-                <Comments/>
-                <TouchableOpacity onPress={closeCommentsModal}>
-                  <Text style={styles.closeButton}>Close</Text>
-                </TouchableOpacity>
-              </Animated.View>
-            </PanGestureHandler>
+          <Modal visible={commentsModalVisible} transparent={true} onRequestClose={closeCommentsModal}>
+            <View style={styles.commentsContainer}>
+              <Comments/>
+              <TouchableOpacity onPress={closeCommentsModal}>
+                <Text style={styles.closeButton}>Close</Text>
+              </TouchableOpacity>
+            </View>
           </Modal>
 
         </View>
@@ -321,10 +284,6 @@ const Post = ( { post } ) => {
       closeButton: {
         color: '#DCDCC8',
         fontSize: 16,
-      },
-      overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
       },
     });
 
