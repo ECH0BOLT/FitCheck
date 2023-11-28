@@ -13,6 +13,8 @@ const SettingsScreen = () => {
   const email = route.params?.email;
   console.log("ProfileScreen/Email: " + email);
 
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isPrivateProfile, setIsPrivateProfile] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showSupportModal, setShowSupportModal] = useState(false);
@@ -37,18 +39,30 @@ const SettingsScreen = () => {
     setIsPrivateProfile((prev) => !prev);
     // Implement privacy toggle functionality
   };
+
    const handleCopyLink = () => {
     Clipboard.setString('fitcheckproject@gmail.com');
     setShowSupportModal(false);
   };
+
    const handleChangePassword = () => {
     setShowChangePasswordModal(true);
   };
+
    const handleSavePassword = () => {
-    // Placeholder logic for saving password
-    // You can implement the actual logic to change the password here
-    console.log('Password saved');
-    setShowChangePasswordModal(false); // Close the modal after saving the password
+//    if(newPassword===changePassword){
+//        const usersRef = doc(firestore, `userData/${email}`);
+//
+//        updateDoc(usersRef, {
+//        password:newPassword
+//
+//        });
+        console.log('Password saved');
+        setShowChangePasswordModal(false); // Close the modal after saving the password
+//    }
+//    else{
+//        console.warn('Passwords do not match.');
+//    }
   };
 
     return (
@@ -130,11 +144,15 @@ const SettingsScreen = () => {
               <TextInput
                 style={styles.input}
                 placeholder="New Password"
+//                value={newPassword}
+//                setValue={setNewPassword}
                 placeholderTextColor="#DCDCC8"
                 secureTextEntry
               />
               <TextInput
                 style={styles.input}
+//                value={confirmPassword}
+//                setValue={setConfirmPassword}
                 placeholder="Confirm Password"
                 placeholderTextColor="#DCDCC8"
                 secureTextEntry
