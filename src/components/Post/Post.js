@@ -9,16 +9,42 @@ const Post = ( { post } ) => {
     const [isImageFilled, setImageFilled] = useState(true);
 
     const updateLikes = async () => {
-    const title = post.user+post.caption;
-     const postDocRef = doc(firestore, 'posts', title);
-     const postDocSnapshot = await getDoc(postDocRef);
-     const postData = postDocSnapshot.data();
-    var likes = postData.likes
-    likes++;
-    await updateDoc(postDocRef, {
-       likes: likes
-    });
+    try {
+    //interchangable with line below, once merged with garrett code use this line: const title = post.postId;
+        const title = post.user+post.caption;
+        console.log('postID: ', title);
+
+        const postDocRef = doc(firestore, 'posts', title);
+        const postDocSnapshot = await getDoc(postDocRef);
+
+        console.log('postDocSnapshot:', postDocSnapshot);
+
+        if (postDocSnapshot.exists()) {
+          const postData = postDocSnapshot.data();
+          console.log('postData:', postData);
+
+          var likes = postData.likes;
+          if(isImageFilled==true){
+          likes++;
+          await updateDoc(postDocRef, {
+               likes: likes
+               });
+          }
+          else{
+          likes--;
+          await updateDoc(postDocRef, {
+               likes: likes
+               });
+          }
+
+        } else {
+          console.warn('Document does not exist');
+        }
+      } catch (error) {
+        console.error('Error updating likes:', error);
+      }
     };
+
     const toggleImage = () => {
       setImageFilled(!isImageFilled);
     };
