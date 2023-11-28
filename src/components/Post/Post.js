@@ -1,11 +1,49 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {firestore} from '../../Firestore_Setup';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
 
 const Post = ( { post } ) => {
-
     const navigation = useNavigation();
     const [isImageFilled, setImageFilled] = useState(true);
+
+    const updateLikes = async () => {
+    try {
+    //interchangable with line below, once merged with garrett code use this line: const title = post.postId;
+        const title = post.user+post.caption;
+        console.log('postID: ', title);
+
+        const postDocRef = doc(firestore, 'posts', title);
+        const postDocSnapshot = await getDoc(postDocRef);
+
+        console.log('postDocSnapshot:', postDocSnapshot);
+
+        if (postDocSnapshot.exists()) {
+          const postData = postDocSnapshot.data();
+          console.log('postData:', postData);
+
+          var likes = postData.likes;
+          if(isImageFilled==true){
+          likes++;
+          await updateDoc(postDocRef, {
+               likes: likes
+               });
+          }
+          else{
+          likes--;
+          await updateDoc(postDocRef, {
+               likes: likes
+               });
+          }
+
+        } else {
+          console.warn('Document does not exist');
+        }
+      } catch (error) {
+        console.error('Error updating likes:', error);
+      }
+    };
 
     const toggleImage = () => {
       setImageFilled(!isImageFilled);
@@ -34,7 +72,10 @@ const Post = ( { post } ) => {
 
           <View style={styles.postBottom}>
             <View style={styles.postButtons}>
-              <TouchableOpacity onPress={toggleImage}>
+              <TouchableOpacity onPress={() => {
+                  updateLikes();
+                  toggleImage();
+              }}>
                 {isImageFilled ? (<Image source={require('../../assets/logo2unfilled.png')} style={styles.unlikedButton} />) : (<Image source={require('../../assets/logo2.png')} style={styles.likedButton} />)}
               </TouchableOpacity>
               <TouchableOpacity style={styles.commentButton} onPress={() => navigation.navigate('Comments', { postId: post.postId, comments: post.comments })}>
