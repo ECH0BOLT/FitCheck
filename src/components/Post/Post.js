@@ -1,12 +1,24 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {firestore} from '../../Firestore_Setup';
+import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
 
 const Post = ( { post } ) => {
-
     const navigation = useNavigation();
     const [isImageFilled, setImageFilled] = useState(true);
 
+    const updateLikes = async () => {
+    const title = post.user+post.caption;
+     const postDocRef = doc(firestore, 'posts', title);
+     const postDocSnapshot = await getDoc(postDocRef);
+     const postData = postDocSnapshot.data();
+    var likes = postData.likes
+    likes++;
+    await updateDoc(postDocRef, {
+       likes: likes
+    });
+    };
     const toggleImage = () => {
       setImageFilled(!isImageFilled);
     };
@@ -78,7 +90,10 @@ const Post = ( { post } ) => {
 
           <View style={styles.postBottom}>
             <View style={styles.postButtons}>
-              <TouchableOpacity onPress={toggleImage}>
+              <TouchableOpacity onPress={() => {
+                  updateLikes();
+                  toggleImage();
+              }}>
                 {isImageFilled ? (<Image source={require('../../assets/logo2unfilled.png')} style={styles.unlikedButton} />) : (<Image source={require('../../assets/logo2.png')} style={styles.likedButton} />)}
               </TouchableOpacity>
               <TouchableOpacity style={styles.commentButton} onPress={() => navigation.navigate('Comments')}>
