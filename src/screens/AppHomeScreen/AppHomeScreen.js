@@ -19,8 +19,10 @@ const AppHomeScreen = () => {
   const email = route.params?.email;
   console.log("HOME/Email: " +email);
   const [imageUri, setImageUri] = useState('');
+
+    const isFocused = useIsFocused();
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
+
 
   useEffect(() => {
     isFocused && fetchPosts()
@@ -36,7 +38,10 @@ const AppHomeScreen = () => {
     requestCameraPermission();
     fetchPosts();
   }, []);
-
+const onLikeUpdated = () => {
+    // Function to trigger re-fetch of posts after a like
+    fetchPosts();
+  }
   const fetchPosts = async () => {
     try {
       const postsCollection = collection(firestore, 'posts');
@@ -160,8 +165,8 @@ const AppHomeScreen = () => {
         <ScrollView style={styles.page} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'} >
           {/* Render fetched posts using the Post component */}
           {posts.map((post, index) => (
-            <Post key={index} post={post} />
-          ))}
+           <Post key={index} post={post} onLikeUpdated={onLikeUpdated} />
+            ))}
         </ScrollView>
       </LinearGradient>
       <View style={styles.bottomNav}>

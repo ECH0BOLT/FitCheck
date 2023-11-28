@@ -2,13 +2,16 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Button, Image } from 'react-native';
 import ProfileFriends from '../../components/ProfileFriends/ProfileFriends';
 import ProfileMemories from '../../components/ProfileMemories/ProfileMemories';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation,useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
 
 const MemoriesScreen = () => {
 
     const navigation = useNavigation();
+    const route = useRoute();
+        const email = route.params?.email;
+        console.log("MemoriesScreen/Email: " +email);
     const today = moment();
     const memoryBoxes = Array.from({ length: 110 }, (_, index) => today.clone().subtract(index, 'days'));
 
@@ -25,7 +28,7 @@ const MemoriesScreen = () => {
     };
 
     const handleSeeAllPress = () => {
-      navigation.navigate('Memories');
+      navigation.navigate('Memories', {email:email});
     };
 
     const scrollToTop = () => {
@@ -81,13 +84,13 @@ const MemoriesScreen = () => {
           </LinearGradient>
 
           <View style={styles.bottomNav}>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile',{email:email})}>
               <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
               <Image source={require('../../assets/logo2.png')} style={styles.navLogo} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Friends')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Friends',{email:email})}>
               <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>

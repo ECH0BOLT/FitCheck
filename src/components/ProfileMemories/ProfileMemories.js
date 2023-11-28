@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useRoute } from '@react-navigation/native';
 import moment from 'moment';
 
 const ProfileMemories = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+      const email = route.params?.email;
+      console.log("ProfileMemories/Email: " +email);
   const today = moment();
   const memoryBoxes = Array.from({ length: 14 }, (_, index) => today.clone().subtract(index, 'days'));
 
@@ -21,7 +24,7 @@ const ProfileMemories = () => {
   };
 
   const handleSeeAllPress = () => {
-    navigation.navigate('Memories');
+    navigation.navigate('Memories', {email:email});
   };
 
   return (

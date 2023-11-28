@@ -15,7 +15,7 @@ const PostConfirmationScreen = ({ route }) => {
   const imagePath = route.params?.imagePath;
   const [caption, setCaption] = useState('');
 
-  var likes=5;
+  var likes=0;
   var imageURL = 'https://kobebryant.com';
 
   const handlePost = async () => {

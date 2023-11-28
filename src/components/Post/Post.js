@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation,useRoute} from '@react-navigation/native';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
 import Comments from '../../components/Comments/Comments';
 
-const Post = ( { post } ) => {
+const Post = ( { post,onLikeUpdated } ) => {
     const navigation = useNavigation();
+
     const [isImageFilled, setImageFilled] = useState(true);
 
     const [commentsModalVisible, setCommentsModalVisible] = useState(false);
@@ -21,7 +22,8 @@ const Post = ( { post } ) => {
     const updateLikes = async () => {
     try {
     //interchangable with line below, once merged with garrett code use this line: const title = post.postId;
-        const title = post.user+post.caption;
+        const title= post.postId;
+        //const title = post.user+post.caption;
         console.log('postID: ', title);
 
         const postDocRef = doc(firestore, 'posts', title);
@@ -46,7 +48,7 @@ const Post = ( { post } ) => {
                likes: likes
                });
           }
-
+             onLikeUpdated();
         } else {
           console.warn('Document does not exist');
         }
@@ -64,50 +66,7 @@ const Post = ( { post } ) => {
     }
 
     return (
-//        <View style={styles.postContent}>
 //
-//          <View style={styles.postTop}>
-//            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-//                <Image source={require('../../assets/adam2.jpg')} style={styles.userIcon} />
-//            </TouchableOpacity>
-//            <View style={styles.userInfo}>
-//              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-//                <Text style={styles.handle}>@SandleMan</Text>
-//              </TouchableOpacity>
-//              <Text style={styles.time}>3 hours ago</Text>
-//            </View>
-//          </View>
-//
-//          <Image source={require('../../assets/adampost.jpg')} style={styles.post} />
-//
-//          <View style={styles.postBottom}>
-//            <View style={styles.postButtons}>
-//              <TouchableOpacity onPress={toggleImage}>
-//                {isImageFilled ? (<Image source={require('../../assets/logo2unfilled.png')} style={styles.unlikedButton} />) : (<Image source={require('../../assets/logo2.png')} style={styles.likedButton} />)}
-//              </TouchableOpacity>
-//              <TouchableOpacity style={styles.commentButton} onPress={() => navigation.navigate('Comments')}>
-//                <Image source={require('../../assets/comment.png')} style={styles.commentButton} />
-//              </TouchableOpacity>
-//            </View>
-//            <View style={styles.checkCount}>
-//              <Text style={styles.checkCount}>
-//                <Text style={styles.boldText}>{'24 '}</Text>
-//                checks
-//              </Text>
-//            </View>
-//            <View style={styles.userCaption}>
-//              <Text style={styles.userCaption}>
-//                <Text style={styles.boldText}>{'SandleMan '}</Text>
-//                This fit goes hard, feel free to ss.
-//              </Text>
-//            </View>
-//            <TouchableOpacity style={styles.viewComments} onPress={() => navigation.navigate('Comments')}>
-//              <Text style={styles.viewComments}>View 6 comments</Text>
-//            </TouchableOpacity>
-//          </View>
-//
-//        </View>
-
         <View style={styles.postContent}>
 
           <View style={styles.postTop}>
