@@ -21,7 +21,7 @@ const Post = ( { post } ) => {
     const updateLikes = async () => {
     try {
     //interchangable with line below, once merged with garrett code use this line: const title = post.postId;
-        const title = post.user+post.caption;
+        const title = post.postId;
         console.log('postID: ', title);
 
         const postDocRef = doc(firestore, 'posts', title);
