@@ -5,11 +5,12 @@ import CustomInput from '../../components/CustomInput';
 import {useNavigation,useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const CommentsScreen = () => {
+const CommentsScreen = ( {postId} ) => {
 
     const route = useRoute();
     const email = route.params?.email;
-    console.log("Comments/Email: " +email);
+//    console.log("Comments/Email: " +email);
+    const { comments } = route.params;
     const navigation = useNavigation();
 
     const scrollToTop = () => {
@@ -28,7 +29,7 @@ const CommentsScreen = () => {
                 </TouchableOpacity>
                 <Text style={styles.commentHeader}>Comments</Text>
             </View>
-            <Comments/>
+          <Comments comments={comments} />
           </LinearGradient>
         </View>
     );
