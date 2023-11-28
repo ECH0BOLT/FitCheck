@@ -66,7 +66,7 @@ const Post = ( { post,onLikeUpdated } ) => {
     }
 
     return (
-//
+
         <View style={styles.postContent}>
 
           <View style={styles.postTop}>
@@ -115,7 +115,7 @@ const Post = ( { post,onLikeUpdated } ) => {
           <Modal visible={commentsModalVisible} transparent={true} onRequestClose={closeCommentsModal}>
             <View style={styles.commentsContainer}>
               <Comments/>
-              <TouchableOpacity onPress={closeCommentsModal}>
+              <TouchableOpacity style={styles.closeContainer} onPress={closeCommentsModal}>
                 <Text style={styles.closeButton}>Close</Text>
               </TouchableOpacity>
             </View>

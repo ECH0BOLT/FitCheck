@@ -1,4 +1,4 @@
-import React, {useState, Fragment, useEffect} from 'react';
+import React, {useState, Fragment, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, PermissionsAndroid } from 'react-native';
 import Post from '../../components/Post/Post';
 import CustomButtonPrimary from '../../components/CustomButton/CustomButtonPrimary';
@@ -19,9 +19,9 @@ const AppHomeScreen = () => {
   const email = route.params?.email;
   console.log("HOME/Email: " +email);
   const [imageUri, setImageUri] = useState('');
-
-    const isFocused = useIsFocused();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  const scrollViewRef = useRef();
 
 
   useEffect(() => {
@@ -68,6 +68,15 @@ const onLikeUpdated = () => {
       console.error('Error fetching posts:', error);
     }
   };
+
+   const onScrollHandler = (event) => {
+      const { contentOffset } = event.nativeEvent;
+      // Check if the user has scrolled to the top (threshold can be adjusted)
+      if (contentOffset.y <= 0) {
+        // Refresh the screen by fetching posts again
+        fetchPosts();
+      }
+    };
 
   const requestCameraPermission = async () => {
     try {
@@ -162,7 +171,15 @@ const onLikeUpdated = () => {
   return (
     <View style={styles.container}>
       <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-        <ScrollView style={styles.page} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'} >
+        <ScrollView style={styles.page} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}
+          ref={scrollViewRef}
+                  style={styles.page}
+                  showsVerticalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={false}
+                  overScrollMode={'never'}
+                  onScroll={onScrollHandler}
+                  scrollEventThrottle={16} // Adjust the throttle value if needed
+                  >
           {/* Render fetched posts using the Post component */}
           {posts.map((post, index) => (
            <Post key={index} post={post} onLikeUpdated={onLikeUpdated} />
