@@ -1,12 +1,53 @@
 import React, {useState} from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, TouchableWithoutFeedback } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
+import Comments from '../../components/Comments/Comments';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import Animated, { Easing } from 'react-native-reanimated';
 
 const Post = ( { post } ) => {
     const navigation = useNavigation();
     const [isImageFilled, setImageFilled] = useState(true);
+
+    const [commentsModalVisible, setCommentsModalVisible] = useState(false);
+    const translateY = new Animated.Value(0);
+
+    const openCommentsModal = () => {
+      setCommentsModalVisible(true);
+    };
+
+    const closeCommentsModal = () => {
+      Animated.timing(translateY, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.inOut(Easing.ease),
+      }).start(() => {
+        setCommentsModalVisible(false);
+      });
+    };
+
+    const onGestureEvent = Animated.event([{ nativeEvent: { translationY: translateY } }], {
+      useNativeDriver: true,
+    });
+
+    const onHandlerStateChange = event => {
+      if (event.nativeEvent.state === State.END) {
+        if (event.nativeEvent.translationY > 100) {
+          closeCommentsModal();
+        } else {
+          Animated.spring(translateY, {
+            toValue: 0,
+            velocity: 2,
+            tension: 1,
+            friction: 8,
+            useNativeDriver: true,
+          }).start();
+        }
+      }
+    };
+
 
     const updateLikes = async () => {
     try {
@@ -122,7 +163,7 @@ const Post = ( { post } ) => {
               }}>
                 {isImageFilled ? (<Image source={require('../../assets/logo2unfilled.png')} style={styles.unlikedButton} />) : (<Image source={require('../../assets/logo2.png')} style={styles.likedButton} />)}
               </TouchableOpacity>
-              <TouchableOpacity style={styles.commentButton} onPress={() => navigation.navigate('Comments')}>
+              <TouchableOpacity style={styles.commentButton} onPress={openCommentsModal}>
                 <Image source={require('../../assets/comment.png')} style={styles.commentButton} />
               </TouchableOpacity>
             </View>
@@ -138,10 +179,25 @@ const Post = ( { post } ) => {
                 { ' ' + post.caption }
               </Text>
             </View>
-            <TouchableOpacity style={styles.viewComments} onPress={() => navigation.navigate('Comments')}>
+            <TouchableOpacity style={styles.viewComments} onPress={openCommentsModal}>
               <Text style={styles.viewComments}>View 6 comments</Text>
             </TouchableOpacity>
           </View>
+
+          <Modal visible={commentsModalVisible} animationType="slide" transparent={true} onRequestClose={closeCommentsModal}>
+            <TouchableWithoutFeedback onPress={closeCommentsModal}>
+              <View style={styles.overlay} />
+            </TouchableWithoutFeedback>
+
+            <PanGestureHandler onGestureEvent={onGestureEvent} onHandlerStateChange={onHandlerStateChange}>
+              <Animated.View style={[styles.commentsContainer, { transform: [{ translateY: translateY }] }]}>
+                <Comments/>
+                <TouchableOpacity onPress={closeCommentsModal}>
+                  <Text style={styles.closeButton}>Close</Text>
+                </TouchableOpacity>
+              </Animated.View>
+            </PanGestureHandler>
+          </Modal>
 
         </View>
     );
@@ -243,6 +299,32 @@ const Post = ( { post } ) => {
         width: 0,
         bottom: 160,
         left: 300,
+      },
+      commentsContainer: {
+        flex: 1,
+        marginTop: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#142614',
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+      },
+      closeContainer: {
+        borderRadius: 10,
+        backgroundColor: '#3B593B',
+        padding: 10,
+        width: 100,
+        elevation: 5,
+        alignItems: 'center',
+      },
+      closeButton: {
+        color: '#DCDCC8',
+        fontSize: 16,
+      },
+      overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
       },
     });
 
