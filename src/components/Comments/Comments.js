@@ -1,69 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TextInput, Keyboard, TouchableOpacity } from 'react-native';
+import {firestore} from '../../Firestore_Setup';
+import { arrayUnion,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc } from 'firebase/firestore'; // Import necessary Firestore methods
 
-const generateFakeComments = (count) => {
-  const comments = [];
-  const commentVariations = ['Nice outfit!', 'Love the style.', 'Great look!', 'Did you get those clothes out of a dumpster? Garbage.', 'Awesome fashion sense!', 'Stylish!', 'Fantastic outfit choice.'];
-
-  for (let i = 0; i < count; i++) {
-    const randomIndex = Math.floor(Math.random() * commentVariations.length);
-    const randomComment = commentVariations[randomIndex];
-
-    comments.push({
-      id: i,
-      username: `StinkyKitten${i}`,
-      comment: randomComment,
-      thumbnail: `https://placekitten.com/50/50?image=${i + 1}`, // Replace with a placeholder image URL
-    });
-  }
-  return comments;
-};
-
-const Comments = () => {
-  const [comments, setComments] = useState([]);
+const Comments = ({ postId, comments }) => {
   const [newComment, setNewComment] = useState('');
+  const [commentsList, setCommentsList] = useState(comments || []);
 
-  useEffect(() => {
-    setComments(generateFakeComments(5)); // Adjust the count as needed
-  }, []);
-
-  const handlePostComment = () => {
-
+  const handlePostComment = async () => {
     if (newComment.trim() === '') {
       return;
     }
 
-    const newComments = [
-      ...comments,
-      {
-        id: comments.length,
-        username: 'RizzGod', // Replace with the actual username or user ID
-        comment: newComment,
-        thumbnail: 'https://placekitten.com/50/50?image=0', // Replace with the actual user thumbnail
-      },
-    ];
+    try {
+        console.log(postId);
+        const postDocRef = doc(firestore, 'posts', postId); // Assuming 'posts' is your collection name
+        const commentData = { comment: newComment.trim() }; // Ensure comment is defined and trimmed
 
-    setComments(newComments);
-    setNewComment('');
+        // Check if the commentData is valid before updating Firestore
+        if (commentData.comment) {
+          // Use arrayUnion to add the new comment to the existing comments array in Firestore
+          await updateDoc(postDocRef, {
+            comments: arrayUnion(commentData),
+          });
 
-    Keyboard.dismiss();
+          // Update local state with the new comment
+          setCommentsList([...commentsList, commentData]);
+          setNewComment('');
+          Keyboard.dismiss();
+        } else {
+          console.error('Invalid comment data:', commentData);
+        }
+      } catch (error) {
+        console.error('Error posting comment:', error);
+      }
   };
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.commentContainer} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
-        <View style={styles.commentList}>
-          {comments.map((comment) => (
-            <View key={comment.id} style={styles.commentItem}>
-              <Image source={{ uri: comment.thumbnail }} style={styles.commentIcon} />
-              <View>
-                <Text style={styles.commentUsername}>{`${comment.username}`}</Text>
-                <Text style={styles.commentText}>{comment.comment}</Text>
+              <View style={styles.commentList}>
+                {comments && comments.length > 0 ? (
+                  comments.map((comments, index) => (
+                    <View key={index} style={styles.commentItem}>
+                      <Image source={{ uri: comments.thumbnail }} style={styles.commentIcon} />
+                      <View>
+                        <Text style={styles.commentUsername}>{comments.userId}</Text>
+                        <Text style={styles.commentText}>{comments.comment}</Text>
+                      </View>
+                    </View>
+                  ))
+                ) : (
+                  <Text>No comments available</Text>
+                )}
               </View>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+            </ScrollView>
+
 
       <View style={styles.inputContainer}>
         <TextInput

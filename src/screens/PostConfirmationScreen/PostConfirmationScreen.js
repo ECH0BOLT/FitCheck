@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import { View, Image, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -13,32 +13,35 @@ const PostConfirmationScreen = ({ route }) => {
   const navigation = useNavigation();
   const [imageData, setImageData] = useState('');
   const imagePath = route.params?.imagePath;
-
   const [caption, setCaption] = useState('');
 
   var likes=5;
   var imageURL = 'https://kobebryant.com';
 
   const handlePost = async () => {
-  const imageRef = doc(getFirestore(), 'test','placeholder');
-  const imageDoc = await getDoc(imageRef);
-  const imageData = imageDoc.data();
-  imageURL = imageData.image;
+    const imageRef = doc(getFirestore(), 'test','placeholder');
+    const imageDoc = await getDoc(imageRef);
+    const imageData = imageDoc.data();
+    imageURL = imageData.image;
 
-  const userRef = doc(getFirestore(), 'userData', email);
-  const userDoc = await getDoc(userRef);
-  const userData = userDoc.data();
-  const username=userData.username;
+    const userRef = doc(getFirestore(), 'userData', email);
+    const userDoc = await getDoc(userRef);
+    const userData = userDoc.data();
+    const username = userData.username;
+    const postId = Math.floor(Math.random() * 100000000).toString();
 
-  setDoc(doc(firestore, 'posts', username+caption), {
+    setDoc(doc(firestore, 'posts', postId), {
+             postId: postId,
              caption: caption,
              imageURL: imageURL,
              likes: likes,
-             user: username
+             user: username,
+             comments: [],
            });
-  console.warn(caption);
-  navigation.navigate('AppHome',{email:email});
+    console.warn(caption);
+    navigation.navigate('AppHome',{email:email});
   }
+
 
   useEffect( () => {
   const postRef = doc(firestore,`test/placeholder`);
