@@ -286,25 +286,24 @@ const Post = ( { post,onLikeUpdated } ) => {
           position: 'absolute',
           bottom: 0,
           right: 10,
-          backgroundColor: 'transparent', // Adjust as needed
+          backgroundColor: 'transparent',
       },
       buttonImage: {
         height: 45,
         width: 45,
         resizeMode: 'contain',
-        // Add any additional styles for your button image
       },
       clothingModalContainer: {
         position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%', // Make the modal width the same as the post image
-        height: '100%', // Make the modal height the same as the post image
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: 'rgba(20, 38, 20, 0.7)',
-        borderRadius: 10,
+  width: 331,
+  height: 500.5,
+  top: 79,
+  left: 30,
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: 20,
+  backgroundColor: 'rgba(20, 38, 20, 0.7)',
+  borderRadius: 10,
       },
       modalText: {
         color: '#DCDCC8',
@@ -317,7 +316,6 @@ const Post = ( { post,onLikeUpdated } ) => {
         marginTop: 10,
       },
       postBox: {
-
 
       }
     });
