@@ -63,7 +63,7 @@ const Comments = ({ post }) => {
                 {commentsList && commentsList.length > 0 ? (
                   commentsList.map((comment, index) => (
                     <View key={index} style={styles.commentItem}>
-                      <Image source={{ uri: comment.thumbnail }} style={styles.commentIcon} />
+                      <Image source={{ uri: 'https://resizing.flixster.com/_rE9VyElC7XgYUnlsnMxWnUy1ZI=/300x300/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/2255_v9_bb.jpg' }} style={styles.commentIcon} />
                       <View>
                         <Text style={styles.commentUsername}>{comment.userId}</Text>
                         <Text style={styles.commentText}>{comment.comment}</Text>
