@@ -8,6 +8,10 @@ import Comments from '../../components/Comments/Comments';
 const Post = ( { post,onLikeUpdated } ) => {
     const navigation = useNavigation();
 
+    const route = useRoute();
+
+    const email = route.params?.email;
+
     const [isImageFilled, setImageFilled] = useState(true);
 
     const [commentsModalVisible, setCommentsModalVisible] = useState(false);
@@ -145,7 +149,7 @@ const Post = ( { post,onLikeUpdated } ) => {
 
           <Modal visible={commentsModalVisible} transparent={true} onRequestClose={closeCommentsModal}>
             <View style={styles.commentsContainer}>
-              <Comments/>
+              <Comments post = {post}/>
               <TouchableOpacity style={styles.closeContainer} onPress={closeCommentsModal}>
                 <Text style={styles.closeButton}>Close</Text>
               </TouchableOpacity>
