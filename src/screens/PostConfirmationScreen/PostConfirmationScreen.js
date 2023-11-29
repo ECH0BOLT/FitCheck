@@ -38,7 +38,7 @@ const PostConfirmationScreen = ({ route }) => {
       user: username,
       comments: [],
     });
-    console.warn(caption);
+//    console.warn(caption);
     navigation.navigate('AppHome',{email:email});
   }
 
