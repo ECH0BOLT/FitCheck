@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TextInput, Keyboard, TouchableOpacity } from 'react-native';
 import {firestore} from '../../Firestore_Setup';
+import {useNavigation,useRoute} from '@react-navigation/native';
 import { arrayUnion,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc } from 'firebase/firestore';
 
-const Comments = ({ postId, comments }) => {
+const Comments = ({ post }) => {
   const [newComment, setNewComment] = useState('');
-  const [commentsList, setCommentsList] = useState(comments || []);
+  const [commentsList, setCommentsList] = useState(post.comments || []);
+  const comments = post.comments;
+  const route = useRoute();
+  const email = route.params?.email;
+  const postId = post.postId
 
   const handlePostComment = async () => {
     if (newComment.trim() === '') {
@@ -13,9 +18,9 @@ const Comments = ({ postId, comments }) => {
     }
 
     try {
-        console.log(postId);
+//        console.log(postId);
         const postDocRef = doc(firestore, 'posts', postId);
-        const commentData = { comment: newComment.trim() };
+        const commentData = { comment: newComment.trim(), userId: email };
 
         if (commentData.comment) {
           await updateDoc(postDocRef, {
@@ -33,25 +38,43 @@ const Comments = ({ postId, comments }) => {
       }
   };
 
+  const fetchComments = async () => {
+      try {
+        const postDocRef = doc(firestore, 'posts', postId);
+        const docSnap = await getDoc(postDocRef);
+
+        if (docSnap.exists()) {
+          const postData = docSnap.data();
+          setCommentsList(postData.comments || []); // Set the initial comments list from Firestore
+        }
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
+
+    useEffect(() => {
+      fetchComments(); // Fetch comments when the component mounts
+    }, [postId]);
+
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.commentContainer} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
-        <View style={styles.commentList}>
-          {comments && comments.length > 0 ? (
-            comments.map((comments, index) => (
-              <View key={index} style={styles.commentItem}>
-                <Image source={{ uri: comments.thumbnail }} style={styles.commentIcon} />
-                <View>
-                  <Text style={styles.commentUsername}>{comments.userId}</Text>
-                  <Text style={styles.commentText}>{comments.comment}</Text>
-                </View>
+      <ScrollView>
+              <View style={styles.commentList}>
+                {commentsList && commentsList.length > 0 ? (
+                  commentsList.map((comment, index) => (
+                    <View key={index} style={styles.commentItem}>
+                      <Image source={{ uri: comment.thumbnail }} style={styles.commentIcon} />
+                      <View>
+                        <Text style={styles.commentUsername}>{comment.userId}</Text>
+                        <Text style={styles.commentText}>{comment.comment}</Text>
+                      </View>
+                    </View>
+                  ))
+                ) : (
+                  <Text>No comments available</Text>
+                )}
               </View>
-            ))
-          ) : (
-            <Text>No comments available</Text>
-          )}
-        </View>
-      </ScrollView>
+            </ScrollView>
 
       <View style={styles.inputContainer}>
         <TextInput
