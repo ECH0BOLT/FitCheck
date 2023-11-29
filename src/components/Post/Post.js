@@ -11,12 +11,22 @@ const Post = ( { post,onLikeUpdated } ) => {
     const [isImageFilled, setImageFilled] = useState(true);
 
     const [commentsModalVisible, setCommentsModalVisible] = useState(false);
+
+    const [clothingModalVisible, setClothingModalVisible] = useState(false);
+
     const openCommentsModal = () => {
       setCommentsModalVisible(true);
     };
 
     const closeCommentsModal = () => {
       setCommentsModalVisible(false);
+    };
+    const openClothingModal = () => {
+        setClothingModalVisible(true);
+    };
+
+    const closeClothingModal = () => {
+        setClothingModalVisible(false);
     };
 
     const updateLikes = async () => {
@@ -80,9 +90,35 @@ const Post = ( { post,onLikeUpdated } ) => {
               <Text style={styles.time}>3 hours ago</Text>
             </View>
           </View>
+          <View style={styles.postBox}>
+          <Image source={{ uri: post.imageURL }} style={styles.post} />
 
-          <Image source={{ uri: post.imageURL}} style={styles.post} />
+         {/* Add a button at the bottom right corner */}
+         <TouchableOpacity
+           style={styles.clothingButton}
+           onPress={openClothingModal}
+         >
+           <Image source={require('../../assets/hanger.png')} style={styles.buttonImage} />
+         </TouchableOpacity>
 
+         {/* Clothing Modal */}
+         <View>
+           <Modal
+             visible={clothingModalVisible}
+             transparent={true}
+             onRequestClose={closeClothingModal}
+           >
+             <View style={styles.clothingModalContainer}>
+               {/* Add components for displaying posts tagged as clothing */}
+               <Text style={styles.modalText}>Clothing tags to be added here</Text>
+               {/* Add additional components as needed */}
+               <TouchableOpacity onPress={closeClothingModal}>
+                 <Text style={styles.closeClothingButton}>Close</Text>
+               </TouchableOpacity>
+             </View>
+           </Modal>
+         </View>
+       </View>
           <View style={styles.postBottom}>
             <View style={styles.postButtons}>
               <TouchableOpacity onPress={() => {
@@ -120,7 +156,6 @@ const Post = ( { post,onLikeUpdated } ) => {
               </TouchableOpacity>
             </View>
           </Modal>
-
         </View>
     );
 };
@@ -128,12 +163,14 @@ const Post = ( { post,onLikeUpdated } ) => {
     const styles = StyleSheet.create({
       postContent: {
         marginBottom: 40,
+        position: 'relative',
       },
       post: {
         width: '100%',
         height: 500,
         borderRadius: 10,
         marginBottom: -6,
+        position: 'relative',
       },
       postTop: {
         flexDirection: 'row',
@@ -244,6 +281,45 @@ const Post = ( { post,onLikeUpdated } ) => {
         color: '#DCDCC8',
         fontSize: 16,
       },
+
+      clothingButton: {
+          position: 'absolute',
+          bottom: 0,
+          right: 10,
+          backgroundColor: 'transparent', // Adjust as needed
+      },
+      buttonImage: {
+        height: 45,
+        width: 45,
+        resizeMode: 'contain',
+        // Add any additional styles for your button image
+      },
+      clothingModalContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%', // Make the modal width the same as the post image
+        height: '100%', // Make the modal height the same as the post image
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: 'rgba(20, 38, 20, 0.7)',
+        borderRadius: 10,
+      },
+      modalText: {
+        color: '#DCDCC8',
+        fontSize: 20,
+        marginBottom: 10,
+      },
+      closeClothingButton: {
+        color: '#DCDCC8',
+        fontSize: 16,
+        marginTop: 10,
+      },
+      postBox: {
+
+
+      }
     });
 
 export default Post;
