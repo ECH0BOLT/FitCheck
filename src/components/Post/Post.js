@@ -143,7 +143,7 @@ const Post = ( { post,onLikeUpdated } ) => {
               </Text>
             </View>
             <TouchableOpacity style={styles.viewComments} onPress={openCommentsModal}>
-              <Text style={styles.viewComments}>View 6 comments</Text>
+              <Text style={styles.viewComments}>View {post.comments.length} comment(s)</Text>
             </TouchableOpacity>
           </View>
 
