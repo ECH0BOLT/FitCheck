@@ -16,42 +16,44 @@ const ProfileEditor = () => {
   const [profilePicture, setProfilePicture] = useState('');
   const { imagePath } = route.params;
 
-const [userData, setUserData] = useState({
-        username: '',
-        name: ''
-      });
+  const [userData, setUserData] = useState({
+    username: '',
+    name: ''
+  });
+
   const [modalVisibleUsername, setModalVisibleUsername] = useState(false);
   const [modalVisibleName, setModalVisibleName] = useState(false);
   const [modalVisibleProfilePicture, setModalVisibleProfilePicture] = useState(false);
 
-  const closeModal = async () => { 
-
-  setModalVisibleUsername(false);
-  setModalVisibleName(false);
-  setModalVisibleProfilePicture(false);
+  const closeModal = async () => {
+    setModalVisibleUsername(false);
+    setModalVisibleName(false);
+    setModalVisibleProfilePicture(false);
   }
 
   const closeUsernameModal = async () => {
-  if(username.length>15){
-  console.warn("Username cannot be longer than 15 characters.")}
-  else {
-    updateDoc(doc(firestore, 'userData', email), {
-          username: username
-    });
-    console.warn("Set to: "+username);
-    setModalVisibleUsername(false);
-  }}
+    if(username.length>15){
+      console.warn("Username cannot be longer than 15 characters.")}
+    else {
+      updateDoc(doc(firestore, 'userData', email), {
+        username: username
+      });
+      console.warn("Set to: "+username);
+      setModalVisibleUsername(false);
+    }
+  }
 
   const closeNameModal = async () => {
-  if(name.length>40){
-  console.warn("Name cannot be longer than 40 characters.")}
-  else{
-    updateDoc(doc(firestore, 'userData', email), {
-          name: name
-    });
-    console.warn("Set to: "+name);
-    setModalVisibleName(false);
-  }}
+    if(name.length>40){
+      console.warn("Name cannot be longer than 40 characters.")}
+    else{
+      updateDoc(doc(firestore, 'userData', email), {
+        name: name
+      });
+      console.warn("Set to: "+name);
+      setModalVisibleName(false);
+    }
+  }
 
   const closeProfilePictureModal = async () => {
     setModalVisibleProfilePicture(false);
@@ -69,107 +71,84 @@ const [userData, setUserData] = useState({
     setModalVisibleProfilePicture(true);
   }
 
-
   const handleChangeProfilePicture = async () => {
         console.warn("todo");
   }
 
-useEffect(() => {
-    // Fetch user data when the component mounts
+  useEffect(() => {
     fetchUserData();
   }, []);
 
-     const fetchUserData = async () => {
-        try {
-          const userRef = doc(getFirestore(), 'userData', email);
-          const userDoc = await getDoc(userRef);
-
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            setUserData(userData);
-
-
-
-            // You can set other state variables based on your user data
-          } else {
-            console.log('User document not found');
-          }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      };
-
-
+  const fetchUserData = async () => {
+    try {
+      const userRef = doc(getFirestore(), 'userData', email);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setUserData(userData);
+      } else {
+        console.log('User document not found');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-
         <View style={styles.header}>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile',{email:email})}>
             <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
           </TouchableOpacity>
           <Text style={styles.titleEP}>Edit Profile</Text>
         </View>
-
         <View style={styles.userInfo}>
           <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
           <Text style={styles.name}>{userData.name}</Text>
           <Text style={styles.username}>@{userData.username}</Text>
         </View>
-
         <TouchableOpacity style={styles.editProfileItem} onPress={handleEditUsername}>
           <Text style={styles.editProfileLabel}>Change Username</Text>
         </TouchableOpacity>
-
         <TouchableOpacity style={styles.editProfileItem} onPress={handleEditName}>
           <Text style={styles.editProfileLabel}>Change Name</Text>
         </TouchableOpacity>
-
         <TouchableOpacity style={styles.editProfileItem} onPress={changeProfilePicture}>
           <Text style={styles.editProfileLabel}>Change Profile Picture</Text>
         </TouchableOpacity>
-
         <Modal visible={modalVisibleUsername} animationType="fade" transparent={true}>
           <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={closeModal}>
             <View style={styles.modalContent}>
               <Text style={styles.modalText}>Change Username</Text>
-
               <CustomInput placeholder="New Username" value={username} setValue={setUsername}/>
-
               <TouchableOpacity onPress={closeUsernameModal} style={styles.closeButton}>
                 <Text style={styles.buttonText}>Confirm</Text>
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
         </Modal>
-
         <Modal visible={modalVisibleName} animationType="fade" transparent={true}>
           <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={closeModal}>
             <View style={styles.modalContent}>
               <Text style={styles.modalText}>Change Name</Text>
-
               <CustomInput placeholder="New Name" value={name} setValue={setName}/>
-
               <TouchableOpacity onPress={closeNameModal} style={styles.closeButton}>
                 <Text style={styles.buttonText}>Confirm</Text>
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
         </Modal>
-
         <Modal visible={modalVisibleProfilePicture} animationType="fade" transparent={true}>
           <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={closeModal}>
             <View style={styles.modalContent}>
               <Text style={styles.modalText}>Change Profile Picture</Text>
-
               <TouchableOpacity onPress={closeProfilePictureModal} style={styles.closeButton}>
                 <Text style={styles.buttonText}>Confirm</Text>
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
         </Modal>
-
       </LinearGradient>
     </View>
   );

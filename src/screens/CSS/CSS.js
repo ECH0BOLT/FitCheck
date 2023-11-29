@@ -2,17 +2,15 @@ import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+
 const CSS = ({ route }) => {
+
   const { item, imagePath } = route.params;
-
-      const email = route.params?.email;
-      console.log("CSS/Email: " +email);
-
+  const email = route.params?.email;
+  console.log("CSS/Email: " +email);
   console.log(imagePath)
   const navigation = useNavigation();
 
-
-  // Define image sources based on the selected item
   let imageSource;
   if (item === 'Hat') {
     imageSource = require('../../assets/hat.png');
@@ -36,37 +34,37 @@ const CSS = ({ route }) => {
   };
 
   return (
-  <View style={styles.container}>
-    <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-      <View style={styles.container2}>
-        <Text style={styles.header}>Add Article</Text>
-        {imageSource && <Image source={imageSource} style={styles.image} />}
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Title"
-            style={styles.textInput}
-            value={formData.title}
-            onChangeText={(text) => handleInputChange('title', text)}
-          />
-          <TextInput
-            placeholder="Price"
-            style={styles.textInput}
-            value={formData.price}
-            onChangeText={(text) => handleInputChange('price', text)}
-          />
-        </View>
-      </View>
-    </LinearGradient>
-    <View style={styles.bottomNav}>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', {imagePath,email:email})}>
-              <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', {imagePath,email:email})}>
-              <Image source={require('../../assets/logo2unfilledjalf.png')} style={styles.navLogo} />
-            </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem}></TouchableOpacity>
+    <View style={styles.container}>
+      <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
+        <View style={styles.container2}>
+          <Text style={styles.header}>Add Article</Text>
+          {imageSource && <Image source={imageSource} style={styles.image} />}
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Title"
+              style={styles.textInput}
+              value={formData.title}
+              onChangeText={(text) => handleInputChange('title', text)}
+            />
+            <TextInput
+              placeholder="Price"
+              style={styles.textInput}
+              value={formData.price}
+              onChangeText={(text) => handleInputChange('price', text)}
+            />
           </View>
-  </View>
+        </View>
+      </LinearGradient>
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', {imagePath,email:email})}>
+          <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', {imagePath,email:email})}>
+          <Image source={require('../../assets/logo2unfilledjalf.png')} style={styles.navLogo} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}></TouchableOpacity>
+      </View>
+    </View>
   );
 };
 

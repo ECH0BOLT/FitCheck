@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TextInput, Keyboard, TouchableOpacity } from 'react-native';
 import {firestore} from '../../Firestore_Setup';
-import { arrayUnion,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc } from 'firebase/firestore'; // Import necessary Firestore methods
+import { arrayUnion,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc } from 'firebase/firestore';
 
 const Comments = ({ postId, comments }) => {
   const [newComment, setNewComment] = useState('');
@@ -14,17 +14,14 @@ const Comments = ({ postId, comments }) => {
 
     try {
         console.log(postId);
-        const postDocRef = doc(firestore, 'posts', postId); // Assuming 'posts' is your collection name
-        const commentData = { comment: newComment.trim() }; // Ensure comment is defined and trimmed
+        const postDocRef = doc(firestore, 'posts', postId);
+        const commentData = { comment: newComment.trim() };
 
-        // Check if the commentData is valid before updating Firestore
         if (commentData.comment) {
-          // Use arrayUnion to add the new comment to the existing comments array in Firestore
           await updateDoc(postDocRef, {
             comments: arrayUnion(commentData),
           });
 
-          // Update local state with the new comment
           setCommentsList([...commentsList, commentData]);
           setNewComment('');
           Keyboard.dismiss();
@@ -39,23 +36,22 @@ const Comments = ({ postId, comments }) => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.commentContainer} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
-              <View style={styles.commentList}>
-                {comments && comments.length > 0 ? (
-                  comments.map((comments, index) => (
-                    <View key={index} style={styles.commentItem}>
-                      <Image source={{ uri: comments.thumbnail }} style={styles.commentIcon} />
-                      <View>
-                        <Text style={styles.commentUsername}>{comments.userId}</Text>
-                        <Text style={styles.commentText}>{comments.comment}</Text>
-                      </View>
-                    </View>
-                  ))
-                ) : (
-                  <Text>No comments available</Text>
-                )}
+        <View style={styles.commentList}>
+          {comments && comments.length > 0 ? (
+            comments.map((comments, index) => (
+              <View key={index} style={styles.commentItem}>
+                <Image source={{ uri: comments.thumbnail }} style={styles.commentIcon} />
+                <View>
+                  <Text style={styles.commentUsername}>{comments.userId}</Text>
+                  <Text style={styles.commentText}>{comments.comment}</Text>
+                </View>
               </View>
-            </ScrollView>
-
+            ))
+          ) : (
+            <Text>No comments available</Text>
+          )}
+        </View>
+      </ScrollView>
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -130,9 +126,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   postButton: {
-    backgroundColor: '#3B593B', // Set the background color of the button
-    paddingVertical: 10, // Adjust the vertical padding
-    paddingHorizontal: 20, // Adjust the horizontal padding
+    backgroundColor: '#3B593B',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 10,
     elevation: 5,
   },

@@ -7,9 +7,9 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const FriendsScreen = () => {
     const navigation = useNavigation();
-     const route = useRoute();
-        const email = route.params?.email;
-        console.log("FriendsScreen/Email: "+email);
+    const route = useRoute();
+    const email = route.params?.email;
+    console.log("FriendsScreen/Email: "+email);
 
     const scrollToTop = () => {
         if (scrollViewRef.current) {
@@ -18,37 +18,36 @@ const FriendsScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
-          <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
-              <View style={styles.pageTop} >
-                  <Text style={styles.title}>Friends</Text>
-                  <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
-                  <TouchableOpacity
-                    style={styles.navItem}
-                    onPress={() => navigation.navigate('Settings',{email:email})}>
-                    <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
-                  </TouchableOpacity>
-              </View>
-              <View style={styles.contentHeader} >
-                <Text style={styles.headerText}>
-                  <Text style={styles.boldText}>34</Text> Friends
+      <View style={styles.container}>
+        <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
+          <ScrollView style={styles.container} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
+            <View style={styles.pageTop} >
+              <Text style={styles.title}>Friends</Text>
+              <Image source={require('../../assets/friends.png')} style={styles.navLogo} />
+              <TouchableOpacity
+                style={styles.navItem}
+                onPress={() => navigation.navigate('Settings',{email:email})}>
+                <Image source={require('../../assets/SETTINGS.png')} style={styles.settings} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.contentHeader} >
+              <Text style={styles.headerText}>
+                <Text style={styles.boldText}>34</Text> Friends
+              </Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('AddFriends',{email:email})}>
+                <Text style={styles.headerText2}>
+                  {'Add Friends '}
+                  <Text style={styles.boldText}>+</Text>
                 </Text>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('AddFriends',{email:email})}>
-                  <Text style={styles.headerText2}>
-                    {'Add Friends '}
-                    <Text style={styles.boldText}>+</Text>
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.pageContent} >
+              <FriendList></FriendList>
+            </View>
+          </ScrollView>
+        </LinearGradient>
 
-              <View style={styles.pageContent} >
-                    <FriendList></FriendList>
-              </View>
-
-            </ScrollView>
-          </LinearGradient>
           <View style={styles.bottomNav}>
             <TouchableOpacity
               style={styles.navItem}
@@ -66,9 +65,9 @@ const FriendsScreen = () => {
               <Image source={require('../../assets/profile.png')} style={styles.navLogo} />
             </TouchableOpacity>
           </View>
-        </View>
-      );
-    };
+      </View>
+    );
+};
 
     const styles = StyleSheet.create({
       container: {
@@ -116,8 +115,8 @@ const FriendsScreen = () => {
         fontWeight: 'bold',
       },
       pageContent: {
-        width: '100%', // Set your desired width
-        height: 535, // Set your desired height
+        width: '100%',
+        height: 535,
         backgroundColor: '#3B593B',
         borderRadius: 10,
         elevation: 5,

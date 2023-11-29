@@ -6,15 +6,16 @@ import CustomInput from '../../components/CustomInput';
 import { useNavigation, useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import * as ImagePicker from 'react-native-image-picker';
-import RNFS from 'react-native-fs'; // Import React Native FS for file handling
+import RNFS from 'react-native-fs';
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 const CreatePostScreen = () => {
+
   const [imageUri, setImageUri] = useState('');
   const navigation = useNavigation();
-   const route = useRoute();
-      const email = route.params?.email;
-      console.log("CREATE_POST/Email: " +email);
+  const route = useRoute();
+  const email = route.params?.email;
+  console.log("CREATE_POST/Email: " +email);
 
   useEffect(() => {
     requestCameraPermission();
@@ -84,7 +85,6 @@ const CreatePostScreen = () => {
       const imageName = 'liked_image.jpg';
       const imagePath = `${RNFS.DocumentDirectoryPath}/${imageName}`;
 
-      // Use moveFile method of RNFS to handle file operations
       await RNFS.moveFile(imageUri, imagePath);
       console.log('Image saved at:', imagePath);
 //      navigation.navigate('ImageViewScreen', { imagePath,email:email });

@@ -40,16 +40,16 @@ const SettingsScreen = () => {
     // Implement privacy toggle functionality
   };
 
-   const handleCopyLink = () => {
+  const handleCopyLink = () => {
     Clipboard.setString('fitcheckproject@gmail.com');
     setShowSupportModal(false);
   };
 
-   const handleChangePassword = () => {
+  const handleChangePassword = () => {
     setShowChangePasswordModal(true);
   };
 
-   const handleSavePassword = () => {
+  const handleSavePassword = () => {
 //    if(newPassword===changePassword){
 //        const usersRef = doc(firestore, `userData/${email}`);
 //
@@ -57,53 +57,53 @@ const SettingsScreen = () => {
 //        password:newPassword
 //
 //        });
-        console.log('Password saved');
-        setShowChangePasswordModal(false); // Close the modal after saving the password
+     console.log('Password saved');
+     setShowChangePasswordModal(false); // Close the modal after saving the password
 //    }
 //    else{
 //        console.warn('Passwords do not match.');
 //    }
   };
 
-    return (
-      <View style={styles.container}>
-        <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile', { email: email })}>
-            <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
+  return (
+    <View style={styles.container}>
+      <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile', { email: email })}>
+          <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
+        </TouchableOpacity>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Settings</Text>
+        </View>
+        <View style={styles.tabContainer}>
+          <TouchableOpacity style={styles.tabItem} onPress={handleLogout}>
+            <Text style={styles.tabText}>Log Out</Text>
           </TouchableOpacity>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>Settings</Text>
+          <TouchableOpacity style={styles.tabItem} onPress={() => setShowDeleteConfirmation(true)}>
+            <Text style={styles.tabText}>Delete Account</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tabItem} onPress={handleSupport}>
+            <Text style={styles.tabText}>Support</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tabItem} onPress={handleChangePassword}>
+            <Text style={styles.tabText}>Change Password</Text>
+          </TouchableOpacity>
+          <View style={styles.privacyContainer}>
+            <Text style={styles.tabText}>Privacy:</Text>
+            <Text style={styles.privacyStatus}>{isPrivateProfile ? 'Private' : 'Public'}</Text>
+            <Switch
+              value={isPrivateProfile}
+              onValueChange={handlePrivacyToggle}
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={isPrivateProfile ? '#f5dd4b' : '#f4f3f4'}
+            />
           </View>
-
-          <View style={styles.tabContainer}>
-            <TouchableOpacity style={styles.tabItem} onPress={handleLogout}>
-              <Text style={styles.tabText}>Log Out</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.tabItem} onPress={() => setShowDeleteConfirmation(true)}>
-              <Text style={styles.tabText}>Delete Account</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.tabItem} onPress={handleSupport}>
-              <Text style={styles.tabText}>Support</Text>
-            </TouchableOpacity>
-             <TouchableOpacity style={styles.tabItem} onPress={handleChangePassword}>
-              <Text style={styles.tabText}>Change Password</Text>
-             </TouchableOpacity>
-            <View style={styles.privacyContainer}>
-              <Text style={styles.tabText}>Privacy:</Text>
-              <Text style={styles.privacyStatus}>{isPrivateProfile ? 'Private' : 'Public'}</Text>
-              <Switch
-                value={isPrivateProfile}
-                onValueChange={handlePrivacyToggle}
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                thumbColor={isPrivateProfile ? '#f5dd4b' : '#f4f3f4'}
-              />
-            </View>
-          </View>
+        </View>
         <Modal
           animationType="slide"
           transparent={true}
           visible={showDeleteConfirmation}
-          onRequestClose={() => setShowDeleteConfirmation(false)}>
+          onRequestClose={() => setShowDeleteConfirmation(false)}
+        >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.modalText}>Are you sure you want to delete your account?</Text>
@@ -227,33 +227,31 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginRight: 10,
   },
-  // Modal for the pop up to confirm or deny account deletion
-   modalContainer: {
+  modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-   modalContent: {
+  modalContent: {
     backgroundColor: '#3B593B',
     padding: 20,
     borderRadius: 10,
     elevation: 5,
   },
-   modalText: {
+  modalText: {
     fontSize: 18,
     marginBottom: 20,
     color: '#DCDCC8',
   },
-   modalButtons: {
+  modalButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-   modalButton: {
+  modalButton: {
     color: '#DCDCC8',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  // Support Modal for copying the link to the support account for fitcheck
   modalEmail: {
     color: '#DCDCC8',
     fontSize: 18,
@@ -264,7 +262,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-   input: {
+  input: {
     height: 40,
     borderColor: '#DCDCC8',
     borderWidth: 1,
@@ -272,7 +270,7 @@ const styles = StyleSheet.create({
     color: '#DCDCC8',
     paddingHorizontal: 10,
     borderRadius: 5,
-    },
+  },
 });
 
 export default SettingsScreen;

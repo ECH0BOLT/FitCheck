@@ -6,8 +6,8 @@ import moment from 'moment';
 const ProfileMemories = () => {
   const navigation = useNavigation();
   const route = useRoute();
-      const email = route.params?.email;
-      console.log("ProfileMemories/Email: " +email);
+  const email = route.params?.email;
+  console.log("ProfileMemories/Email: " +email);
   const today = moment();
   const memoryBoxes = Array.from({ length: 14 }, (_, index) => today.clone().subtract(index, 'days'));
 

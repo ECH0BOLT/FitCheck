@@ -31,17 +31,16 @@ const PostConfirmationScreen = ({ route }) => {
     const postId = Math.floor(Math.random() * 100000000).toString();
 
     setDoc(doc(firestore, 'posts', postId), {
-             postId: postId,
-             caption: caption,
-             imageURL: imageURL,
-             likes: likes,
-             user: username,
-             comments: [],
-           });
+      postId: postId,
+      caption: caption,
+      imageURL: imageURL,
+      likes: likes,
+      user: username,
+      comments: [],
+    });
     console.warn(caption);
     navigation.navigate('AppHome',{email:email});
   }
-
 
   useEffect( () => {
   const postRef = doc(firestore,`test/placeholder`);
@@ -50,19 +49,17 @@ const PostConfirmationScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-     <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-      <View style={styles.imageContainer}>
-        {
-        imageData &&
-        <Image source={{ uri: imageData }} style={styles.image} />
-        }
-      </View>
-
-      <View style={styles.captionContainer}>
-        <CustomInput placeholder="Enter a caption" value={caption} setValue={setCaption}/>
-      </View>
-
-     </LinearGradient>
+      <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
+        <View style={styles.imageContainer}>
+          {
+          imageData &&
+          <Image source={{ uri: imageData }} style={styles.image} />
+          }
+        </View>
+        <View style={styles.captionContainer}>
+          <CustomInput placeholder="Enter a caption" value={caption} setValue={setCaption}/>
+        </View>
+      </LinearGradient>
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen',{email:email})}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />

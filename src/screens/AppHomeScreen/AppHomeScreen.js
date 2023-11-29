@@ -7,7 +7,7 @@ import CustomInput from '../../components/CustomInput';
 import { useNavigation,useRoute, useIsFocused } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import * as ImagePicker from 'react-native-image-picker';
-import RNFS from 'react-native-fs'; // Import React Native FS for file handling
+import RNFS from 'react-native-fs';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc, getDocs} from 'firebase/firestore';
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
@@ -23,7 +23,6 @@ const AppHomeScreen = () => {
   const isFocused = useIsFocused();
   const scrollViewRef = useRef();
 
-
   useEffect(() => {
     isFocused && fetchPosts()
   },[isFocused]);
@@ -38,10 +37,11 @@ const AppHomeScreen = () => {
     requestCameraPermission();
     fetchPosts();
   }, []);
-const onLikeUpdated = () => {
-    // Function to trigger re-fetch of posts after a like
+
+  const onLikeUpdated = () => {
     fetchPosts();
-  }
+  };
+
   const fetchPosts = async () => {
     try {
       const postsCollection = collection(firestore, 'posts');
@@ -50,7 +50,6 @@ const onLikeUpdated = () => {
       const fetchedPosts = [];
       querySnapshot.forEach((doc) => {
         const postData = doc.data();
-        // Map Firestore data to the structure expected by the Post component
         const post = {
           user: postData.user,
           imageURL: "data:image/png;base64,"+postData.imageURL,
@@ -69,14 +68,13 @@ const onLikeUpdated = () => {
     }
   };
 
-   const onScrollHandler = (event) => {
-      const { contentOffset } = event.nativeEvent;
-      // Check if the user has scrolled to the top (threshold can be adjusted)
-      if (contentOffset.y <= 0) {
-        // Refresh the screen by fetching posts again
-        fetchPosts();
-      }
-    };
+   // refresh screen when scroll to top
+  const onScrollHandler = (event) => {
+    const { contentOffset } = event.nativeEvent;
+    if (contentOffset.y <= 0) {
+      fetchPosts();
+    }
+  };
 
   const requestCameraPermission = async () => {
     try {
@@ -144,8 +142,6 @@ const onLikeUpdated = () => {
     });
   };
 
-
-
   const saveImage = async (imageUri) => {
     try {
       if (!imageUri || !imageUri.startsWith('file://')) {
@@ -156,7 +152,6 @@ const onLikeUpdated = () => {
       const imageName = 'liked_image.jpg';
       const imagePath = `${RNFS.DocumentDirectoryPath}/${imageName}`;
 
-    // Use moveFile method of RNFS to handle file operations
       await RNFS.moveFile(imageUri, imagePath);
       console.log('Image saved at:', imagePath);
 
@@ -173,17 +168,16 @@ const onLikeUpdated = () => {
       <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
         <ScrollView style={styles.page} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}
           ref={scrollViewRef}
-                  style={styles.page}
-                  showsVerticalScrollIndicator={false}
-                  showsHorizontalScrollIndicator={false}
-                  overScrollMode={'never'}
-                  onScroll={onScrollHandler}
-                  scrollEventThrottle={16} // Adjust the throttle value if needed
-                  >
-          {/* Render fetched posts using the Post component */}
+          style={styles.page}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          overScrollMode={'never'}
+          onScroll={onScrollHandler}
+          scrollEventThrottle={16}
+        >
           {posts.map((post, index) => (
-           <Post key={index} post={post} onLikeUpdated={onLikeUpdated} />
-            ))}
+            <Post key={index} post={post} onLikeUpdated={onLikeUpdated} />
+          ))}
         </ScrollView>
       </LinearGradient>
       <View style={styles.bottomNav}>
@@ -275,9 +269,9 @@ const styles = StyleSheet.create({
     width: 45,
   },
   navPost: {
-          height: 55,
-          width: 55,
-        },
+    height: 55,
+    width: 55,
+  },
   postLogo: {
     height: 80,
     width: 80,

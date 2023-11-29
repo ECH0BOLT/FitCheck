@@ -27,7 +27,7 @@ const ImageViewScreen = ({ route }) => {
 
     Animated.timing(slideAnimation, {
       toValue: newValue,
-      duration: 1000, // Adjust the duration as needed (in milliseconds)
+      duration: 1000,
       useNativeDriver: false,
     }).start();
   };
@@ -46,7 +46,7 @@ const ImageViewScreen = ({ route }) => {
       {
         translateY: slideAnimation.interpolate({
           inputRange: [0, 1],
-          outputRange: [120, 0], // Adjust the height of the sliding menu as needed
+          outputRange: [120, 0],
         }),
       },
     ],
@@ -67,7 +67,6 @@ const ImageViewScreen = ({ route }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Sliding Menu */}
       {menuVisible && (
         <Animated.View style={[styles.menuContainer, menuStyle]}>
           <TouchableOpacity style={styles.menuItem} onPress={() => {navigateToCSS('Hat', { imagePath,email:email })}}>
@@ -87,7 +86,7 @@ const ImageViewScreen = ({ route }) => {
           </TouchableOpacity>
         </Animated.View>
       )}
-       </LinearGradient>
+     </LinearGradient>
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
@@ -123,36 +122,36 @@ const styles = StyleSheet.create({
       right: 10,
       zIndex: 1,
     },
-    circleContainer: {
-      width: 75,
-      height: 75,
-      borderRadius: 40,
-      backgroundColor: '#DCF0C8',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    hangerIcon: {
-      width: 55,
-      height: 40,
-    },
-    menuContainer: {
-      position: 'absolute',
-      bottom: 140,
-      right: 10,
-      zIndex: 0,
-      backgroundColor: '#142614',
-      width: 75,
-      height: 325,
-      borderRadius: 40,
-      elevation: 5,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingBottom: 50,
-    },
-    menuItem: {
-      paddingVertical: 5,
-    },
-    navLogo: {
+  circleContainer: {
+    width: 75,
+    height: 75,
+    borderRadius: 40,
+    backgroundColor: '#DCF0C8',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  hangerIcon: {
+    width: 55,
+    height: 40,
+  },
+  menuContainer: {
+    position: 'absolute',
+    bottom: 140,
+    right: 10,
+    zIndex: 0,
+    backgroundColor: '#142614',
+    width: 75,
+    height: 325,
+    borderRadius: 40,
+    elevation: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 50,
+  },
+  menuItem: {
+    paddingVertical: 5,
+  },
+  navLogo: {
     height: 45,
     width: 45,
   },
