@@ -58,7 +58,7 @@ const SettingsScreen = () => {
 //
 //        });
      console.log('Password saved');
-     setShowChangePasswordModal(false); // Close the modal after saving the password
+     setShowChangePasswordModal(false);
 //    }
 //    else{
 //        console.warn('Passwords do not match.');
