@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TextInput, Keyboard, TouchableOpacity } from 'react-native';
 import {firestore} from '../../Firestore_Setup';
 import {useNavigation,useRoute} from '@react-navigation/native';
-import { arrayUnion,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc } from 'firebase/firestore';
+import {getFirestore,arrayUnion,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc } from 'firebase/firestore';
 
 const Comments = ({ post }) => {
   const [newComment, setNewComment] = useState('');
@@ -11,6 +11,40 @@ const Comments = ({ post }) => {
   const route = useRoute();
   const email = route.params?.email;
   const postId = post.postId
+  const [userData, setUserData] = useState({
+        username: '',
+        name: '',
+        pfp:''
+      });
+
+
+const images = [
+   require('../../assets/pfps/1.jpg'),
+   require('../../assets/pfps/2.jpg'),
+   require('../../assets/pfps/3.jpg'),
+  require('../../assets/pfps/4.jpg'),
+   require('../../assets/pfps/5.jpg'),
+   require('../../assets/pfps/6.jpg'),
+  require('../../assets/pfps/7.jpg'),
+   require('../../assets/pfps/8.jpg'),
+   require('../../assets/pfps/9.jpg')
+];
+
+const fetchUserData = async () => {
+    try {
+      const userRef = doc(getFirestore(), 'userData', email);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setUserData(userData);
+        console.log(userData.pfp);
+      } else {
+        console.log('User document not found');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
 
   const handlePostComment = async () => {
     if (newComment.trim() === '') {
@@ -19,8 +53,10 @@ const Comments = ({ post }) => {
 
     try {
 //        console.log(postId);
+
         const postDocRef = doc(firestore, 'posts', postId);
-        const commentData = { comment: newComment.trim(), userId: email };
+
+        const commentData = { comment: newComment.trim(), userId: userData.username,pfp:userData.pfp};
 
         if (commentData.comment) {
           await updateDoc(postDocRef, {
@@ -54,6 +90,7 @@ const Comments = ({ post }) => {
 
     useEffect(() => {
       fetchComments(); // Fetch comments when the component mounts
+      fetchUserData();
     }, [postId]);
 
   return (
@@ -63,7 +100,7 @@ const Comments = ({ post }) => {
                 {commentsList && commentsList.length > 0 ? (
                   commentsList.map((comment, index) => (
                     <View key={index} style={styles.commentItem}>
-                      <Image source={{ uri: 'https://resizing.flixster.com/_rE9VyElC7XgYUnlsnMxWnUy1ZI=/300x300/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/2255_v9_bb.jpg' }} style={styles.commentIcon} />
+                      <Image source={( comment.pfp === undefined)?images[0]:images[comment.pfp-1]}  style={styles.commentIcon} />
                       <View>
                         <Text style={styles.commentUsername}>{comment.userId}</Text>
                         <Text style={styles.commentText}>{comment.comment}</Text>
