@@ -136,13 +136,13 @@ const ProfileEditor = () => {
   return (
     <View style={styles.container}>
       <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile',{email:email})}>
             <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
           </TouchableOpacity>
           <Text style={styles.titleEP}>Edit Profile</Text>
         </View>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.userInfo}>
           <Image source={( userData.pfp === undefined)?images[0]:images[userData.pfp-1]} style={styles.profilePic} />
           <Text style={styles.name}>{userData.name}</Text>
