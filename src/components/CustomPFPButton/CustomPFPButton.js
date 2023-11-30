@@ -5,12 +5,16 @@ const images = [
    require('../../assets/pfps/1.jpg'),
    require('../../assets/pfps/2.jpg'),
    require('../../assets/pfps/3.jpg'),
-  require('../../assets/pfps/4.jpg'),
+   require('../../assets/pfps/4.jpg'),
    require('../../assets/pfps/5.jpg'),
    require('../../assets/pfps/6.jpg'),
-  require('../../assets/pfps/7.jpg'),
+   require('../../assets/pfps/7.jpg'),
    require('../../assets/pfps/8.jpg'),
-   require('../../assets/pfps/9.jpg')
+   require('../../assets/pfps/9.jpg'),
+   require('../../assets/pfps/10.jpg'),
+   require('../../assets/pfps/11.jpg'),
+   require('../../assets/pfps/12.jpg')
+
 ];
 
 const CustomPFPButton = ({ onPress }) => {

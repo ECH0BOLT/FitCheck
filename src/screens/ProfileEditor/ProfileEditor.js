@@ -11,15 +11,18 @@ import CustomPFPButton from '../../components/CustomPFPButton';
 const images = [
    require('../../assets/pfps/1.jpg'),
    require('../../assets/pfps/2.jpg'),
-    require('../../assets/pfps/3.jpg'),
-  require('../../assets/pfps/4.jpg'),
+   require('../../assets/pfps/3.jpg'),
+   require('../../assets/pfps/4.jpg'),
    require('../../assets/pfps/5.jpg'),
    require('../../assets/pfps/6.jpg'),
-  require('../../assets/pfps/7.jpg'),
+   require('../../assets/pfps/7.jpg'),
    require('../../assets/pfps/8.jpg'),
-   require('../../assets/pfps/9.jpg')
-];
+   require('../../assets/pfps/9.jpg'),
+   require('../../assets/pfps/10.jpg'),
+   require('../../assets/pfps/11.jpg'),
+   require('../../assets/pfps/12.jpg')
 
+];
 
 
 const ProfileEditor = () => {
@@ -144,7 +147,7 @@ const ProfileEditor = () => {
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.userInfo}>
-          <Image source={( userData.pfp === undefined)?images[0]:images[userData.pfp-1]} style={styles.profilePic} />
+          <Image source={(userData.pfp === null || userData.pfp === undefined)?images[0]:images[userData.pfp-1]} style={styles.profilePic} />
           <Text style={styles.name}>{userData.name}</Text>
           <Text style={styles.username}>@{userData.username}</Text>
         </View>
