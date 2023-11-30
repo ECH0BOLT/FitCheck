@@ -23,7 +23,8 @@ const CreateAccountScreen2 = () => {
     setDoc(doc(firestore, 'userData', email), {
             name: name,
             username: username,
-            password: password1
+            password: password1,
+            pfp: 1
           });
         navigation.navigate('AppHome', {email:email});
     }

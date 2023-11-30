@@ -8,7 +8,23 @@ import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
 import CustomInput from '../../components/CustomInput';
 
+const images = [
+   require('../../assets/pfps/1.jpg'),
+   require('../../assets/pfps/2.jpg'),
+   require('../../assets/pfps/3.jpg'),
+  require('../../assets/pfps/4.jpg'),
+   require('../../assets/pfps/5.jpg'),
+   require('../../assets/pfps/6.jpg'),
+  require('../../assets/pfps/7.jpg'),
+   require('../../assets/pfps/8.jpg'),
+   require('../../assets/pfps/9.jpg')
+];
+
 const ProfileScreen = () => {
+
+
+
+
 
     const navigation = useNavigation();
 
@@ -18,7 +34,8 @@ const ProfileScreen = () => {
 
     const [userData, setUserData] = useState({
       username: '',
-      name: ''
+      name: '',
+      pfp:''
     });
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -107,7 +124,7 @@ const ProfileScreen = () => {
             </TouchableOpacity>
           </View>
           <View style={styles.userInfo}>
-            <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
+            <Image source={(userData.pfp === null || userData.pfp === undefined)?images[0]:images[userData.pfp-1]} style={styles.profilePic} />
             <Text style={styles.name}>{userData.name}</Text>
             <Text style={styles.username}>@{userData.username}</Text>
           </View>

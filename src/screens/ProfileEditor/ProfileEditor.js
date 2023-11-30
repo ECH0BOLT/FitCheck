@@ -1,24 +1,45 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect, useReducer} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Modal, Button, TextInput, Clipboard, } from 'react-native';
 import {useNavigation,useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
 import CustomInput from '../../components/CustomInput';
+//import ChangeProfilePictureModal from './ChangeProfilePictureModal';
+import CustomPFPButton from '../../components/CustomPFPButton';
+
+const images = [
+   require('../../assets/pfps/1.jpg'),
+   require('../../assets/pfps/2.jpg'),
+    require('../../assets/pfps/3.jpg'),
+  require('../../assets/pfps/4.jpg'),
+   require('../../assets/pfps/5.jpg'),
+   require('../../assets/pfps/6.jpg'),
+  require('../../assets/pfps/7.jpg'),
+   require('../../assets/pfps/8.jpg'),
+   require('../../assets/pfps/9.jpg')
+];
+
+
 
 const ProfileEditor = () => {
+
   const route = useRoute();
   const navigation = useNavigation();
   const email = route.params?.email;
   console.log("ProfileEditor/Email: " +email);
   var [username, setUsername] = useState('');
   var [name, setName] = useState('');
+  const [selectedNumber, setSelectedNumber] = useState(1);
   const [profilePicture, setProfilePicture] = useState('');
+  const [showPFPButton, setShowPFPButton] = useState(false);
   const { imagePath } = route.params;
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const [userData, setUserData] = useState({
     username: '',
-    name: ''
+    name: '',
+    pfp:''
   });
 
   const [modalVisibleUsername, setModalVisibleUsername] = useState(false);
@@ -35,6 +56,7 @@ const ProfileEditor = () => {
     if(username.length>15){
       console.warn("Username cannot be longer than 15 characters.")}
     else {
+     userData.username=username;
       updateDoc(doc(firestore, 'userData', email), {
         username: username
       });
@@ -47,6 +69,7 @@ const ProfileEditor = () => {
     if(name.length>40){
       console.warn("Name cannot be longer than 40 characters.")}
     else{
+      userData.name=name;
       updateDoc(doc(firestore, 'userData', email), {
         name: name
       });
@@ -68,12 +91,27 @@ const ProfileEditor = () => {
   }
 
   const changeProfilePicture = () => {
-    setModalVisibleProfilePicture(true);
+     setShowPFPButton(!showPFPButton);
   }
 
   const handleChangeProfilePicture = async () => {
-        console.warn("todo");
+
+     setModalVisibleProfilePicture(true);
   }
+  const handleSelectNumber = (selectedNumber) => {
+      console.log('Selected Number:', selectedNumber);
+        setSelectedNumber(selectedNumber);
+        userData.pfp=selectedNumber;
+         updateDoc(doc(firestore, 'userData', email), {
+                pfp:selectedNumber
+              });
+              console.log(userData.pfp);
+
+
+        //forceUpdate();
+      // Do something with the selected number, e.g., update state or perform an action
+      // For example, you can update the profile picture based on the selected number
+    };
 
   useEffect(() => {
     fetchUserData();
@@ -86,6 +124,7 @@ const ProfileEditor = () => {
       if (userDoc.exists()) {
         const userData = userDoc.data();
         setUserData(userData);
+        console.log(userData.pfp);
       } else {
         console.log('User document not found');
       }
@@ -97,6 +136,7 @@ const ProfileEditor = () => {
   return (
     <View style={styles.container}>
       <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile',{email:email})}>
             <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
@@ -104,7 +144,7 @@ const ProfileEditor = () => {
           <Text style={styles.titleEP}>Edit Profile</Text>
         </View>
         <View style={styles.userInfo}>
-          <Image source={require('../../assets/adam2.jpg')} style={styles.profilePic} />
+          <Image source={( userData.pfp === undefined)?images[0]:images[userData.pfp-1]} style={styles.profilePic} />
           <Text style={styles.name}>{userData.name}</Text>
           <Text style={styles.username}>@{userData.username}</Text>
         </View>
@@ -117,6 +157,16 @@ const ProfileEditor = () => {
         <TouchableOpacity style={styles.editProfileItem} onPress={changeProfilePicture}>
           <Text style={styles.editProfileLabel}>Change Profile Picture</Text>
         </TouchableOpacity>
+        <View style={styles.centeredContent}>
+        {showPFPButton && (
+          <CustomPFPButton
+            isVisible={modalVisibleProfilePicture}
+            onClose={() => setShowPFPButton(false)}
+            onSave={handleChangeProfilePicture}
+            onPress={handleSelectNumber}
+          />
+        )}
+        </View>
         <Modal visible={modalVisibleUsername} animationType="fade" transparent={true}>
           <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={closeModal}>
             <View style={styles.modalContent}>
@@ -149,12 +199,24 @@ const ProfileEditor = () => {
             </View>
           </TouchableOpacity>
         </Modal>
+        </ScrollView>
       </LinearGradient>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+
+ scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  centeredContent: {
+    width: '100%', // Ensure content takes up the full width of the screen
+    alignItems: 'center',
+  },
+
   page: {
     flex: 1,
     padding: 16,

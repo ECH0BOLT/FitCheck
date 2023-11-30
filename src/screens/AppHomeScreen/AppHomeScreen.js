@@ -23,6 +23,18 @@ const AppHomeScreen = () => {
   const isFocused = useIsFocused();
   const scrollViewRef = useRef();
 
+const images = [
+   require('../../assets/pfps/1.jpg'),
+   require('../../assets/pfps/2.jpg'),
+   require('../../assets/pfps/3.jpg'),
+  require('../../assets/pfps/4.jpg'),
+   require('../../assets/pfps/5.jpg'),
+   require('../../assets/pfps/6.jpg'),
+  require('../../assets/pfps/7.jpg'),
+   require('../../assets/pfps/8.jpg'),
+   require('../../assets/pfps/9.jpg')
+];
+
   useEffect(() => {
     isFocused && fetchPosts()
   },[isFocused]);
@@ -52,6 +64,7 @@ const AppHomeScreen = () => {
         const postData = doc.data();
         const post = {
           user: postData.user,
+          pfp:postData.pfp,
           imageURL: "data:image/png;base64,"+postData.imageURL,
           caption: postData.caption,
           likes: postData.likes,

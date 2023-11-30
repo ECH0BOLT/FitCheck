@@ -5,7 +5,21 @@ import {firestore} from '../../Firestore_Setup';
 import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc} from 'firebase/firestore';
 import Comments from '../../components/Comments/Comments';
 
+
+const images = [
+   require('../../assets/pfps/1.jpg'),
+   require('../../assets/pfps/2.jpg'),
+   require('../../assets/pfps/3.jpg'),
+  require('../../assets/pfps/4.jpg'),
+   require('../../assets/pfps/5.jpg'),
+   require('../../assets/pfps/6.jpg'),
+  require('../../assets/pfps/7.jpg'),
+   require('../../assets/pfps/8.jpg'),
+   require('../../assets/pfps/9.jpg')
+];
+
 const Post = ( { post,onLikeUpdated } ) => {
+
     const navigation = useNavigation();
 
     const route = useRoute();
@@ -50,6 +64,7 @@ const Post = ( { post,onLikeUpdated } ) => {
           console.log('postData:', postData);
 
           var likes = postData.likes;
+
           if(isImageFilled==true){
           likes++;
           await updateDoc(postDocRef, {
@@ -85,7 +100,7 @@ const Post = ( { post,onLikeUpdated } ) => {
 
           <View style={styles.postTop}>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                <Image source={require('../../assets/adam2.jpg')} style={styles.userIcon} />
+                <Image source={(post.pfp === null || post.pfp === undefined)?images[0]:images[post.pfp-1]} style={styles.userIcon} />
             </TouchableOpacity>
             <View style={styles.userInfo}>
               <TouchableOpacity onPress={() => navigation.navigate('Profile')}>

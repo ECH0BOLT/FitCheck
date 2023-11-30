@@ -29,6 +29,7 @@ const PostConfirmationScreen = ({ route }) => {
     const userData = userDoc.data();
     const username = userData.username;
     const postId = Math.floor(Math.random() * 100000000).toString();
+    const pfp = userData.pfp;
 
     setDoc(doc(firestore, 'posts', postId), {
       postId: postId,
@@ -36,6 +37,7 @@ const PostConfirmationScreen = ({ route }) => {
       imageURL: imageURL,
       likes: likes,
       user: username,
+      pfp:pfp,
       comments: [],
     });
 //    console.warn(caption);
