@@ -162,30 +162,30 @@ const Post = ( { post,onLikeUpdated } ) => {
                          <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
                                      <Image source={require('../../assets/hat.png')} style={styles.hat} />
                                         <Text style={styles.boldText}>{hat.title} : </Text>
-                                        <Text style={styles.boldText}>${hat.price === null||hat.price===undefined ? 'N/A' : hat.price}</Text>
+                                        <Text style={styles.boldText}>${(hat.price === ''||hat.price===undefined) ? 'N/A' : hat.price}</Text>
                                    </TouchableOpacity>
                                    <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
                                      <Image source={require('../../assets/shirt.png')} style={styles.shirt} />
                                     <Text style={styles.boldText}>{shirt.title} : </Text>
-                                    <Text style={styles.boldText}>${shirt.price=== null||shirt.price===undefined ? 'N/A' :  shirt.price}</Text>
+                                    <Text style={styles.boldText}>${shirt.price=== ''||shirt.price===undefined ? 'N/A' :  shirt.price}</Text>
 
                                    </TouchableOpacity>
                                    <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
                                      <Image source={require('../../assets/pants.png')} style={styles.pants} />
                                      <Text style={styles.boldText}>{pants.title} : </Text>
-                                     <Text style={styles.boldText}>${pants.price=== null||pants.price===undefined ? 'N/A' : pants.price}</Text>
+                                     <Text style={styles.boldText}>${pants.price=== ''||pants.price===undefined ? 'N/A' : pants.price}</Text>
 
                                    </TouchableOpacity>
                                    <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
                                      <Image source={require('../../assets/shoes.png')} style={styles.shoes} />
                                      <Text style={styles.boldText}>{shoes.title} : </Text>
-                                     <Text style={styles.boldText}>${shoes.price=== null||shoes.price===undefined ? 'N/A' : shoes.price}</Text>
+                                     <Text style={styles.boldText}>${shoes.price=== ''||shoes.price===undefined ? 'N/A' : shoes.price}</Text>
 
                                    </TouchableOpacity>
                                    <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
                                      <Image source={require('../../assets/moreOptions.png')} style={styles.more} />
                                      <Text style={styles.boldText}>{accessories.title} : </Text>
-                                     <Text style={styles.boldText}>{accessories.price=== null||accessories.price===undefined ? 'N/A' : `{accessories.price}`}</Text>
+                                     <Text style={styles.boldText}>{accessories.price=== ''||accessories.price===undefined ? 'N/A' : accessories.price}</Text>
 
                                    </TouchableOpacity>
 
