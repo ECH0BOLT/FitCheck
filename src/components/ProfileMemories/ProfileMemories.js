@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Image } from 'react-native';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import moment from 'moment';
 

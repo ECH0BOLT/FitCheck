@@ -16,14 +16,14 @@ const ImageViewScreen = ({ route }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const slideAnimation = new Animated.Value(0);
   const initialClothes=[
-  {hat: ''},
-  {shirt:''},
-  {pants:''},
-  {shoes:''},
-  {accessories:''}
+    {hat: {title:'',price:''}},
+    {shirt:{title:'',price:''}},
+    {pants:{title:'',price:''}},
+    {shoes:{title:'',price:''}},
+    {accessories:{title:'',price:''}}
 
 
-  ]
+    ]
   let clothes = initialClothes;
   if(route.params?.clothes) {
     clothes=route.params?.clothes;

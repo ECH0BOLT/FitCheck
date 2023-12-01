@@ -153,7 +153,8 @@ const Post = ( { post,onLikeUpdated } ) => {
           <View style={styles.postBox}>
             <Image source={{ uri: post.imageURL }} style={styles.post} />
 
-             {/* Semi-transparent overlay with text */}
+           { //the overlay for the clothing
+           }
              {clothingModalVisible && (
                <>
                  <View style={styles.overlay} />
@@ -293,6 +294,7 @@ const Post = ( { post,onLikeUpdated } ) => {
         pants: {
           height: 45,
           width: 30,
+          left: 8,
         },
         shoes: {
           height: 35,
@@ -410,17 +412,7 @@ const Post = ( { post,onLikeUpdated } ) => {
       },
 
       clothingModalContainer: {
-         position: 'absolute',  // Change to absolute
-          zIndex: 2,              // Set a higher zIndex
-          width: 331,
-          height: 500.5,
-          top: 79,
-          left: 30,
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 20,
-          backgroundColor: 'rgba(20, 38, 20, 0.7)',
-          borderRadius: 10,
+
       },
       modalText: {
         color: '#DCDCC8',
@@ -431,11 +423,14 @@ const Post = ( { post,onLikeUpdated } ) => {
         color: '#DCDCC8',
         fontSize: 16,
         marginTop: 10,
+        left: 145,
       },
 
         overlay: {
           ...StyleSheet.absoluteFillObject,
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          borderRadius: 10,
+          height: 500,
           },overlayContent: {
               ...StyleSheet.absoluteFillObject,
               justifyContent: 'center',
