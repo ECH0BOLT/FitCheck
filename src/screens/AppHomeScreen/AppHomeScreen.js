@@ -178,7 +178,16 @@ const images = [
 
 
   return (
+
     <View style={styles.container}>
+
+    <LinearGradient
+            colors={['#789672', '#455D3F']}  // Adjust gradient colors as needed
+           style={styles.headerContainer}
+         >
+           <Text style={styles.header}>FitCheck</Text>
+         </LinearGradient>
+
       <LinearGradient useAngle angle={150} colors={['#3B593B', '#142814']} style={styles.page}>
         <ScrollView style={styles.page} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} overScrollMode={'never'}
           ref={scrollViewRef}
@@ -239,6 +248,24 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
   },
+
+  header: {
+      fontSize: 28,
+      fontWeight: 'bold',
+       //backgroundColor: 'green',
+       color: '#f0f0f0', // White text color
+      textAlign: 'center',
+      marginTop: 10, // Adjust the margin based on your design
+      fontFamily: 'Helvetica Neue', // Adjust the font family as needed
+    },
+     headerContainer: {
+        // Flex direction is set to row to allow linear gradient background
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10, // Add padding to the header if needed
+      },
+
   postTop: {
     flexDirection: 'row',
     flexWrap: 'wrap',
