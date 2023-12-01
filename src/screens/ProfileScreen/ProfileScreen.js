@@ -39,7 +39,7 @@ const ProfileScreen = () => {
     const [userData, setUserData] = useState({
       username: '',
       name: '',
-      pfp:''
+      pfp: ''
     });
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -77,6 +77,7 @@ const ProfileScreen = () => {
       try {
         const userRef = doc(getFirestore(), 'userData', email);
         const userDoc = await getDoc(userRef);
+        //const userDoc = await getDoc(userRef);
         if (userDoc.exists()) {
           const userData = userDoc.data();
           setUserData(userData);

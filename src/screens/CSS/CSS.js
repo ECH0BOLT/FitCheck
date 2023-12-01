@@ -5,8 +5,9 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const CSS = ({ route }) => {
 
-  const { item, imagePath } = route.params;
+  const { item, imagePath,clothes } = route.params;
   const email = route.params?.email;
+
   console.log("CSS/Email: " +email);
   console.log(imagePath)
   const navigation = useNavigation();
@@ -14,6 +15,7 @@ const CSS = ({ route }) => {
   let imageSource;
   if (item === 'Hat') {
     imageSource = require('../../assets/hat.png');
+    console.log("hat: tags!");
   } else if (item === 'Shirt') {
     imageSource = require('../../assets/shirt.png');
   } else if (item === 'Pants') {
@@ -30,8 +32,30 @@ const CSS = ({ route }) => {
   });
 
   const handleInputChange = (key, value) => {
-    setFormData({ ...formData, [key]: value });
-  };
+      setFormData({ ...formData, [key]: value });
+    };
+
+    const handleSave = () => {
+      switch (item) {
+        case 'Hat':
+          clothes[0].hat = {title:formData.title, price:formData.price};
+          break;
+        case 'Shirt':
+          clothes[1].shirt = {title:formData.title, price:formData.price};
+          break;
+        case 'Pants':
+          clothes[2].pants =  {title:formData.title, price:formData.price};
+          break;
+        case 'Shoes':
+          clothes[3].shoes =  {title:formData.title, price:formData.price};
+          break;
+        case 'Accessories':
+          clothes[4] =  {title:formData.title, price:formData.price};
+          break;
+        default:
+          console.warn("switch case failed!");
+      }
+    };
 
   return (
     <View style={styles.container}>
@@ -56,10 +80,10 @@ const CSS = ({ route }) => {
         </View>
       </LinearGradient>
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', {imagePath,email:email})}>
+        <TouchableOpacity style={styles.navItem} onPress={() =>{handleSave(); navigation.navigate('ImageViewScreen', {imagePath,email:email,clothes:clothes})}}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('ImageViewScreen', {imagePath,email:email})}>
+        <TouchableOpacity style={styles.navItem} onPress={() =>{handleSave(); navigation.navigate('ImageViewScreen', {imagePath,email:email,clothes:clothes})}}>
           <Image source={require('../../assets/logo2unfilledjalf.png')} style={styles.navLogo} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}></TouchableOpacity>

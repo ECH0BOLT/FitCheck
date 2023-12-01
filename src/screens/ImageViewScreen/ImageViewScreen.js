@@ -15,10 +15,24 @@ const ImageViewScreen = ({ route }) => {
   const navigation = useNavigation();
   const [menuVisible, setMenuVisible] = useState(false);
   const slideAnimation = new Animated.Value(0);
+  const initialClothes=[
+  {hat: ''},
+  {shirt:''},
+  {pants:''},
+  {shoes:''},
+  {accessories:''}
+
+
+  ]
+  let clothes = initialClothes;
+  if(route.params?.clothes) {
+    clothes=route.params?.clothes;
+    console.log(clothes);
+  }
 
 
   const navigateToCSS = (item, imagePath) => {
-    navigation.navigate('CSS', { item: item, imagePath: imagePath,email:email });
+    navigation.navigate('CSS', { item: item, imagePath: imagePath,email:email,clothes:clothes });
     };
 
   const toggleMenu = () => {
@@ -91,7 +105,7 @@ const ImageViewScreen = ({ route }) => {
         <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('AppHome',{email:email})}>
           <Image source={require('../../assets/arrow.png')} style={styles.navLogo} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('PostConfirmation',{ imagePath: imagePath, email:email})}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('PostConfirmation',{ imagePath: imagePath, email:email,clothes:clothes})}>
           <Image source={require('../../assets/logo2unfilled.png')} style={styles.navLogo} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}></TouchableOpacity>

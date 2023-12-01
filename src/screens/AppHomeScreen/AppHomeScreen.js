@@ -69,6 +69,7 @@ const images = [
           caption: postData.caption,
           likes: postData.likes,
           comments: postData.comments,
+          clothes: postData.clothes,
           postId: postData.postId,
           // Add other fields as needed (likes, comments, etc.)
         };
@@ -190,6 +191,7 @@ const images = [
         >
           {posts.map((post, index) => (
             <Post key={index} post={post} onLikeUpdated={onLikeUpdated} />
+
           ))}
         </ScrollView>
       </LinearGradient>

@@ -9,6 +9,7 @@ import {getFirestore,collection,addDoc, doc, Timestamp, updateDoc, setDoc,getDoc
 const PostConfirmationScreen = ({ route }) => {
 
   const email = route.params?.email;
+
   console.log("ImageViewS/Email: " +email);
   const navigation = useNavigation();
   const [imageData, setImageData] = useState('');
@@ -23,7 +24,7 @@ const PostConfirmationScreen = ({ route }) => {
     const imageDoc = await getDoc(imageRef);
     const imageData = imageDoc.data();
     imageURL = imageData.image;
-
+    const clothes = route.params?.clothes;
     const userRef = doc(getFirestore(), 'userData', email);
     const userDoc = await getDoc(userRef);
     const userData = userDoc.data();
@@ -39,6 +40,7 @@ const PostConfirmationScreen = ({ route }) => {
       user: username,
       pfp:pfp,
       comments: [],
+      clothes: clothes
     });
 //    console.warn(caption);
     navigation.navigate('AppHome',{email:email});

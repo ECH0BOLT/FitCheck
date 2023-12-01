@@ -22,13 +22,37 @@ const images = [
 
 ];
 
+const clothImages=[
+require('../../assets/hat.png'),
+require('../../assets/shirt.png'),
+require('../../assets/pants.png'),
+require('../../assets/shoes.png'),
+require('../../assets/moreOptions.png')
+
+
+]
+
+
+const clothingItems = [
+  { key: 'hat', image: require('../../assets/hat.png'), text: 'Hat' },
+  { key: 'shirt', image: require('../../assets/shirt.png'), text: 'Shirt' },
+  { key: 'pants', image: require('../../assets/pants.png'), text: 'Pants' },
+  { key: 'shoes', image: require('../../assets/shoes.png'), text: 'Shoes' },
+  { key: 'more', image: require('../../assets/moreOptions.png'), text: 'More Options' },
+];
+
+
 const Post = ( { post,onLikeUpdated } ) => {
 
+    console.log(Array.isArray(post.clothes));
+    const [{ hat }, { shirt }, { pants }, { shoes }, { accessories }] = post.clothes;
     const navigation = useNavigation();
 
     const route = useRoute();
 
     const email = route.params?.email;
+
+
 
     const [isImageFilled, setImageFilled] = useState(true);
 
@@ -45,6 +69,7 @@ const Post = ( { post,onLikeUpdated } ) => {
     };
     const openClothingModal = () => {
         setClothingModalVisible(true);
+        console.log(post.clothes);
     };
 
     const closeClothingModal = () => {
@@ -99,17 +124,28 @@ const Post = ( { post,onLikeUpdated } ) => {
     }
 
     return (
-
+/*<View style={styles.postTop}>
+              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                  <Image source={(post.pfp === null || post.pfp === undefined)?images[0]:images[post.pfp-1]} style={styles.userIcon} />
+              </TouchableOpacity>
+              <View style={styles.userInfo}>
+                <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                  <Text style={styles.handle}>@{ post.user }</Text>
+                </TouchableOpacity>
+                <Text style={styles.time}>3 hours ago</Text>
+              </View>
+            </View>  */
+        //got rid of the touchableOpacity that brought you back to your own profile....
         <View style={styles.postContent}>
 
           <View style={styles.postTop}>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+
                 <Image source={(post.pfp === null || post.pfp === undefined)?images[0]:images[post.pfp-1]} style={styles.userIcon} />
-            </TouchableOpacity>
+
             <View style={styles.userInfo}>
-              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+
                 <Text style={styles.handle}>@{ post.user }</Text>
-              </TouchableOpacity>
+
               <Text style={styles.time}>3 hours ago</Text>
             </View>
           </View>
@@ -117,25 +153,59 @@ const Post = ( { post,onLikeUpdated } ) => {
           <View style={styles.postBox}>
             <Image source={{ uri: post.imageURL }} style={styles.post} />
 
+             {/* Semi-transparent overlay with text */}
+             {clothingModalVisible && (
+               <>
+                 <View style={styles.overlay} />
+                   <View style={styles.overlayContent}>
+                         <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
+                                     <Image source={require('../../assets/hat.png')} style={styles.hat} />
+                                        <Text style={styles.boldText}>{hat.title} : </Text>
+                                        <Text style={styles.boldText}>${hat.price === null||hat.price===undefined ? 'N/A' : hat.price}</Text>
+                                   </TouchableOpacity>
+                                   <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
+                                     <Image source={require('../../assets/shirt.png')} style={styles.shirt} />
+                                    <Text style={styles.boldText}>{shirt.title} : </Text>
+                                    <Text style={styles.boldText}>${shirt.price=== null||shirt.price===undefined ? 'N/A' :  shirt.price}</Text>
+
+                                   </TouchableOpacity>
+                                   <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
+                                     <Image source={require('../../assets/pants.png')} style={styles.pants} />
+                                     <Text style={styles.boldText}>{pants.title} : </Text>
+                                     <Text style={styles.boldText}>${pants.price=== null||pants.price===undefined ? 'N/A' : pants.price}</Text>
+
+                                   </TouchableOpacity>
+                                   <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
+                                     <Image source={require('../../assets/shoes.png')} style={styles.shoes} />
+                                     <Text style={styles.boldText}>{shoes.title} : </Text>
+                                     <Text style={styles.boldText}>${shoes.price=== null||shoes.price===undefined ? 'N/A' : shoes.price}</Text>
+
+                                   </TouchableOpacity>
+                                   <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
+                                     <Image source={require('../../assets/moreOptions.png')} style={styles.more} />
+                                     <Text style={styles.boldText}>{accessories.title} : </Text>
+                                     <Text style={styles.boldText}>{accessories.price=== null||accessories.price===undefined ? 'N/A' : `{accessories.price}`}</Text>
+
+                                   </TouchableOpacity>
+
+
+                    <TouchableOpacity onPress={closeClothingModal}>
+                                     <Text style={styles.closeClothingButton}>Close</Text>
+                                   </TouchableOpacity>
+                 </View>
+               </>
+             )}
+
+
+
+
             <TouchableOpacity
               style={styles.clothingButton}
               onPress={openClothingModal}
             >
               <Image source={require('../../assets/hanger.png')} style={styles.buttonImage} />
             </TouchableOpacity>
-
-            <View>
-              <Modal visible={clothingModalVisible} transparent={true} onRequestClose={closeClothingModal}>
-                <View style={styles.clothingModalContainer}>
-                  <Text style={styles.modalText}>Clothing tags to be added here</Text>
-                  <TouchableOpacity onPress={closeClothingModal}>
-                    <Text style={styles.closeClothingButton}>Close</Text>
-                  </TouchableOpacity>
-                </View>
-              </Modal>
-         </View>
-
-       </View>
+          </View>
 
           <View style={styles.postBottom}>
             <View style={styles.postButtons}>
@@ -211,6 +281,28 @@ const Post = ( { post,onLikeUpdated } ) => {
         paddingHorizontal: 10,
         marginBottom: 3,
       },
+
+      hat: {
+          height: 30,
+          width: 45,
+        },
+        shirt: {
+          height: 45,
+          width: 45,
+        },
+        pants: {
+          height: 45,
+          width: 30,
+        },
+        shoes: {
+          height: 35,
+          width: 45,
+        },
+        more: {
+          height: 30,
+          width: 45,
+        },
+
       postBottom: {
       },
       postButtons:{
@@ -277,6 +369,12 @@ const Post = ( { post,onLikeUpdated } ) => {
         bottom: 160,
         left: 300,
       },
+      menuItem:{
+      flexDirection: 'row', // Align items horizontally
+          alignItems: 'center',  // Align items vertically
+          marginBottom: 10,      // Adjust this margin based on your design
+
+      },
       commentsContainer: {
         flex: 1,
         marginTop: 50,
@@ -310,17 +408,19 @@ const Post = ( { post,onLikeUpdated } ) => {
         width: 45,
         resizeMode: 'contain',
       },
+
       clothingModalContainer: {
-        position: 'absolute',
-        width: 331,
-        height: 500.5,
-        top: 79,
-        left: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: 'rgba(20, 38, 20, 0.7)',
-        borderRadius: 10,
+         position: 'absolute',  // Change to absolute
+          zIndex: 2,              // Set a higher zIndex
+          width: 331,
+          height: 500.5,
+          top: 79,
+          left: 30,
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 20,
+          backgroundColor: 'rgba(20, 38, 20, 0.7)',
+          borderRadius: 10,
       },
       modalText: {
         color: '#DCDCC8',
@@ -332,9 +432,26 @@ const Post = ( { post,onLikeUpdated } ) => {
         fontSize: 16,
         marginTop: 10,
       },
+
+        overlay: {
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          },overlayContent: {
+              ...StyleSheet.absoluteFillObject,
+              justifyContent: 'center',
+             alignItems: 'flex-start',
+              zIndex: 2, // Make sure it appears above the overlay
+            },
+            overlayText: {
+              color: '#FFFFFF', // Set the text color
+              fontSize: 24,
+              fontWeight: 'bold',
+            },
+
       postBox: {
 
       }
+
     });
 
 export default Post;
